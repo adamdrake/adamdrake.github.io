@@ -1,0 +1,147 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content="True"><meta name=MobileOptimized content="320"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer"><meta name=description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams."><title>UDID is Gone. So What? - Adam Drake</title><link rel="shortcut icon" href=/static/favicon.ico><link rel=stylesheet href=https://adamdrake.com/css/main.min.504be040a7418e5cb36174fca671fd5f87aa7c9d713b086c3696df81209c3b56.css integrity="sha256-UEvgQKdBjlyzYXT8pnH9X4eqfJ1xOwhsNpbfgSCcO1Y=" media=screen><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://adamdrake.com/static/images/twitter-card.jpg"><meta name=twitter:title content="UDID is Gone.  So What?"><meta name=twitter:description content="The last week has seen quite a bit of commotion in the mobile world as Apple has started enforcing their long-awaited deprecation of the use of the UDID. Honestly, I&rsquo;m not sure what all the fuss is about. This change was announced by Apple last summer, so everyone has had nearly a year to prepare for it. The general set of questions I&rsquo;ve seen on the topic can be reduced to the following."><meta property="og:title" content="UDID is Gone.  So What?"><meta property="og:description" content="The last week has seen quite a bit of commotion in the mobile world as Apple has started enforcing their long-awaited deprecation of the use of the UDID. Honestly, I&rsquo;m not sure what all the fuss is about. This change was announced by Apple last summer, so everyone has had nearly a year to prepare for it. The general set of questions I&rsquo;ve seen on the topic can be reduced to the following."><meta property="og:type" content="article"><meta property="og:url" content="https://adamdrake.com/udid-is-gone.-so-what.html"><meta property="og:image" content="https://adamdrake.com/static/images/twitter-card.jpg"><meta property="article:published_time" content="2012-03-31T00:00:00+00:00"><meta property="article:modified_time" content="2012-03-31T00:00:00+00:00"></head><body><div class=title-box><div class=title-left><h1 class=name><a href=/>Adam Drake</a></h1></div><div class=title-right><div class=social-icons><a href=https://github.com/adamdrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64></a>
+<a href=https://twitter.com/aadrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64></a>
+<a href=https://linkedin.com/in/aadrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64></a>
+<a href=/index.xml><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABOElEQVRIib2WXXWEMBBGIyESkICDroPWQSNhHRQnrANwsOsAHFAJdXD7ALSz0wmZLrTfObwwkDs/X3ISwiIgAQPHaQBegxRwORCg1cpK/lopAKN6eQEaoAduwPsBoCFoSDAEVMDZSMotF0hBT8yV7gIBtMAb8Aw8ATEDTMDHHpClDm3VGVbjbKcXtGrSQCB6YL8FreoQLfXALJC099bPg4LVbMys6DpmazdOWHbzu+29AK0KO/Wdaf2SvaNaJGKfi0ntMxfIApcGP6mEflTudd0E1KqNWrKq86OgFSYr0wbplQMfBoEwC3ZVMpG7U98C3ZZFKmwHZRcDTjn3WaCqkPWLiPfemAWKBVCzMadszAJd+W7d1YjLOek9lY2ZnneoXR5vbPy/y0mmBUfqq50rLLHj8mFoRJwWnzknvtUm1yWnAAAAAElFTkSuQmCC width=64 height=64></a></div><div class=subscribe><form action=https://api.digitalmaneuver.com/subscribe method=get><input class=subscribe-field style=width:200px name=email placeholder="Subscribe to newsletter?" type=text>
+<input class=subscribe-btn value=Yes! type=submit></form></div></div></div><div class="nav-box row"><div class=nav-left-menu><ul><li><a href=/>Latest</a> |</li><li><a href=/about.html>About</a> |</li><li><a href=/cases.html>Case Studies</a> |</li><li><a href=/contact.html>Contact</a> |</li><li><a href=/press.html>Press</a></li></ul></div></div><section class=section><div class=container><a href=https://applybyapi.com><button class=btn>Struggling to hire developers? Check out ApplyByAPI!</button></a><h1 class=page-title>UDID is Gone. So What?</h1><h2 class=content-date>March 31, 2012</h2><div class=share-links>Share this:
+<a class=twitter-share-button href="https://twitter.com/intent/tweet?text=Read%20UDID%20is%20Gone.%20%20So%20What%3f%20https%3a%2f%2fadamdrake.com%2fudid-is-gone.-so-what.html" onclick="window.open(this.href,'twitter-share','width=550,height=235');return false;">twitter</a> //
+<a class=icon-facebook href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fadamdrake.com%2fudid-is-gone.-so-what.html" onclick="window.open(this.href,'facebook-share','width=580,height=296');return false;">facebook</a> //
+<a class=icon-linkedin href="https://www.linkedin.com/shareArticle?mini=true&url=https://adamdrake.com&title=UDID%20is%20Gone.%20%20So%20What%3f&source=Adam%20Drake" onclick="window.open(this.href,'linkedin-share','width=980,height=980');return false;">linkedin</a> //
+<a class=icon-google-plus href="https://plus.google.com/share?url=https%3a%2f%2fadamdrake.com%2fudid-is-gone.-so-what.html" onclick="window.open(this.href,'google-plus-share','width=490,height=530');return false;">google+</a></div><div class=content><p>The last week has seen quite a bit of commotion in the mobile world as
+Apple has started enforcing their long-awaited deprecation of the use of
+the UDID. Honestly, I&rsquo;m not sure what all the fuss is about. This change
+was announced by Apple last summer, so everyone has had nearly a year to
+prepare for it. The general set of questions I&rsquo;ve seen on the topic can
+be reduced to the following.</p><h3 id=why-did-apple-do-this>Why did Apple do this?</h3><p>Most people would simply state the the reason is related to privacy
+concerns, but I think that&rsquo;s the short and easy answer. Before we can go
+deeper into this question we need to consider how the UDID is typically
+used by app developers and mobile advertising firms.</p><p>The problem with using the UDID is that, as the name implies, it is an
+identifier that is unique to the device. In that sense you can think
+about it like a license plate number on a car. The industry
+best-practice for dealing with the UDID is to anonymize it before it
+gets sent anywhere. So let&rsquo;s just say at this point that if you are
+using the UDID and you aren&rsquo;t anonymizing it first, you&rsquo;re part of the
+problem. Having an anonymized UDID basically akin to having some encoded
+version of a license plate number from a car. This encoding is one-way
+so even if you have the encoded version of the UDID, that doesn&rsquo;t mean
+that you can just reverse the process to obtain the UDID itself. This
+process is called hashing and the <a href=https://en.wikipedia.org/wiki/MD5>MD5</a> and <a href=https://en.wikipedia.org/wiki/SHA-1>SHA-1</a> algorithms are the
+ones most commonly used for this.</p><p>So what does having this anonymized identifier get you as an app
+developer? Namely it allows you to see how many people have downloaded
+you app, how it is being used, and various other kinds of analytics that
+you may be interested in. For example, perhaps you would like to know
+how often people have deleted and then re-installed your app. You can
+find this out by sending the anonymized UDID every time your application
+is launched. There are plenty of useful things you can measure using
+this identifier from an app developer&rsquo;s perspective.</p><p>The other large group that makes use of the UDID is mobile advertising
+firms. One obvious use for the identifier is something like frequency
+capping, which is just an industry term for making sure you don&rsquo;t see
+the same ad over and over again. I think everyone is happy not to be
+bothered by the same ad, especially if it isn&rsquo;t even relevant. Another
+use for the UDID is for services like conversion tracking. Say you are
+an advertiser and you want to run advertisements for your new app. You
+also would like to know how often people are clicking on your ad, and
+how often people who click on your ad are actually downloading the app,
+and how many of those people are actually running the app, and so forth.
+This kind of information can be obtained using the UDID. The UDID can
+also be used to do so-called targeted advertising, which basically looks
+at the devices who fit into some group and makes some guesses about
+other devices. In other words, users who have app A and app B installed
+tend to be more likely to click on advertisements for app C. This allows
+for better targeting of ads and provides more efficient allocation of
+resources for advertisers and more relevant advertising for users.</p><p>Now that the groundwork has been laid on UDIDs, how they&rsquo;re used, and
+why they&rsquo;re used, we can begin to have a discussion about privacy
+issues.</p><p>I cannot pretend to know what went on in the debates leading up to the
+decision to deprecate the UDID, but here is the basic idea as I see it.
+Many developers were not anonymizing the UDID before making use of it,
+and this is bad no matter how you slice it. Secondly, people tend to be
+uncomfortable with the idea of &ldquo;being tracked&rdquo; and don&rsquo;t have a firm
+concept of what that always means. For example, if you know an
+anonymized version of my license plate number, and you can&rsquo;t see
+original license plate numbers, then you really don&rsquo;t have any useful
+information about me. If you see my anonymized license plate in
+different places on different days then you&rsquo;ll be able to re-recognize
+me, but that doesn&rsquo;t mean you know who I am or where I live. Lastly, the
+UDID is something that is hardware based and therefore can&rsquo;t really be
+changed or deleted from the device. In other words, it&rsquo;s too permanent.
+All that being said, Apple didn&rsquo;t want to be seen as making it easy for
+people to &ldquo;be tracked.&rdquo; I don&rsquo;t blame them for that, but deprecating the
+UDID doesn&rsquo;t change anything, as we&rsquo;ll see.</p><h3 id=potential-replacements>Potential Replacements</h3><p>Okay, so apparently the gospel says that using the UDID is bad. What
+happens next then? Well there are quite a few proposed solutions, some
+of which are below in no particular order.</p><ul><li><p><a href=https://github.com/ylechelle/OpenUDID>OpenUDID</a> is a solution that came out last year and generates a
+unique token for the device that is stored in the UIPasteboard and
+consequently is available to all apps. In this way it still becomes a
+unique identifier for the device, which doesn&rsquo;t solve any of the
+privacy problems mentioned earlier. There is some opt-out
+functionality present, but the fact remains that it&rsquo;s still one
+identifier that goes back to one device.</p></li><li><p><a href=https://code.google.com/p/odinmobile/wiki/ODIN1>ODIN-1</a> uses the <a href=https://en.wikipedia.org/wiki/MAC_address>Media Access Control</a> (MAC) address from the
+wireless network chip inside the device in order to generate a unique
+token for the device. In this way it is really no different than
+using the UDID as it is still a hardware-based identification system
+and therefore is difficult to change.</p></li><li><p><a href=https://www.secureudid.org/>SecureUDID</a> is an effort by <a href=https://beta.crashlytics.com/>Crashlytics</a> to produce their own
+UDID replacement. Apparently there is a <a href=https://techcrunch.com/2012/03/27/secureudid-is-an-open-source-solution-to-the-apple-udid-problem/>bit of a scuffle</a> between
+the SecureUDID people and the OpenUDID people over who contributed to
+which technology and when. In the end, the result is that you still
+have a token that you can use to differentiate between devices, but
+the problem is that the token is generated on a per-domain basis. In
+other words, a publisher of multiple apps will be able to use the
+same token in all their apps, but another publisher will not be able
+to see the same token. If you are an ad network and you process ad
+requests from multiple apps, then you will not be able to tell that
+two requests from different apps actually came from the same device
+except under very specific circumstances. In the end, this solution
+is a non-starter in cases where you need to be able to identify the
+same device across apps from different publishers.</p></li></ul><p>There are other solutions out there, but the last one brings us to the
+key issue in the matter. The only way for the ecosystem to perpetuate is
+with one unique identifier per device, and that&rsquo;s the point that is at
+odds with the privacy argument. The reason that there are so many apps
+available for iOS devices is because that can be a profitable endeavor.
+The app developer will try to make money by selling their app for some
+price, or by having some in-app advertising that generates revenue for
+them. This is why apps are free. If Apple started rejecting every app
+that was able to identify a device uniquely, people would be forced to
+develop for other platforms, and that would be horrible for Apple.
+Imagine having an iPhone or an iPad without any apps. So Apple has to
+walk a fine line now by addressing concerns of privacy advocates and
+also addressing concerns of those who make a living by developing apps
+on their platform.</p><h3 id=what-next>What next?</h3><p>I think most people in the industry will move towards using the
+anonymized MAC address. This is the easiest change to make and the one
+that is most likely to be done by most industry players. This also
+allows for a device-specific identifier and therefore all of the
+previous products and services that were using the UDID can convert to
+using the MAC address without issue. The problem with this approach is
+that it is fundamentally no different from using the UDID and therefore
+likely to receive push-back from Apple at some point. In the end there
+will (hopefully) be an industry-wide solution that provides the required
+level of identification on a per-device basis, but is also something
+that can be cleared by the user. I think that will be the best solution
+for everyone involved.</p><p>Additionally, mobile websites and app developers should take additional
+steps to clearly communicate to their users what kind of information is
+being collected, why it being collected, how it will be handled, and so
+forth. Additionally, opt-out capability is something that will need to
+become the rule rather than the exception. This doesn&rsquo;t have to be
+anything complicated, and could be as simple as app developers
+displaying a Terms of Use window to the user when the app is run for the
+first time. These terms should be very clear on anything related to data
+collection, use, and storage, and allow the user to choose not to
+provide any data at all. At that point it will be up to the
+developer/publisher to decide if they want to allow the user to continue
+to use the app or if they want to make the use contingent on the ability
+to display ads. That&rsquo;s how they&rsquo;re making money from their trade.</p><h3 id=conclusion>Conclusion</h3><p>So the UDID is gone now. So what? This was announced months ago, and in
+the end it doesn&rsquo;t really change anything. The need to uniquely identify
+devices is greater than ever, and the number of apps in the iOS App
+Store is rapidly growing (<a href=https://www.apple.com/iphone/built-in-apps/app-store.html>over 500,000 at the moment</a>). Apple won&rsquo;t
+risk alienating their developers, who are an integral part of the reason
+that people buy iOS devices in the first place (There&rsquo;s an App For
+That(tm)). The goal then is to be as transparent as possible and move
+toward solutions that allow users to opt out of data collection, even
+though there should be no personally-identifiable information being
+collected anyway. That will be the only solution to the problem of
+balancing the need to uniquely identify a device and also respect the
+privacy and desires of users. The downside may be that app developers
+will only allow their apps to be used by those that opt in since they
+need to put food on the table. Just like there is no free lunch, there
+are no free apps.</p></div></div></section><div class="nav-box row"><div class=nav-left-menu><ul><li><a href=/>Latest</a> |</li><li><a href=/about.html>About</a> |</li><li><a href=/cases.html>Case Studies</a> |</li><li><a href=/contact.html>Contact</a> |</li><li><a href=/press.html>Press</a></li></ul></div></div><div class="footer-box row"><div class="footer-left col-md-6 col-xs-12"><div class="footer-bio content"><p><strong>Adam Drake</strong> leads technical business transformations in global and multi-cultural environments. He has a passion for helping companies become more productive by improving internal leadership capabilities, and accelerating product development through technology and data architecture guidance. Adam is currently a White House Presidential Innovation Fellow and IEEE Senior Member.</p></div></div><div class=footer-right><div class=social-icons><a href=https://github.com/adamdrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64></a>
+<a href=https://twitter.com/aadrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64></a>
+<a href=https://linkedin.com/in/aadrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64></a>
+<a href=/index.xml><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABOElEQVRIib2WXXWEMBBGIyESkICDroPWQSNhHRQnrANwsOsAHFAJdXD7ALSz0wmZLrTfObwwkDs/X3ISwiIgAQPHaQBegxRwORCg1cpK/lopAKN6eQEaoAduwPsBoCFoSDAEVMDZSMotF0hBT8yV7gIBtMAb8Aw8ATEDTMDHHpClDm3VGVbjbKcXtGrSQCB6YL8FreoQLfXALJC099bPg4LVbMys6DpmazdOWHbzu+29AK0KO/Wdaf2SvaNaJGKfi0ntMxfIApcGP6mEflTudd0E1KqNWrKq86OgFSYr0wbplQMfBoEwC3ZVMpG7U98C3ZZFKmwHZRcDTjn3WaCqkPWLiPfemAWKBVCzMadszAJd+W7d1YjLOek9lY2ZnneoXR5vbPy/y0mmBUfqq50rLLHj8mFoRJwWnzknvtUm1yWnAAAAAElFTkSuQmCC width=64 height=64></a></div><div class=subscribe><form action=https://api.digitalmaneuver.com/subscribe method=get><input class=subscribe-field style=width:200px name=email placeholder="Subscribe to newsletter?" type=text>
+<input class=subscribe-btn value=Yes! type=submit></form></div></div></div><div class="container has-text-centered footer-copyright"></div><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-118644773-1','auto');ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script></body>
