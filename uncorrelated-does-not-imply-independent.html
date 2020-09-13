@@ -24,15 +24,15 @@ random variables, both normally distributed and perfectly uncorrelated.
 Let $X$ be a normally distributed random variable with mean
 0 and standard deviation 1. Let $W$ be a simple random
 variable that is -1 with probability 1/2 and 1 with probability 1/2. Now
-let $Y = WX$. Then $X$ and $Y$:</p><ul><li>Are uncorrelated</li><li>Have the same normal distribution</li><li>Are NOT independent</li></ul><h3 id=proof-that--x--and--y--are-uncorrelated>Proof that <code>$ X $</code> and <code>$ Y $</code> are uncorrelated:</h3><p>To show this we need only demonstrate that their covariance is 0.
+let $Y = WX$. Then $X$ and $Y$:</p><ul><li>Are uncorrelated</li><li>Have the same normal distribution</li><li>Are NOT independent</li></ul><h3 id=proof-that--x--and--y--are-uncorrelated class=anchor-link><a href=#proof-that--x--and--y--are-uncorrelated>Proof that <code>$ X $</code> and <code>$ Y $</code> are uncorrelated:</a></h3><p>To show this we need only demonstrate that their covariance is 0.
 <code>$$ cov(X,Y) = E[XY]-E[X]E[Y] = E[XY] - 0 = E[E[XY \| W]] $$</code> Now
 <code>$ W $</code> is very simple, so this conditional expectation can be
-expressed easily. <code>$E[E[XY| W]]= E[X^2]Pr(W=1) + E[-X^2]Pr(W=-1) = 1\\\times\\\frac{1}{2} + -1\\\times\\\frac{1}{2} = 0$</code> Since their covariance is 0, they are uncorrelated. <strong>QED</strong></p><h3 id=proof-that-x-and-y-have-the-same-normal-distribution>Proof that $X$ and $Y$ have the same normal distribution:</h3><p>To do this we can show that both random variables have
+expressed easily. <code>$E[E[XY| W]]= E[X^2]Pr(W=1) + E[-X^2]Pr(W=-1) = 1\\\times\\\frac{1}{2} + -1\\\times\\\frac{1}{2} = 0$</code> Since their covariance is 0, they are uncorrelated. <strong>QED</strong></p><h3 id=proof-that-x-and-y-have-the-same-normal-distribution class=anchor-link><a href=#proof-that-x-and-y-have-the-same-normal-distribution>Proof that $X$ and $Y$ have the same normal distribution:</a></h3><p>To do this we can show that both random variables have
 the same cumulative probability density function. $Pr(Y \le x) = E[Pr(Y \le x | W)] = Pr(X \le x)Pr(W=1) + Pr(-X \le
 x)Pr(W=-1)$ Now since $X$ and $-X$ have
 the same normal distribution, this just becomes $Pr(X \le
 x)\times\frac{1}{2} + Pr(X \le x)\times\frac{1}{2} = Pr(X \le
-x)$ Therefore $Pr(Y \le x) = Pr(X \le x)$. <strong>QED</strong>.</p><h3 id=proof-that-x-and-y-are-not-independent>Proof that $X$ and $Y$ are NOT independent:</h3><p>To see this consider the fact that $Pr(Y > 1 | X =
+x)$ Therefore $Pr(Y \le x) = Pr(X \le x)$. <strong>QED</strong>.</p><h3 id=proof-that-x-and-y-are-not-independent class=anchor-link><a href=#proof-that-x-and-y-are-not-independent>Proof that $X$ and $Y$ are NOT independent:</a></h3><p>To see this consider the fact that $Pr(Y > 1 | X =
 \frac{1}{2}) = 0$. In other words, $Y$ being
 greater than 1 is dependent on $X$ NOT being
 $\frac{1}{2}$ and therefore, they are NOT independent. <strong>QED</strong>.</p><p>As you can see, the fact that two things are uncorrelated does
