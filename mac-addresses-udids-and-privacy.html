@@ -1,12 +1,86 @@
-<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content="True"><meta name=MobileOptimized content="320"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer"><meta name=description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams."><title>MAC Addresses, UDIDs, and Privacy - Adam Drake</title><link rel="shortcut icon" href=/static/favicon.ico><link rel=stylesheet href=https://adamdrake.com/css/main.min.be12b679e5899a8805bab6348a0b4d7dc70275c3a131afa9cf3753df691719da.css integrity="sha256-vhK2eeWJmogFurY0igtNfccCdcOhMa+pzzdT32kXGdo=" media=screen><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://adamdrake.com/static/images/twitter-card.jpg"><meta name=twitter:title content="MAC Addresses, UDIDs, and Privacy"><meta name=twitter:description content="There has been quite a bit of fuss in the days since Apple started rejecting apps that make use of the UDID. The deprecation was announced months ago, but the rejection started without warning and was a surprise to some. Firms that had been planning for the change typically already had multiple secondary solutions in place, many of which rely on using the Media Access Control (MAC) address from the wireless network interface controller (wireless NIC) on the device."><meta property="og:title" content="MAC Addresses, UDIDs, and Privacy"><meta property="og:description" content="There has been quite a bit of fuss in the days since Apple started rejecting apps that make use of the UDID. The deprecation was announced months ago, but the rejection started without warning and was a surprise to some. Firms that had been planning for the change typically already had multiple secondary solutions in place, many of which rely on using the Media Access Control (MAC) address from the wireless network interface controller (wireless NIC) on the device."><meta property="og:type" content="article"><meta property="og:url" content="https://adamdrake.com/mac-addresses-udids-and-privacy.html"><meta property="og:image" content="https://adamdrake.com/static/images/twitter-card.jpg"><meta property="article:section" content="posts"><meta property="article:published_time" content="2012-04-06T00:00:00+00:00"><meta property="article:modified_time" content="2012-04-06T00:00:00+00:00"></head><body><div class=title-box><div class=title-left><h1 class=name><a href=/>Adam Drake</a></h1></div><div class=title-right><div class=social-icons><a href=https://github.com/adamdrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=https://twitter.com/aadrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=https://linkedin.com/in/aadrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=/index.xml><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABOElEQVRIib2WXXWEMBBGIyESkICDroPWQSNhHRQnrANwsOsAHFAJdXD7ALSz0wmZLrTfObwwkDs/X3ISwiIgAQPHaQBegxRwORCg1cpK/lopAKN6eQEaoAduwPsBoCFoSDAEVMDZSMotF0hBT8yV7gIBtMAb8Aw8ATEDTMDHHpClDm3VGVbjbKcXtGrSQCB6YL8FreoQLfXALJC099bPg4LVbMys6DpmazdOWHbzu+29AK0KO/Wdaf2SvaNaJGKfi0ntMxfIApcGP6mEflTudd0E1KqNWrKq86OgFSYr0wbplQMfBoEwC3ZVMpG7U98C3ZZFKmwHZRcDTjn3WaCqkPWLiPfemAWKBVCzMadszAJd+W7d1YjLOek9lY2ZnneoXR5vbPy/y0mmBUfqq50rLLHj8mFoRJwWnzknvtUm1yWnAAAAAElFTkSuQmCC width=64 height=64></a></div><div class=subscribe><form action=https://api.digitalmaneuver.com/subscribe method=get><input class=subscribe-field style=width:200px name=email placeholder=" Subscribe to newsletter? " type=text>
-<input class=subscribe-btn value=Yes! type=submit></form></div></div></div><div class="nav-box row"><div class=nav-left-menu><ul><li><a href=/>Latest</a> |</li><li><a href=/about.html>About</a> |</li><li><a href=/cases.html>Case Studies</a> |</li><li><a href=/contact.html>Contact</a> |</li><li><a href=/press.html>Press</a></li></ul></div></div><section class=section><div class=container><a href=https://applybyapi.com><button class=btn>Struggling to hire developers? Check out ApplyByAPI!</button></a><h1 class=page-title>MAC Addresses, UDIDs, and Privacy</h1><h2 class=content-date>April 6, 2012</h2><div class=share-links>Share this:
-<a class=twitter-share-button href="https://twitter.com/intent/tweet?text=Read%20MAC%20Addresses%2c%20UDIDs%2c%20and%20Privacy%20https%3a%2f%2fadamdrake.com%2fmac-addresses-udids-and-privacy.html" onclick="return window.open(this.href,'twitter-share','width=550,height=235'),!1">twitter</a> //
-<a class=icon-facebook href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fadamdrake.com%2fmac-addresses-udids-and-privacy.html" onclick="return window.open(this.href,'facebook-share','width=580,height=296'),!1">facebook</a> //
-<a class=icon-linkedin href="https://www.linkedin.com/shareArticle?mini=true&url=https://adamdrake.com&title=MAC%20Addresses%2c%20UDIDs%2c%20and%20Privacy&source=Adam%20Drake" onclick="return window.open(this.href,'linkedin-share','width=980,height=980'),!1">linkedin</a> //
-<a class=icon-google-plus href="https://plus.google.com/share?url=https%3a%2f%2fadamdrake.com%2fmac-addresses-udids-and-privacy.html" onclick="return window.open(this.href,'google-plus-share','width=490,height=530'),!1">google+</a></div><div class=content><p>There has been quite a bit of fuss in the days since Apple started
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="chrome=1">
+<meta name=HandheldFriendly content="True">
+<meta name=MobileOptimized content="320">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=referrer content="no-referrer">
+<meta name=description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams.">
+<title>
+MAC Addresses, UDIDs, and Privacy - Adam Drake
+</title>
+<link rel="shortcut icon" href=/static/favicon.ico>
+<link rel=stylesheet href=https://adamdrake.com/css/main.min.be12b679e5899a8805bab6348a0b4d7dc70275c3a131afa9cf3753df691719da.css integrity="sha256-vhK2eeWJmogFurY0igtNfccCdcOhMa+pzzdT32kXGdo=" media=screen>
+<meta name=twitter:card content="summary_large_image">
+<meta name=twitter:image content="https://adamdrake.com/static/images/twitter-card.jpg">
+<meta name=twitter:title content="MAC Addresses, UDIDs, and Privacy">
+<meta name=twitter:description content="There has been quite a bit of fuss in the days since Apple started rejecting apps that make use of the UDID. The deprecation was announced months ago, but the rejection started without warning and was a surprise to some. Firms that had been planning for the change typically already had multiple secondary solutions in place, many of which rely on using the Media Access Control (MAC) address from the wireless network interface controller (wireless NIC) on the device.">
+<meta property="og:title" content="MAC Addresses, UDIDs, and Privacy">
+<meta property="og:description" content="There has been quite a bit of fuss in the days since Apple started rejecting apps that make use of the UDID. The deprecation was announced months ago, but the rejection started without warning and was a surprise to some. Firms that had been planning for the change typically already had multiple secondary solutions in place, many of which rely on using the Media Access Control (MAC) address from the wireless network interface controller (wireless NIC) on the device.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://adamdrake.com/mac-addresses-udids-and-privacy.html"><meta property="og:image" content="https://adamdrake.com/static/images/twitter-card.jpg"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2012-04-06T00:00:00+00:00">
+<meta property="article:modified_time" content="2012-04-06T00:00:00+00:00">
+</head>
+<body>
+<div class=title-box>
+<div class=title-left>
+<h1 class=name><a href=/>Adam Drake</a></h1>
+</div>
+<div class=title-right>
+<div class=social-icons>
+<a href=https://github.com/adamdrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=https://twitter.com/aadrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=https://linkedin.com/in/aadrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=/index.xml>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABOElEQVRIib2WXXWEMBBGIyESkICDroPWQSNhHRQnrANwsOsAHFAJdXD7ALSz0wmZLrTfObwwkDs/X3ISwiIgAQPHaQBegxRwORCg1cpK/lopAKN6eQEaoAduwPsBoCFoSDAEVMDZSMotF0hBT8yV7gIBtMAb8Aw8ATEDTMDHHpClDm3VGVbjbKcXtGrSQCB6YL8FreoQLfXALJC099bPg4LVbMys6DpmazdOWHbzu+29AK0KO/Wdaf2SvaNaJGKfi0ntMxfIApcGP6mEflTudd0E1KqNWrKq86OgFSYr0wbplQMfBoEwC3ZVMpG7U98C3ZZFKmwHZRcDTjn3WaCqkPWLiPfemAWKBVCzMadszAJd+W7d1YjLOek9lY2ZnneoXR5vbPy/y0mmBUfqq50rLLHj8mFoRJwWnzknvtUm1yWnAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+</div>
+<div class=subscribe>
+<a href=https://www.digitalmaneuver.com/#/portal>Subscribe to my newsletter</a>
+</div>
+</div>
+</div>
+<div class="nav-box row">
+<div class=nav-left-menu>
+<ul>
+<li><a href=/>Latest</a> | </li>
+<li><a href=/about.html>About</a> | </li>
+<li><a href=/cases.html>Case Studies</a> | </li>
+<li><a href=/contact.html>Contact</a> | </li>
+<li><a href=/press.html>Press</a></li>
+</ul>
+</div>
+</div>
+<section class=section>
+<div class=container>
+<a href=https://applybyapi.com><button class=btn>Struggling to hire developers? Check out ApplyByAPI!</button></a>
+<h1 class=page-title>MAC Addresses, UDIDs, and Privacy</h1>
+<h2 class=content-date>April 6, 2012</h2>
+<div class=share-links>
+Share this:
+<a class=twitter-share-button href="https://twitter.com/intent/tweet?text=Read%20MAC%20Addresses%2c%20UDIDs%2c%20and%20Privacy%20https%3a%2f%2fadamdrake.com%2fmac-addresses-udids-and-privacy.html" onclick="return window.open(this.href,'twitter-share','width=550,height=235'),!1">
+twitter
+</a> //
+<a class=icon-facebook href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fadamdrake.com%2fmac-addresses-udids-and-privacy.html" onclick="return window.open(this.href,'facebook-share','width=580,height=296'),!1">
+facebook
+</a> //
+<a class=icon-linkedin href="https://www.linkedin.com/shareArticle?mini=true&url=https://adamdrake.com&title=MAC%20Addresses%2c%20UDIDs%2c%20and%20Privacy&source=Adam%20Drake" onclick="return window.open(this.href,'linkedin-share','width=980,height=980'),!1">
+linkedin
+</a> //
+<a class=icon-google-plus href="https://plus.google.com/share?url=https%3a%2f%2fadamdrake.com%2fmac-addresses-udids-and-privacy.html" onclick="return window.open(this.href,'google-plus-share','width=490,height=530'),!1">
+google+
+</a>
+</div>
+<div class=content>
+<p>There has been quite a bit of fuss in the days since Apple started
 rejecting apps that make use of the UDID. The deprecation was announced
 months ago, but the rejection started without warning and was a surprise
 to some. Firms that had been planning for the change typically already
@@ -18,7 +92,9 @@ the UDID that Apple banned access to (keep in mind, they still have
 access to it), but these complaints demonstrate a lack of understanding
 on what a MAC address is, why it exists, and most notably the fact that
 it is transmitted in a plainly-readable form that can be viewed by every
-other device on any network to which you are connected.</p><h3 id=some-background-on-mac-addresses class=anchor-link><a href=#some-background-on-mac-addresses>Some background on MAC addresses</a></h3><p>MAC stands for <a href=https://en.wikipedia.org/wiki/Media_access_control>Media Access Control</a>, and it is a
+other device on any network to which you are connected.</p>
+<h3 id=some-background-on-mac-addresses class=anchor-link><a href=#some-background-on-mac-addresses>Some background on MAC addresses</a></h3>
+<p>MAC stands for <a href=https://en.wikipedia.org/wiki/Media_access_control>Media Access Control</a>, and it is a
 special identifier that is assigned by the manufacturer to every NIC
 inside electronic devices. In theory, every NIC in every device has a
 unique MAC address assigned to it. This has been the case for decades,
@@ -35,7 +111,8 @@ you send any information over the network, say to access a web page,
 check your email, or any other task, this information is broken up into
 tiny chunks, and each chunk contains information about where it came
 from and where it&rsquo;s going. Maybe a more concrete example would better
-illustrate how this works.</p><p>Say you want to mail a big book to a friend. If you used the same method
+illustrate how this works.</p>
+<p>Say you want to mail a big book to a friend. If you used the same method
 to send the book that your electronic device uses to surf the web, then
 you wouldn&rsquo;t just send one big book in one big box. What your
 computer/iPhone/whatever does is splits the book into stacks of say, 20
@@ -46,7 +123,8 @@ envelope so that your friend can reassemble the pages inside the
 envelopes in the correct order and make sure that they received all the
 envelopes required to reconstruct the complete book. People are not
 shocked by the fact that anyone who happens to see one of the envelopes
-will also see the addressing information that you wrote on them.</p><p>This process works just the same when electronic devices communicate.
+will also see the addressing information that you wrote on them.</p>
+<p>This process works just the same when electronic devices communicate.
 The difference is that the address of the sender and recipient are not a
 name, street, city, and country. They are other identifiers, one of
 which is the MAC address of your NIC. In general these pieces of
@@ -61,14 +139,17 @@ if you wrote it on a huge piece of paper and held it above your head.
 Everyone could easily read it, and they&rsquo;d think you were crazy if you
 yelled at them for doing so. They would probably already think you were
 crazy for writing a MAC address on a huge piece of paper and holding it
-over your head, but you get my point.</p><h3 id=the-privacy-problem class=anchor-link><a href=#the-privacy-problem>The Privacy Problem</a></h3><p>So then the question becomes, is making use of information someone has
+over your head, but you get my point.</p>
+<h3 id=the-privacy-problem class=anchor-link><a href=#the-privacy-problem>The Privacy Problem</a></h3>
+<p>So then the question becomes, is making use of information someone has
 publicized actually a privacy problem? I am guessing that most people
 who are raising the privacy issue in relation to the usage MAC addresses
 don&rsquo;t realize that the MAC address is being constantly broadcast by
 their device any time they are doing anything on any network. User
 privacy is important, and that&rsquo;s why I fully advocate that companies
 making use of the MAC address should anonymize it first. By doing so
-they are voluntarily protecting the user.</p><p>From the opposite perspective, there is no way to easily disable or
+they are voluntarily protecting the user.</p>
+<p>From the opposite perspective, there is no way to easily disable or
 change a MAC address. You can pretend to have a different one, called
 <a href=https://en.wikipedia.org/wiki/MAC_spoofing>MAC Spoofing</a>, but it isn&rsquo;t always easy or possible to do so. In that
 sense, anyone who is using a device connected to some network doesn&rsquo;t
@@ -76,7 +157,8 @@ really have a choice in regards to the visibility of their MAC address.
 The MAC address exists and has for decades, it&rsquo;s pretty much required in
 order for most devices to communicate, and there is nothing you can
 easily do to get rid of it. In that sense, using the MAC address as a
-device identifier poses the same problems as the UDID.</p><p>The big problem here is something that is very common when technology
+device identifier poses the same problems as the UDID.</p>
+<p>The big problem here is something that is very common when technology
 and privacy intersect. People don&rsquo;t understand the details of how the
 technology works, and for the most part they don&rsquo;t really care. This
 causes people to use features that probably aren&rsquo;t good for their
@@ -88,7 +170,8 @@ their iPhone, checking in with Foursquare, which is cross-posted to
 their Facebook (or they check in with Facebook directly), and they tweet
 pictures with Instagram, and they think nothing of doing all of this. In
 reality, they are giving away an amazing amount of information about who
-they are, where they are, and what they are doing.</p><p>For example, if you are checking in with Facebook or Foursquare then
+they are, where they are, and what they are doing.</p>
+<p>For example, if you are checking in with Facebook or Foursquare then
 people know where you are and where you aren&rsquo;t. If you have personal
 photos on your (likely public) Facebook profile then someone can easily
 just go to wherever you are (since you checked in), wait for you to come
@@ -105,13 +188,16 @@ one. I would advise people to visit the <a href=https://www.eff.org>Electronic F
 and security</a>. As is often the case, the privacy argument all comes
 down to user education. They never knew anything about MAC addresses,
 and now they&rsquo;re unhappy that there is some unique token that is tied to
-their device. They just didn&rsquo;t know that it&rsquo;s been this way all along.</p><h3 id=conclusion class=anchor-link><a href=#conclusion>Conclusion</a></h3><p>So using UDIDs is not possible anymore, and that isn&rsquo;t a bad thing. Many
+their device. They just didn&rsquo;t know that it&rsquo;s been this way all along.</p>
+<h3 id=conclusion class=anchor-link><a href=#conclusion>Conclusion</a></h3>
+<p>So using UDIDs is not possible anymore, and that isn&rsquo;t a bad thing. Many
 companies have switched to alternative methods, including using an
 anonymized version of the MAC address. The MAC address is a necessary
 part of communication between networked devices and is readable by all
 devices on the same network (and always has been), so taking the step to
 anonymize it (which every company should) is actually a step up for user
-privacy.</p><p>You don&rsquo;t get to drive a car without license plates, you don&rsquo;t get to
+privacy.</p>
+<p>You don&rsquo;t get to drive a car without license plates, you don&rsquo;t get to
 send letters without writing an address on them, and you don&rsquo;t really
 get to connect electronic devices to a network without a MAC address.
 You do get to choose if you will drive, write letters, or surf the web,
@@ -121,8 +207,50 @@ only they can decide, but that decision should be an informed one. In
 the meantime, companies making use of the MAC address should keep in
 mind user privacy concerns, should always hash the MAC address so they
 are not accessing the original, and should take all possible steps to
-facilitate privacy and transparency for users.</p></div></div></section><div class="nav-box row"><div class=nav-left-menu><ul><li><a href=/>Latest</a> |</li><li><a href=/about.html>About</a> |</li><li><a href=/cases.html>Case Studies</a> |</li><li><a href=/contact.html>Contact</a> |</li><li><a href=/press.html>Press</a></li></ul></div></div><div class="footer-box row"><div class="footer-left col-md-6 col-xs-12"><div class="footer-bio content"><p><strong>Adam Drake</strong> leads technical business transformations in global and multi-cultural environments. He has a passion for helping companies become more productive by improving internal leadership capabilities, and accelerating product development through technology and data architecture guidance. Adam has served as a White House Presidential Innovation Fellow and is an IEEE Senior Member.</p></div></div><div class=footer-right><div class=social-icons><a href=https://github.com/adamdrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=https://twitter.com/aadrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=https://linkedin.com/in/aadrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=/index.xml><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABOElEQVRIib2WXXWEMBBGIyESkICDroPWQSNhHRQnrANwsOsAHFAJdXD7ALSz0wmZLrTfObwwkDs/X3ISwiIgAQPHaQBegxRwORCg1cpK/lopAKN6eQEaoAduwPsBoCFoSDAEVMDZSMotF0hBT8yV7gIBtMAb8Aw8ATEDTMDHHpClDm3VGVbjbKcXtGrSQCB6YL8FreoQLfXALJC099bPg4LVbMys6DpmazdOWHbzu+29AK0KO/Wdaf2SvaNaJGKfi0ntMxfIApcGP6mEflTudd0E1KqNWrKq86OgFSYr0wbplQMfBoEwC3ZVMpG7U98C3ZZFKmwHZRcDTjn3WaCqkPWLiPfemAWKBVCzMadszAJd+W7d1YjLOek9lY2ZnneoXR5vbPy/y0mmBUfqq50rLLHj8mFoRJwWnzknvtUm1yWnAAAAAElFTkSuQmCC width=64 height=64></a></div><div class=subscribe><form action=https://api.digitalmaneuver.com/subscribe method=get><input class=subscribe-field style=width:200px name=email placeholder=" Subscribe to newsletter? " type=text>
-<input class=subscribe-btn value=Yes! type=submit></form></div></div></div><div class="container has-text-centered footer-copyright"></div></body>
+facilitate privacy and transparency for users.</p>
+</div>
+</div>
+</section>
+<div class="nav-box row">
+<div class=nav-left-menu>
+<ul>
+<li><a href=/>Latest</a> | </li>
+<li><a href=/about.html>About</a> | </li>
+<li><a href=/cases.html>Case Studies</a> | </li>
+<li><a href=/contact.html>Contact</a> | </li>
+<li><a href=/press.html>Press</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-box row">
+<div class="footer-left col-md-6 col-xs-12">
+<div class="footer-bio content">
+<p><strong>Adam Drake</strong> leads technical business transformations in global and multi-cultural environments. He has a passion for helping companies become more productive by improving internal leadership capabilities, and accelerating product development through technology and data architecture guidance. Adam has served as a White House Presidential Innovation Fellow and is an IEEE Senior Member.</p>
+</div>
+</div>
+<div class=footer-right>
+<div class=social-icons>
+<a href=https://github.com/adamdrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=https://twitter.com/aadrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=https://linkedin.com/in/aadrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=/index.xml>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABOElEQVRIib2WXXWEMBBGIyESkICDroPWQSNhHRQnrANwsOsAHFAJdXD7ALSz0wmZLrTfObwwkDs/X3ISwiIgAQPHaQBegxRwORCg1cpK/lopAKN6eQEaoAduwPsBoCFoSDAEVMDZSMotF0hBT8yV7gIBtMAb8Aw8ATEDTMDHHpClDm3VGVbjbKcXtGrSQCB6YL8FreoQLfXALJC099bPg4LVbMys6DpmazdOWHbzu+29AK0KO/Wdaf2SvaNaJGKfi0ntMxfIApcGP6mEflTudd0E1KqNWrKq86OgFSYr0wbplQMfBoEwC3ZVMpG7U98C3ZZFKmwHZRcDTjn3WaCqkPWLiPfemAWKBVCzMadszAJd+W7d1YjLOek9lY2ZnneoXR5vbPy/y0mmBUfqq50rLLHj8mFoRJwWnzknvtUm1yWnAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+</div>
+<div class=subscribe>
+<form action=https://api.digitalmaneuver.com/subscribe method=get>
+<input class=subscribe-field style=width:200px name=email placeholder=" Subscribe to newsletter? " type=text>
+<input class=subscribe-btn value=Yes! type=submit>
+</form>
+</div>
+</div>
+</div>
+<div class="container has-text-centered footer-copyright">
+</div>
+</body>

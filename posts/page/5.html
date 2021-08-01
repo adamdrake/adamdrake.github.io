@@ -1,25 +1,210 @@
-<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content="True"><meta name=MobileOptimized content="320"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer"><meta name=description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams."><title>Posts - Adam Drake</title><link href=/posts/index.xml rel=alternate type=application/rss+xml title="Adam Drake"><link rel="shortcut icon" href=/static/favicon.ico><link rel=stylesheet href=https://adamdrake.com/css/main.min.be12b679e5899a8805bab6348a0b4d7dc70275c3a131afa9cf3753df691719da.css integrity="sha256-vhK2eeWJmogFurY0igtNfccCdcOhMa+pzzdT32kXGdo=" media=screen><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://adamdrake.com/static/images/twitter-card.jpg"><meta name=twitter:title content="Posts"><meta name=twitter:description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams."><meta property="og:title" content="Posts"><meta property="og:description" content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams."><meta property="og:type" content="website"><meta property="og:url" content="https://adamdrake.com/posts.html"><meta property="og:image" content="https://adamdrake.com/static/images/twitter-card.jpg"></head><body><div class=title-box><div class=title-left><h1 class=name><a href=/>Adam Drake</a></h1></div><div class=title-right><div class=social-icons><a href=https://github.com/adamdrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=https://twitter.com/aadrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=https://linkedin.com/in/aadrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=/index.xml><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABOElEQVRIib2WXXWEMBBGIyESkICDroPWQSNhHRQnrANwsOsAHFAJdXD7ALSz0wmZLrTfObwwkDs/X3ISwiIgAQPHaQBegxRwORCg1cpK/lopAKN6eQEaoAduwPsBoCFoSDAEVMDZSMotF0hBT8yV7gIBtMAb8Aw8ATEDTMDHHpClDm3VGVbjbKcXtGrSQCB6YL8FreoQLfXALJC099bPg4LVbMys6DpmazdOWHbzu+29AK0KO/Wdaf2SvaNaJGKfi0ntMxfIApcGP6mEflTudd0E1KqNWrKq86OgFSYr0wbplQMfBoEwC3ZVMpG7U98C3ZZFKmwHZRcDTjn3WaCqkPWLiPfemAWKBVCzMadszAJd+W7d1YjLOek9lY2ZnneoXR5vbPy/y0mmBUfqq50rLLHj8mFoRJwWnzknvtUm1yWnAAAAAElFTkSuQmCC width=64 height=64></a></div><div class=subscribe><form action=https://api.digitalmaneuver.com/subscribe method=get><input class=subscribe-field style=width:200px name=email placeholder=" Subscribe to newsletter? " type=text>
-<input class=subscribe-btn value=Yes! type=submit></form></div></div></div><div class="nav-box row"><div class=nav-left-menu><ul><li><a href=/>Latest</a> |</li><li><a href=/about.html>About</a> |</li><li><a href=/cases.html>Case Studies</a> |</li><li><a href=/contact.html>Contact</a> |</li><li><a href=/press.html>Press</a></li></ul></div></div><section class=section><div class=container><div class=content><a href=https://applybyapi.com><button class=btn>Struggling to hire developers? Check out ApplyByAPI!</button></a><div class=page-title>Right Now</div></div><hr><div class=page-title>Recent Publications</div><article><h1 class=title><a href=https://adamdrake.com/a-hackish-system-command-service-in-go.html>A Hackish System Command Service in Go</a></h1><h2 class=subtitle>September 27, 2015</h2><div class=content>When building data products, often the end result is either a recurring report or an API which allows for an interface with other services. In these cases, the product might be run by a cron job, or even manually, depending on the situation. When the product is part of (more frequently, at the end of) a larger data processing pipeline, this can become inefficient or problematic since steps earlier in the pipeline can cause the product to supply incorrect information or fail altogether.
-<a href=https://adamdrake.com/a-hackish-system-command-service-in-go.html>[Read more]</a></div></article><article><h1 class=title><a href=https://adamdrake.com/are-your-functions-total.html>Are your Functions Total?</a></h1><h2 class=subtitle>September 7, 2015</h2><div class=content>In recent years, and for a variety of reasons, functional programming has become an increasingly popular topic. Languages like Haskell, Scala, Clojure, and others, have had huge gains in popularity and consequently there have been many large-scale projects written in some of these languages. There has also been increasing pressure to move programming more towards the rigor of mathematics, something which I strongly support.
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="chrome=1">
+<meta name=HandheldFriendly content="True">
+<meta name=MobileOptimized content="320">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=referrer content="no-referrer">
+<meta name=description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams.">
+<title>
+Posts - Adam Drake
+</title>
+<link href=/posts/index.xml rel=alternate type=application/rss+xml title="Adam Drake">
+<link rel="shortcut icon" href=/static/favicon.ico>
+<link rel=stylesheet href=https://adamdrake.com/css/main.min.be12b679e5899a8805bab6348a0b4d7dc70275c3a131afa9cf3753df691719da.css integrity="sha256-vhK2eeWJmogFurY0igtNfccCdcOhMa+pzzdT32kXGdo=" media=screen>
+<meta name=twitter:card content="summary_large_image">
+<meta name=twitter:image content="https://adamdrake.com/static/images/twitter-card.jpg">
+<meta name=twitter:title content="Posts">
+<meta name=twitter:description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams.">
+<meta property="og:title" content="Posts">
+<meta property="og:description" content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://adamdrake.com/posts.html"><meta property="og:image" content="https://adamdrake.com/static/images/twitter-card.jpg">
+</head>
+<body>
+<div class=title-box>
+<div class=title-left>
+<h1 class=name><a href=/>Adam Drake</a></h1>
+</div>
+<div class=title-right>
+<div class=social-icons>
+<a href=https://github.com/adamdrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=https://twitter.com/aadrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=https://linkedin.com/in/aadrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=/index.xml>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABOElEQVRIib2WXXWEMBBGIyESkICDroPWQSNhHRQnrANwsOsAHFAJdXD7ALSz0wmZLrTfObwwkDs/X3ISwiIgAQPHaQBegxRwORCg1cpK/lopAKN6eQEaoAduwPsBoCFoSDAEVMDZSMotF0hBT8yV7gIBtMAb8Aw8ATEDTMDHHpClDm3VGVbjbKcXtGrSQCB6YL8FreoQLfXALJC099bPg4LVbMys6DpmazdOWHbzu+29AK0KO/Wdaf2SvaNaJGKfi0ntMxfIApcGP6mEflTudd0E1KqNWrKq86OgFSYr0wbplQMfBoEwC3ZVMpG7U98C3ZZFKmwHZRcDTjn3WaCqkPWLiPfemAWKBVCzMadszAJd+W7d1YjLOek9lY2ZnneoXR5vbPy/y0mmBUfqq50rLLHj8mFoRJwWnzknvtUm1yWnAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+</div>
+<div class=subscribe>
+<a href=https://www.digitalmaneuver.com/#/portal>Subscribe to my newsletter</a>
+</div>
+</div>
+</div>
+<div class="nav-box row">
+<div class=nav-left-menu>
+<ul>
+<li><a href=/>Latest</a> | </li>
+<li><a href=/about.html>About</a> | </li>
+<li><a href=/cases.html>Case Studies</a> | </li>
+<li><a href=/contact.html>Contact</a> | </li>
+<li><a href=/press.html>Press</a></li>
+</ul>
+</div>
+</div>
+<section class=section>
+<div class=container>
+<div class=content>
+<a href=https://applybyapi.com><button class=btn>Struggling to hire developers? Check out ApplyByAPI!</button></a>
+<div class=page-title>Right Now</div>
+</div>
+<hr>
+<div class=page-title>Recent Publications</div>
+<article>
+<h1 class=title><a href=https://adamdrake.com/a-hackish-system-command-service-in-go.html>A Hackish System Command Service in Go</a></h1>
+<h2 class=subtitle>September 27, 2015</h2>
+<div class=content>
+When building data products, often the end result is either a recurring report or an API which allows for an interface with other services. In these cases, the product might be run by a cron job, or even manually, depending on the situation. When the product is part of (more frequently, at the end of) a larger data processing pipeline, this can become inefficient or problematic since steps earlier in the pipeline can cause the product to supply incorrect information or fail altogether.
+<a href=https://adamdrake.com/a-hackish-system-command-service-in-go.html>[Read more]</a>
+</div>
+</article>
+<article>
+<h1 class=title><a href=https://adamdrake.com/are-your-functions-total.html>Are your Functions Total?</a></h1>
+<h2 class=subtitle>September 7, 2015</h2>
+<div class=content>
+In recent years, and for a variety of reasons, functional programming has become an increasingly popular topic. Languages like Haskell, Scala, Clojure, and others, have had huge gains in popularity and consequently there have been many large-scale projects written in some of these languages. There has also been increasing pressure to move programming more towards the rigor of mathematics, something which I strongly support.
 One thing which could get more attention in the context of functional programming is the concept of Total Functional Programming, which uses the concepts of total functions combined with specific types of recursion in order to guarantee that all your programs terminate.
-<a href=https://adamdrake.com/are-your-functions-total.html>[Read more]</a></div></article><article><h1 class=title><a href=https://adamdrake.com/hooked-how-to-build-habit-forming-products.html>Hooked: How to Build Habit-Forming Products</a></h1><h2 class=subtitle>September 2, 2015</h2><div class=content>I recently finished a book called Hooked: How to Build Habit-Forming Products by Nir Eyal. The book overall expresses a nice framework for considering products and services, whether or not they should be habit-forming in the first place, and if so how to go about making that happen. The framework is very useful in that it allows for organizations to have a common language they can use to speak about their product and how they should modify or improve it.
-<a href=https://adamdrake.com/hooked-how-to-build-habit-forming-products.html>[Read more]</a></div></article><article><h1 class=title><a href=https://adamdrake.com/a-quick-overview-on-the-kaggle-competition-for-avito.html>A Quick Overview on the Kaggle Competition for Avito</a></h1><h2 class=subtitle>July 31, 2015</h2><div class=content>Introduction I didn&rsquo;t have much time for this competition, so didn&rsquo;t invest much into feature engineering, creating ensembles or other things. As I participated in the Avazu competition as well, which included the use of tinrtgu&rsquo;s now-famous code, I decided to use the same approach here.
+<a href=https://adamdrake.com/are-your-functions-total.html>[Read more]</a>
+</div>
+</article>
+<article>
+<h1 class=title><a href=https://adamdrake.com/hooked-how-to-build-habit-forming-products.html>Hooked: How to Build Habit-Forming Products</a></h1>
+<h2 class=subtitle>September 2, 2015</h2>
+<div class=content>
+I recently finished a book called Hooked: How to Build Habit-Forming Products by Nir Eyal. The book overall expresses a nice framework for considering products and services, whether or not they should be habit-forming in the first place, and if so how to go about making that happen. The framework is very useful in that it allows for organizations to have a common language they can use to speak about their product and how they should modify or improve it.
+<a href=https://adamdrake.com/hooked-how-to-build-habit-forming-products.html>[Read more]</a>
+</div>
+</article>
+<article>
+<h1 class=title><a href=https://adamdrake.com/a-quick-overview-on-the-kaggle-competition-for-avito.html>A Quick Overview on the Kaggle Competition for Avito</a></h1>
+<h2 class=subtitle>July 31, 2015</h2>
+<div class=content>
+Introduction I didn&rsquo;t have much time for this competition, so didn&rsquo;t invest much into feature engineering, creating ensembles or other things. As I participated in the Avazu competition as well, which included the use of tinrtgu&rsquo;s now-famous code, I decided to use the same approach here.
 Background The overall goal of the competition is to analyze user behavior in order to generate a model for recommending ads to be shown in front of users, with the success metric being whether or not the user clicks on the ad.
-<a href=https://adamdrake.com/a-quick-overview-on-the-kaggle-competition-for-avito.html>[Read more]</a></div></article><article><h1 class=title><a href=https://adamdrake.com/transitioning-to-a-data-driven-organization.html>Transitioning to a Data-Driven Organization</a></h1><h2 class=subtitle>July 12, 2015</h2><div class=content>Introduction I gave a talk at the CDO Summit in Singapore on 18 June and thought it may be worthwhile to address some of the points and provide additional detail on the slides I used.
+<a href=https://adamdrake.com/a-quick-overview-on-the-kaggle-competition-for-avito.html>[Read more]</a>
+</div>
+</article>
+<article>
+<h1 class=title><a href=https://adamdrake.com/transitioning-to-a-data-driven-organization.html>Transitioning to a Data-Driven Organization</a></h1>
+<h2 class=subtitle>July 12, 2015</h2>
+<div class=content>
+Introduction I gave a talk at the CDO Summit in Singapore on 18 June and thought it may be worthwhile to address some of the points and provide additional detail on the slides I used.
 Sections below are listed by slide content and provide extra explanation.
 Kardashev Scale This is simply applying the Kardashev Scale of technological advancement to the advancement of data usage in organizations. For more detail see the article I wrote on the Kardashev Scale of Data Maturity.
-<a href=https://adamdrake.com/transitioning-to-a-data-driven-organization.html>[Read more]</a></div></article><article><h1 class=title><a href=https://adamdrake.com/makespan-minimization-for-unrelated-parallel-machines-with-maintenance-windows.html>Makespan Minimization for Unrelated Parallel Machines with Maintenance Windows</a></h1><h2 class=subtitle>May 27, 2015</h2><div class=content>It&rsquo;s a bit late, but last year during the Christmas break, Kaggle had a very interesting competition for the season. The story was that the toy list at Santa&rsquo;s workshop was long, and elves had to make all the toys, with some constraints on their productivity rating and rest intervals. This is an adaptation of the classic problem of minimizing makespan, though with additional constraints. A good leaderboard position could be achieved using offline methods since the entire list of toys was supplied in advance, but as usual I pursued online solutions for fun and speed.
-<a href=https://adamdrake.com/makespan-minimization-for-unrelated-parallel-machines-with-maintenance-windows.html>[Read more]</a></div></article><article><h1 class=title><a href=https://adamdrake.com/on-two-sided-markets.html>On Two-Sided Markets</a></h1><h2 class=subtitle>March 3, 2015</h2><div class=content>Many technology companies can be viewed in the context of a two-sided marketplace (TSM), a special case of a multi-sided marketplace (MSM). This view has interesting implications for the dynamics of the business in addition to how product strategy and prioritization is decided. Having worked for over 15 years in TSM environments from Online Travel, to Affiliate Marketing at Zanox, mobile ad network madvertise, and many years in Financial Services, I thought it might be useful to provide a conceptual overview of the markets, dynamics, and implications.
-<a href=https://adamdrake.com/on-two-sided-markets.html>[Read more]</a></div></article><article><h1 class=title><a href=https://adamdrake.com/moving-from-type-2-to-type-3-data-organizations.html>Moving from Type 2 to Type 3 Data Organizations</a></h1><h2 class=subtitle>February 15, 2015</h2><div class=content>Introduction In the previous post on the Kardashev scale for data organizations we discussed the three general types and their characteristics, but didn&rsquo;t dive deeply into how to make the move from Type 2 to Type 3 (the move from Type 1 to Type 2 doesn&rsquo;t really require much explanation).
+<a href=https://adamdrake.com/transitioning-to-a-data-driven-organization.html>[Read more]</a>
+</div>
+</article>
+<article>
+<h1 class=title><a href=https://adamdrake.com/makespan-minimization-for-unrelated-parallel-machines-with-maintenance-windows.html>Makespan Minimization for Unrelated Parallel Machines with Maintenance Windows</a></h1>
+<h2 class=subtitle>May 27, 2015</h2>
+<div class=content>
+It&rsquo;s a bit late, but last year during the Christmas break, Kaggle had a very interesting competition for the season. The story was that the toy list at Santa&rsquo;s workshop was long, and elves had to make all the toys, with some constraints on their productivity rating and rest intervals. This is an adaptation of the classic problem of minimizing makespan, though with additional constraints. A good leaderboard position could be achieved using offline methods since the entire list of toys was supplied in advance, but as usual I pursued online solutions for fun and speed.
+<a href=https://adamdrake.com/makespan-minimization-for-unrelated-parallel-machines-with-maintenance-windows.html>[Read more]</a>
+</div>
+</article>
+<article>
+<h1 class=title><a href=https://adamdrake.com/on-two-sided-markets.html>On Two-Sided Markets</a></h1>
+<h2 class=subtitle>March 3, 2015</h2>
+<div class=content>
+Many technology companies can be viewed in the context of a two-sided marketplace (TSM), a special case of a multi-sided marketplace (MSM). This view has interesting implications for the dynamics of the business in addition to how product strategy and prioritization is decided. Having worked for over 15 years in TSM environments from Online Travel, to Affiliate Marketing at Zanox, mobile ad network madvertise, and many years in Financial Services, I thought it might be useful to provide a conceptual overview of the markets, dynamics, and implications.
+<a href=https://adamdrake.com/on-two-sided-markets.html>[Read more]</a>
+</div>
+</article>
+<article>
+<h1 class=title><a href=https://adamdrake.com/moving-from-type-2-to-type-3-data-organizations.html>Moving from Type 2 to Type 3 Data Organizations</a></h1>
+<h2 class=subtitle>February 15, 2015</h2>
+<div class=content>
+Introduction In the previous post on the Kardashev scale for data organizations we discussed the three general types and their characteristics, but didn&rsquo;t dive deeply into how to make the move from Type 2 to Type 3 (the move from Type 1 to Type 2 doesn&rsquo;t really require much explanation).
 The move from Type 2 to Type 3 requires more focus on data and how it integrates into the product (including developing totally new products) and a departure from focusing on the data organization as a service unit.
-<a href=https://adamdrake.com/moving-from-type-2-to-type-3-data-organizations.html>[Read more]</a></div></article><article><h1 class=title><a href=https://adamdrake.com/on-schemas.html>On Schemas</a></h1><h2 class=subtitle>February 15, 2015</h2><div class=content>Introduction Over the last few years, some people have come to see schemas of any type as a legacy hinderance which should generally be ignored, and much of the NoSQL fervor that gained momentum around 2010 was related to this. The promise was that not having schemas would set you free and that you would become more productive, agile, your application would be faster, and all kinds of other things.
-<a href=https://adamdrake.com/on-schemas.html>[Read more]</a></div></article><article><h1 class=title><a href=https://adamdrake.com/the-kardashev-scale-of-data-maturity.html>The Kardashev Scale of Data Maturity</a></h1><h2 class=subtitle>January 12, 2015</h2><div class=content>Introduction For those who have read or seen much science fiction, you have probably encountered the Kardashev Scale at some point. This is a general grouping of how advanced a civilization is based on the ways it utilizes energy. At the risk of reiterating what&rsquo;s already on Wikipedia:
+<a href=https://adamdrake.com/moving-from-type-2-to-type-3-data-organizations.html>[Read more]</a>
+</div>
+</article>
+<article>
+<h1 class=title><a href=https://adamdrake.com/on-schemas.html>On Schemas</a></h1>
+<h2 class=subtitle>February 15, 2015</h2>
+<div class=content>
+Introduction Over the last few years, some people have come to see schemas of any type as a legacy hinderance which should generally be ignored, and much of the NoSQL fervor that gained momentum around 2010 was related to this. The promise was that not having schemas would set you free and that you would become more productive, agile, your application would be faster, and all kinds of other things.
+<a href=https://adamdrake.com/on-schemas.html>[Read more]</a>
+</div>
+</article>
+<article>
+<h1 class=title><a href=https://adamdrake.com/the-kardashev-scale-of-data-maturity.html>The Kardashev Scale of Data Maturity</a></h1>
+<h2 class=subtitle>January 12, 2015</h2>
+<div class=content>
+Introduction For those who have read or seen much science fiction, you have probably encountered the Kardashev Scale at some point. This is a general grouping of how advanced a civilization is based on the ways it utilizes energy. At the risk of reiterating what&rsquo;s already on Wikipedia:
 The Kardashev scale is a method of measuring a civilization&rsquo;s level of technological advancement, based on the amount of energy a civilization is able to utilize.
-<a href=https://adamdrake.com/the-kardashev-scale-of-data-maturity.html>[Read more]</a></div></article></div></section><section class=section><div class="container pager"><div class=pager-left><a class=button href=/posts/page/4.html>&lt;&lt; Newer</a></div><div class=pager-right><a class=button href=/posts/page/6.html>Older >></a></div></div></section><div class="nav-box row"><div class=nav-left-menu><ul><li><a href=/>Latest</a> |</li><li><a href=/about.html>About</a> |</li><li><a href=/cases.html>Case Studies</a> |</li><li><a href=/contact.html>Contact</a> |</li><li><a href=/press.html>Press</a></li></ul></div></div><div class="footer-box row"><div class="footer-left col-md-6 col-xs-12"><div class="footer-bio content"><p><strong>Adam Drake</strong> leads technical business transformations in global and multi-cultural environments. He has a passion for helping companies become more productive by improving internal leadership capabilities, and accelerating product development through technology and data architecture guidance. Adam has served as a White House Presidential Innovation Fellow and is an IEEE Senior Member.</p></div></div><div class=footer-right><div class=social-icons><a href=https://github.com/adamdrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=https://twitter.com/aadrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=https://linkedin.com/in/aadrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=/index.xml><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABOElEQVRIib2WXXWEMBBGIyESkICDroPWQSNhHRQnrANwsOsAHFAJdXD7ALSz0wmZLrTfObwwkDs/X3ISwiIgAQPHaQBegxRwORCg1cpK/lopAKN6eQEaoAduwPsBoCFoSDAEVMDZSMotF0hBT8yV7gIBtMAb8Aw8ATEDTMDHHpClDm3VGVbjbKcXtGrSQCB6YL8FreoQLfXALJC099bPg4LVbMys6DpmazdOWHbzu+29AK0KO/Wdaf2SvaNaJGKfi0ntMxfIApcGP6mEflTudd0E1KqNWrKq86OgFSYr0wbplQMfBoEwC3ZVMpG7U98C3ZZFKmwHZRcDTjn3WaCqkPWLiPfemAWKBVCzMadszAJd+W7d1YjLOek9lY2ZnneoXR5vbPy/y0mmBUfqq50rLLHj8mFoRJwWnzknvtUm1yWnAAAAAElFTkSuQmCC width=64 height=64></a></div><div class=subscribe><form action=https://api.digitalmaneuver.com/subscribe method=get><input class=subscribe-field style=width:200px name=email placeholder=" Subscribe to newsletter? " type=text>
-<input class=subscribe-btn value=Yes! type=submit></form></div></div></div><div class="container has-text-centered footer-copyright"></div></body>
+<a href=https://adamdrake.com/the-kardashev-scale-of-data-maturity.html>[Read more]</a>
+</div>
+</article>
+</div>
+</section>
+<section class=section>
+<div class="container pager">
+<div class=pager-left>
+<a class=button href=/posts/page/4.html>
+&lt;&lt; Newer </a> </div> <div class=pager-right>
+<a class=button href=/posts/page/6.html>
+Older >>
+</a>
+</div>
+</div>
+</section>
+<div class="nav-box row">
+<div class=nav-left-menu>
+<ul>
+<li><a href=/>Latest</a> | </li>
+<li><a href=/about.html>About</a> | </li>
+<li><a href=/cases.html>Case Studies</a> | </li>
+<li><a href=/contact.html>Contact</a> | </li>
+<li><a href=/press.html>Press</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-box row">
+<div class="footer-left col-md-6 col-xs-12">
+<div class="footer-bio content">
+<p><strong>Adam Drake</strong> leads technical business transformations in global and multi-cultural environments. He has a passion for helping companies become more productive by improving internal leadership capabilities, and accelerating product development through technology and data architecture guidance. Adam has served as a White House Presidential Innovation Fellow and is an IEEE Senior Member.</p>
+</div>
+</div>
+<div class=footer-right>
+<div class=social-icons>
+<a href=https://github.com/adamdrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=https://twitter.com/aadrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=https://linkedin.com/in/aadrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=/index.xml>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABOElEQVRIib2WXXWEMBBGIyESkICDroPWQSNhHRQnrANwsOsAHFAJdXD7ALSz0wmZLrTfObwwkDs/X3ISwiIgAQPHaQBegxRwORCg1cpK/lopAKN6eQEaoAduwPsBoCFoSDAEVMDZSMotF0hBT8yV7gIBtMAb8Aw8ATEDTMDHHpClDm3VGVbjbKcXtGrSQCB6YL8FreoQLfXALJC099bPg4LVbMys6DpmazdOWHbzu+29AK0KO/Wdaf2SvaNaJGKfi0ntMxfIApcGP6mEflTudd0E1KqNWrKq86OgFSYr0wbplQMfBoEwC3ZVMpG7U98C3ZZFKmwHZRcDTjn3WaCqkPWLiPfemAWKBVCzMadszAJd+W7d1YjLOek9lY2ZnneoXR5vbPy/y0mmBUfqq50rLLHj8mFoRJwWnzknvtUm1yWnAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+</div>
+<div class=subscribe>
+<form action=https://api.digitalmaneuver.com/subscribe method=get>
+<input class=subscribe-field style=width:200px name=email placeholder=" Subscribe to newsletter? " type=text>
+<input class=subscribe-btn value=Yes! type=submit>
+</form>
+</div>
+</div>
+</div>
+<div class="container has-text-centered footer-copyright">
+</div>
+</body>

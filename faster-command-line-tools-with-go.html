@@ -1,16 +1,124 @@
-<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content="True"><meta name=MobileOptimized content="320"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer"><meta name=description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams."><title>Faster command line tools with Go - Adam Drake</title><link rel="shortcut icon" href=/static/favicon.ico><link rel=stylesheet href=https://adamdrake.com/css/main.min.be12b679e5899a8805bab6348a0b4d7dc70275c3a131afa9cf3753df691719da.css integrity="sha256-vhK2eeWJmogFurY0igtNfccCdcOhMa+pzzdT32kXGdo=" media=screen><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://adamdrake.com/static/images/twitter-card.jpg"><meta name=twitter:title content="Faster command line tools with Go"><meta name=twitter:description content="Update After some input from u/epiris on Reddit, I improved the code a bit further by changing the way bytestreams are scanned. Current fastest runtime is 0.308s for 10,512,769 rows, or about 34 Million rows per second. Since the file is 184 Megabytes, this is a processing speed of about 600 Megabytes per second, which is probably close to the read speed limit of my SSD.
- It all started with a blog post, Faster Command Line Tools in D."><meta property="og:title" content="Faster command line tools with Go"><meta property="og:description" content="Update After some input from u/epiris on Reddit, I improved the code a bit further by changing the way bytestreams are scanned. Current fastest runtime is 0.308s for 10,512,769 rows, or about 34 Million rows per second. Since the file is 184 Megabytes, this is a processing speed of about 600 Megabytes per second, which is probably close to the read speed limit of my SSD.
- It all started with a blog post, Faster Command Line Tools in D."><meta property="og:type" content="article"><meta property="og:url" content="https://adamdrake.com/faster-command-line-tools-with-go.html"><meta property="og:image" content="https://adamdrake.com/static/images/twitter-card.jpg"><meta property="article:section" content="posts"><meta property="article:published_time" content="2017-05-29T00:00:00+00:00"><meta property="article:modified_time" content="2017-05-29T00:00:00+00:00"></head><body><div class=title-box><div class=title-left><h1 class=name><a href=/>Adam Drake</a></h1></div><div class=title-right><div class=social-icons><a href=https://github.com/adamdrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=https://twitter.com/aadrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=https://linkedin.com/in/aadrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=/index.xml><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABOElEQVRIib2WXXWEMBBGIyESkICDroPWQSNhHRQnrANwsOsAHFAJdXD7ALSz0wmZLrTfObwwkDs/X3ISwiIgAQPHaQBegxRwORCg1cpK/lopAKN6eQEaoAduwPsBoCFoSDAEVMDZSMotF0hBT8yV7gIBtMAb8Aw8ATEDTMDHHpClDm3VGVbjbKcXtGrSQCB6YL8FreoQLfXALJC099bPg4LVbMys6DpmazdOWHbzu+29AK0KO/Wdaf2SvaNaJGKfi0ntMxfIApcGP6mEflTudd0E1KqNWrKq86OgFSYr0wbplQMfBoEwC3ZVMpG7U98C3ZZFKmwHZRcDTjn3WaCqkPWLiPfemAWKBVCzMadszAJd+W7d1YjLOek9lY2ZnneoXR5vbPy/y0mmBUfqq50rLLHj8mFoRJwWnzknvtUm1yWnAAAAAElFTkSuQmCC width=64 height=64></a></div><div class=subscribe><form action=https://api.digitalmaneuver.com/subscribe method=get><input class=subscribe-field style=width:200px name=email placeholder=" Subscribe to newsletter? " type=text>
-<input class=subscribe-btn value=Yes! type=submit></form></div></div></div><div class="nav-box row"><div class=nav-left-menu><ul><li><a href=/>Latest</a> |</li><li><a href=/about.html>About</a> |</li><li><a href=/cases.html>Case Studies</a> |</li><li><a href=/contact.html>Contact</a> |</li><li><a href=/press.html>Press</a></li></ul></div></div><section class=section><div class=container><a href=https://applybyapi.com><button class=btn>Struggling to hire developers? Check out ApplyByAPI!</button></a><h1 class=page-title>Faster command line tools with Go</h1><h2 class=content-date>May 29, 2017</h2><div class=share-links>Share this:
-<a class=twitter-share-button href="https://twitter.com/intent/tweet?text=Read%20Faster%20command%20line%20tools%20with%20Go%20https%3a%2f%2fadamdrake.com%2ffaster-command-line-tools-with-go.html" onclick="return window.open(this.href,'twitter-share','width=550,height=235'),!1">twitter</a> //
-<a class=icon-facebook href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fadamdrake.com%2ffaster-command-line-tools-with-go.html" onclick="return window.open(this.href,'facebook-share','width=580,height=296'),!1">facebook</a> //
-<a class=icon-linkedin href="https://www.linkedin.com/shareArticle?mini=true&url=https://adamdrake.com&title=Faster%20command%20line%20tools%20with%20Go&source=Adam%20Drake" onclick="return window.open(this.href,'linkedin-share','width=980,height=980'),!1">linkedin</a> //
-<a class=icon-google-plus href="https://plus.google.com/share?url=https%3a%2f%2fadamdrake.com%2ffaster-command-line-tools-with-go.html" onclick="return window.open(this.href,'google-plus-share','width=490,height=530'),!1">google+</a></div><div class=content><h1 id=update class=anchor-link><a href=#update>Update</a></h1><p>After some input from u/epiris on Reddit, I improved the code a bit further by changing the way bytestreams are scanned. Current fastest runtime is 0.308s for 10,512,769 rows, or about 34 Million rows per second. Since the file is 184 Megabytes, this is a processing speed of about 600 Megabytes per second, which is probably close to the read speed limit of my SSD.</p><hr><p>It all started with a blog post, <a href=https://dlang.org/blog/2017/05/24/faster-command-line-tools-in-d/>Faster Command Line Tools in D</a>. It was at the top of <a href=https://news.ycombinator.com>Hacker News</a> and got picked up by other sites as well. Then Euan Torano wrote <a href=https://www.euantorano.co.uk/posts/faster-command-line-tools-in-nim/>Faster Command Line Tools in Nim</a>. After reading about both, I found some comments in the <a href=https://www.reddit.com/r/golang/comments/6dhbwv/faster_command_line_tools_in_golang/>Reddit post</a> on the same topic, but in Go. Go is a great tool for many things, but I wasn&rsquo;t sure what kind of performance I&rsquo;d get out of this kind of tool.</p><p><strong>TL;DR</strong>: I wrote a special-case version of the utility which processes the input in about 0.482 seconds, or about 22.8 million lines per second on my laptop, which is a processing rate of about 390 Megabytes per second.</p><p>The approximate performance of the other languages was as follows:</p><ul><li><p>Python: 15 seconds</p></li><li><p>D (DMD): 2.4 seconds</p></li><li><p>D (LDC): 1.4 seconds</p></li><li><p>Nim: 1.4 seconds</p></li><li><p>My current-fastest Go version: 0.338s</p></li></ul><h1 id=problem-statement class=anchor-link><a href=#problem-statement>Problem statement</a></h1><p>The original version of the problem, as outlined in the post on D, was the following:</p><blockquote><p>It’s a common programming task: Take a data file with fields separated by a delimiter (comma, tab, etc), and run a mathematical calculation involving several of the fields. Often these programs are one-time use scripts, other times they have longer shelf life. Speed is of course appreciated when the program is used more than a few times on large files.</p><p>The specific exercise we’ll explore starts with files having keys in one field, integer values in another.
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="chrome=1">
+<meta name=HandheldFriendly content="True">
+<meta name=MobileOptimized content="320">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=referrer content="no-referrer">
+<meta name=description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams.">
+<title>
+Faster command line tools with Go - Adam Drake
+</title>
+<link rel="shortcut icon" href=/static/favicon.ico>
+<link rel=stylesheet href=https://adamdrake.com/css/main.min.be12b679e5899a8805bab6348a0b4d7dc70275c3a131afa9cf3753df691719da.css integrity="sha256-vhK2eeWJmogFurY0igtNfccCdcOhMa+pzzdT32kXGdo=" media=screen>
+<meta name=twitter:card content="summary_large_image">
+<meta name=twitter:image content="https://adamdrake.com/static/images/twitter-card.jpg">
+<meta name=twitter:title content="Faster command line tools with Go">
+<meta name=twitter:description content="Update After some input from u/epiris on Reddit, I improved the code a bit further by changing the way bytestreams are scanned. Current fastest runtime is 0.308s for 10,512,769 rows, or about 34 Million rows per second. Since the file is 184 Megabytes, this is a processing speed of about 600 Megabytes per second, which is probably close to the read speed limit of my SSD.
+ It all started with a blog post, Faster Command Line Tools in D.">
+<meta property="og:title" content="Faster command line tools with Go">
+<meta property="og:description" content="Update After some input from u/epiris on Reddit, I improved the code a bit further by changing the way bytestreams are scanned. Current fastest runtime is 0.308s for 10,512,769 rows, or about 34 Million rows per second. Since the file is 184 Megabytes, this is a processing speed of about 600 Megabytes per second, which is probably close to the read speed limit of my SSD.
+ It all started with a blog post, Faster Command Line Tools in D.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://adamdrake.com/faster-command-line-tools-with-go.html"><meta property="og:image" content="https://adamdrake.com/static/images/twitter-card.jpg"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2017-05-29T00:00:00+00:00">
+<meta property="article:modified_time" content="2017-05-29T00:00:00+00:00">
+</head>
+<body>
+<div class=title-box>
+<div class=title-left>
+<h1 class=name><a href=/>Adam Drake</a></h1>
+</div>
+<div class=title-right>
+<div class=social-icons>
+<a href=https://github.com/adamdrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=https://twitter.com/aadrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=https://linkedin.com/in/aadrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=/index.xml>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABOElEQVRIib2WXXWEMBBGIyESkICDroPWQSNhHRQnrANwsOsAHFAJdXD7ALSz0wmZLrTfObwwkDs/X3ISwiIgAQPHaQBegxRwORCg1cpK/lopAKN6eQEaoAduwPsBoCFoSDAEVMDZSMotF0hBT8yV7gIBtMAb8Aw8ATEDTMDHHpClDm3VGVbjbKcXtGrSQCB6YL8FreoQLfXALJC099bPg4LVbMys6DpmazdOWHbzu+29AK0KO/Wdaf2SvaNaJGKfi0ntMxfIApcGP6mEflTudd0E1KqNWrKq86OgFSYr0wbplQMfBoEwC3ZVMpG7U98C3ZZFKmwHZRcDTjn3WaCqkPWLiPfemAWKBVCzMadszAJd+W7d1YjLOek9lY2ZnneoXR5vbPy/y0mmBUfqq50rLLHj8mFoRJwWnzknvtUm1yWnAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+</div>
+<div class=subscribe>
+<a href=https://www.digitalmaneuver.com/#/portal>Subscribe to my newsletter</a>
+</div>
+</div>
+</div>
+<div class="nav-box row">
+<div class=nav-left-menu>
+<ul>
+<li><a href=/>Latest</a> | </li>
+<li><a href=/about.html>About</a> | </li>
+<li><a href=/cases.html>Case Studies</a> | </li>
+<li><a href=/contact.html>Contact</a> | </li>
+<li><a href=/press.html>Press</a></li>
+</ul>
+</div>
+</div>
+<section class=section>
+<div class=container>
+<a href=https://applybyapi.com><button class=btn>Struggling to hire developers? Check out ApplyByAPI!</button></a>
+<h1 class=page-title>Faster command line tools with Go</h1>
+<h2 class=content-date>May 29, 2017</h2>
+<div class=share-links>
+Share this:
+<a class=twitter-share-button href="https://twitter.com/intent/tweet?text=Read%20Faster%20command%20line%20tools%20with%20Go%20https%3a%2f%2fadamdrake.com%2ffaster-command-line-tools-with-go.html" onclick="return window.open(this.href,'twitter-share','width=550,height=235'),!1">
+twitter
+</a> //
+<a class=icon-facebook href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fadamdrake.com%2ffaster-command-line-tools-with-go.html" onclick="return window.open(this.href,'facebook-share','width=580,height=296'),!1">
+facebook
+</a> //
+<a class=icon-linkedin href="https://www.linkedin.com/shareArticle?mini=true&url=https://adamdrake.com&title=Faster%20command%20line%20tools%20with%20Go&source=Adam%20Drake" onclick="return window.open(this.href,'linkedin-share','width=980,height=980'),!1">
+linkedin
+</a> //
+<a class=icon-google-plus href="https://plus.google.com/share?url=https%3a%2f%2fadamdrake.com%2ffaster-command-line-tools-with-go.html" onclick="return window.open(this.href,'google-plus-share','width=490,height=530'),!1">
+google+
+</a>
+</div>
+<div class=content>
+<h1 id=update class=anchor-link><a href=#update>Update</a></h1>
+<p>After some input from u/epiris on Reddit, I improved the code a bit further by changing the way bytestreams are scanned. Current fastest runtime is 0.308s for 10,512,769 rows, or about 34 Million rows per second. Since the file is 184 Megabytes, this is a processing speed of about 600 Megabytes per second, which is probably close to the read speed limit of my SSD.</p>
+<hr>
+<p>It all started with a blog post, <a href=https://dlang.org/blog/2017/05/24/faster-command-line-tools-in-d/>Faster Command Line Tools in D</a>. It was at the top of <a href=https://news.ycombinator.com>Hacker News</a> and got picked up by other sites as well. Then Euan Torano wrote <a href=https://www.euantorano.co.uk/posts/faster-command-line-tools-in-nim/>Faster Command Line Tools in Nim</a>. After reading about both, I found some comments in the <a href=https://www.reddit.com/r/golang/comments/6dhbwv/faster_command_line_tools_in_golang/>Reddit post</a> on the same topic, but in Go. Go is a great tool for many things, but I wasn&rsquo;t sure what kind of performance I&rsquo;d get out of this kind of tool.</p>
+<p><strong>TL;DR</strong>: I wrote a special-case version of the utility which processes the input in about 0.482 seconds, or about 22.8 million lines per second on my laptop, which is a processing rate of about 390 Megabytes per second.</p>
+<p>The approximate performance of the other languages was as follows:</p>
+<ul>
+<li>
+<p>Python: 15 seconds</p>
+</li>
+<li>
+<p>D (DMD): 2.4 seconds</p>
+</li>
+<li>
+<p>D (LDC): 1.4 seconds</p>
+</li>
+<li>
+<p>Nim: 1.4 seconds</p>
+</li>
+<li>
+<p>My current-fastest Go version: 0.338s</p>
+</li>
+</ul>
+<h1 id=problem-statement class=anchor-link><a href=#problem-statement>Problem statement</a></h1>
+<p>The original version of the problem, as outlined in the post on D, was the following:</p>
+<blockquote>
+<p>It’s a common programming task: Take a data file with fields separated by a delimiter (comma, tab, etc), and run a mathematical calculation involving several of the fields. Often these programs are one-time use scripts, other times they have longer shelf life. Speed is of course appreciated when the program is used more than a few times on large files.</p>
+<p>The specific exercise we’ll explore starts with files having keys in one field, integer values in another.
 &mldr;
-Fields are delimited by a TAB, and there may be any number of fields on a line. The file name and field numbers of the key and value are passed as command line arguments.</p></blockquote><p>Okay. We&rsquo;ll have a delimited file (with tabs in this case), and we want to provide the filename, index for the key column, and index for the value column to our code. With those, our code should compute the sum of all the values for each specific key, and then output the key having the largest value. In SQL terms, this is a <code>GROUP BY</code> and a <code>MAX</code>. (Note that I did not do a version of this problem in SQL, but from what I&rsquo;ve seen it is slower than the Go/Nim/D versions, though perhaps not the Python version.)</p><p>The data we will use is a <a href=https://storage.googleapis.com/books/ngrams/books/googlebooks-eng-all-1gram-20120701-0.gz>file of n-grams</a> from the Google Books dataset. The file is 184 Megabytes, uncompressed, and has a total of 10,512,769 lines.</p><h1 id=first-attempt class=anchor-link><a href=#first-attempt>First attempt</a></h1><p>As a first try, we&rsquo;ll use all the built-in Go libraries for string and file processing. We&rsquo;ll keep the code general and high-level, and see what kind of speed we get.</p><p>Since I like to start with data structures, we&rsquo;ll just use a simple <code>map[string]int</code> in this case, with the string keys being the keys from our file, and the integer values being the sum of all the values in the file for that particular key. In other words, it&rsquo;s a <code>for</code> loop over the rows in the file, and an increment of a map value each time we go through the loop. Then at the end we&rsquo;ll do a for loop over all the elements in the map and see which key has the largest value.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>package</span> main
+Fields are delimited by a TAB, and there may be any number of fields on a line. The file name and field numbers of the key and value are passed as command line arguments.</p>
+</blockquote>
+<p>Okay. We&rsquo;ll have a delimited file (with tabs in this case), and we want to provide the filename, index for the key column, and index for the value column to our code. With those, our code should compute the sum of all the values for each specific key, and then output the key having the largest value. In SQL terms, this is a <code>GROUP BY</code> and a <code>MAX</code>. (Note that I did not do a version of this problem in SQL, but from what I&rsquo;ve seen it is slower than the Go/Nim/D versions, though perhaps not the Python version.)</p>
+<p>The data we will use is a <a href=https://storage.googleapis.com/books/ngrams/books/googlebooks-eng-all-1gram-20120701-0.gz>file of n-grams</a> from the Google Books dataset. The file is 184 Megabytes, uncompressed, and has a total of 10,512,769 lines.</p>
+<h1 id=first-attempt class=anchor-link><a href=#first-attempt>First attempt</a></h1>
+<p>As a first try, we&rsquo;ll use all the built-in Go libraries for string and file processing. We&rsquo;ll keep the code general and high-level, and see what kind of speed we get.</p>
+<p>Since I like to start with data structures, we&rsquo;ll just use a simple <code>map[string]int</code> in this case, with the string keys being the keys from our file, and the integer values being the sum of all the values in the file for that particular key. In other words, it&rsquo;s a <code>for</code> loop over the rows in the file, and an increment of a map value each time we go through the loop. Then at the end we&rsquo;ll do a for loop over all the elements in the map and see which key has the largest value.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>package</span> main
 
 <span style=color:#069;font-weight:700>import</span> (
 	<span style=color:#c30>&#34;bufio&#34;</span>
@@ -71,7 +179,8 @@ Fields are delimited by a TAB, and there may be any number of fields on a line. 
 	<span style=color:#c0f>processFile</span>(<span style=color:#555>*</span>filePath, <span style=color:#555>*</span>keyIndex, <span style=color:#555>*</span>valueIndex)
 
 }
-</code></pre></div><p>The <code>processFile()</code> function does all the work, and that makes it easy for us to write a benchmark.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>package</span> main
+</code></pre></div><p>The <code>processFile()</code> function does all the work, and that makes it easy for us to write a benchmark.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>package</span> main
 
 <span style=color:#069;font-weight:700>import</span> (
 	<span style=color:#c30>&#34;testing&#34;</span>
@@ -82,11 +191,15 @@ Fields are delimited by a TAB, and there may be any number of fields on a line. 
 		<span style=color:#c0f>processFile</span>(<span style=color:#c30>&#34;../ngrams.tsv&#34;</span>, <span style=color:#f60>1</span>, <span style=color:#f60>2</span>)
 	}
 }
-</code></pre></div><h2 id=results class=anchor-link><a href=#results>Results</a></h2><p>The first version works, but it&rsquo;s not very fast. We can see its performance by running <code>go test -cpuprofile cpu.prof -memprofile mem.prof -bench .</code> both to get a benchmark, and to see which parts are slow.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>max_key: <span style=color:#f60>2006</span> sum: <span style=color:#f60>22569013</span>
+</code></pre></div>
+<h2 id=results class=anchor-link><a href=#results>Results</a></h2>
+<p>The first version works, but it&rsquo;s not very fast. We can see its performance by running <code>go test -cpuprofile cpu.prof -memprofile mem.prof -bench .</code> both to get a benchmark, and to see which parts are slow.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>max_key: <span style=color:#f60>2006</span> sum: <span style=color:#f60>22569013</span>
 Benchmark_processFile-4   	       1	<span style=color:#f60>3486100959</span> ns/op
 PASS
 ok  	github.com/adamdrake/faster-command-line-tools-in-nim/Go/v1	3.491s
-</code></pre></div><p>Our first version takes about 3.49 seconds to run, which isn&rsquo;t bad, but isn&rsquo;t great. Why so slow? Let&rsquo;s <code>go tool pprof cpu.prof</code> and find out.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>Entering interactive mode <span style=color:#555>(</span><span style=color:#366>type</span> <span style=color:#c30>&#34;help&#34;</span> <span style=color:#069;font-weight:700>for</span> commands<span style=color:#555>)</span>
+</code></pre></div><p>Our first version takes about 3.49 seconds to run, which isn&rsquo;t bad, but isn&rsquo;t great. Why so slow? Let&rsquo;s <code>go tool pprof cpu.prof</code> and find out.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>Entering interactive mode <span style=color:#555>(</span><span style=color:#366>type</span> <span style=color:#c30>&#34;help&#34;</span> <span style=color:#069;font-weight:700>for</span> commands<span style=color:#555>)</span>
 <span style=color:#555>(</span>pprof<span style=color:#555>)</span> text
 2250ms of 3490ms total <span style=color:#555>(</span>64.47%<span style=color:#555>)</span>
 Dropped <span style=color:#f60>33</span> nodes <span style=color:#555>(</span>cum &lt;<span style=color:#555>=</span> 17.45ms<span style=color:#555>)</span>
@@ -102,7 +215,8 @@ Showing top <span style=color:#f60>10</span> nodes out of <span style=color:#f60
      120ms  3.44% 58.45%      400ms 11.46%  strings.Count
      110ms  3.15% 61.60%     3440ms 98.57%  github.com/adamdrake/faster-command-line-tools-in-nim/Go/v1.processFile
      100ms  2.87% 64.47%      160ms  4.58%  strconv.ParseInt
-</code></pre></div><p>It seems like we spend a lot of time on <code>genSplit()</code>, which is the General Split command invoked by <code>strings.Split()</code> in our code. To see this, we can type <code>list processFile</code> in <code>pprof</code> to get the line-by-line timing for that function. Here&rsquo;s a selection of the output of <code>list processFile</code>.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>         .      240ms     29:	<span style=color:#069;font-weight:700>for</span> fileReader.Scan<span style=color:#555>()</span> <span style=color:#555>{</span>
+</code></pre></div><p>It seems like we spend a lot of time on <code>genSplit()</code>, which is the General Split command invoked by <code>strings.Split()</code> in our code. To see this, we can type <code>list processFile</code> in <code>pprof</code> to get the line-by-line timing for that function. Here&rsquo;s a selection of the output of <code>list processFile</code>.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>         .      240ms     29:	<span style=color:#069;font-weight:700>for</span> fileReader.Scan<span style=color:#555>()</span> <span style=color:#555>{</span>
          .      2.19s     30:		fields :<span style=color:#555>=</span> strings.Split<span style=color:#555>(</span>strings.TrimSpace<span style=color:#555>(</span>fileReader.Text<span style=color:#555>())</span>, delim<span style=color:#555>)</span>
          .          .     31:
          .          .     32:		<span style=color:#069;font-weight:700>if</span> maxFieldIndex &lt; len<span style=color:#555>(</span>fields<span style=color:#555>)</span> <span style=color:#555>{</span>
@@ -113,7 +227,11 @@ Showing top <span style=color:#f60>10</span> nodes out of <span style=color:#f60
       80ms      800ms     37:			sumByKey<span style=color:#555>[</span>fields<span style=color:#555>[</span>keyIndex<span style=color:#555>]]</span> +<span style=color:#555>=</span> value
          .          .     38:		<span style=color:#555>}</span>
          .          .     39:	<span style=color:#555>}</span>
-</code></pre></div><p>We see that out of the 3.49s we&rsquo;re spending processing our file, 2.19s of that is spent just splitting strings. To confirm that <code>genSplit()</code> is in <code>strings.Split()</code> we can do the same thing with <code>list Split</code> and get all the details on where the time is going.</p><p>Let&rsquo;s assume that we aren&rsquo;t going to dive in and start making changes to the standard library. What should we do to improve the speed? The natural thing for most Go programmers is to turn to channels and goroutines. Spoiler alert: that is slower.</p><h1 id=v2-channels-and-goroutines class=anchor-link><a href=#v2-channels-and-goroutines>V2: Channels and Goroutines</a></h1><p>Channels and goroutines are great, but often overused. They have a startup cost, and many people are not aware of the fact that channels are a data structure that includes a mutex, and therefore subject to lock contention (i.e., they can be slow). Regardless, let&rsquo;s see how the performance fares if we go that route. We&rsquo;ll keep the map and other data in a <code>struct</code>, which we&rsquo;ll protect with a <code>sync.Mutex</code> so that we have thread-safe write access to the map (recall: in Go, a <code>map</code> is <strong>NOT</strong> thread-safe).</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>package</span> main
+</code></pre></div><p>We see that out of the 3.49s we&rsquo;re spending processing our file, 2.19s of that is spent just splitting strings. To confirm that <code>genSplit()</code> is in <code>strings.Split()</code> we can do the same thing with <code>list Split</code> and get all the details on where the time is going.</p>
+<p>Let&rsquo;s assume that we aren&rsquo;t going to dive in and start making changes to the standard library. What should we do to improve the speed? The natural thing for most Go programmers is to turn to channels and goroutines. Spoiler alert: that is slower.</p>
+<h1 id=v2-channels-and-goroutines class=anchor-link><a href=#v2-channels-and-goroutines>V2: Channels and Goroutines</a></h1>
+<p>Channels and goroutines are great, but often overused. They have a startup cost, and many people are not aware of the fact that channels are a data structure that includes a mutex, and therefore subject to lock contention (i.e., they can be slow). Regardless, let&rsquo;s see how the performance fares if we go that route. We&rsquo;ll keep the map and other data in a <code>struct</code>, which we&rsquo;ll protect with a <code>sync.Mutex</code> so that we have thread-safe write access to the map (recall: in Go, a <code>map</code> is <strong>NOT</strong> thread-safe).</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>package</span> main
 
 <span style=color:#069;font-weight:700>import</span> (
 	<span style=color:#c30>&#34;flag&#34;</span>
@@ -194,11 +312,15 @@ Showing top <span style=color:#f60>10</span> nodes out of <span style=color:#f60
 	<span style=color:#c0f>processFile</span>(<span style=color:#555>*</span>filePath, <span style=color:#555>*</span>keyIndex, <span style=color:#555>*</span>valueIndex)
 
 }
-</code></pre></div><p>This code has the same <code>processFile()</code> function as before, but this time it creates a streaming reader for the file, and streams each row of the file over a channel. We then give the channel to a worker thread, and the workers do the same thing we did before. We also have some additional complexity in the form of a <code>sync.WaitGroup</code> to make sure we actually wait and allow the workers to do their job before <code>main()</code> returns. What&rsquo;s the performance? Not great. In fact, it&rsquo;s worse, at about 4.5s.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>max_key: <span style=color:#f60>2006</span> sum: <span style=color:#f60>22569013</span>
+</code></pre></div><p>This code has the same <code>processFile()</code> function as before, but this time it creates a streaming reader for the file, and streams each row of the file over a channel. We then give the channel to a worker thread, and the workers do the same thing we did before. We also have some additional complexity in the form of a <code>sync.WaitGroup</code> to make sure we actually wait and allow the workers to do their job before <code>main()</code> returns. What&rsquo;s the performance? Not great. In fact, it&rsquo;s worse, at about 4.5s.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>max_key: <span style=color:#f60>2006</span> sum: <span style=color:#f60>22569013</span>
 Benchmark_processFile-4   	       1	<span style=color:#f60>4476065569</span> ns/op
 PASS
 ok  	github.com/adamdrake/faster-command-line-tools-in-nim/Go/v4	4.482s
-</code></pre></div><p>I won&rsquo;t go into the <code>pprof</code> output for this one, but you can see that the reason it&rsquo;s slower is because of <code>runtime.procyield</code>, due to all our goroutines. I probably could have tried to do some things with <code>sync/atomic</code> instead of using a mutex on the struct, but spinning up goroutines for such a small file doesn&rsquo;t make much sense in this case anyway. If the file was larger, perhaps we&rsquo;d get the benefit of using all cores, but for input of this size it just isn&rsquo;t worth it.</p><h1 id=v4-stop-using-strings class=anchor-link><a href=#v4-stop-using-strings>V4: Stop using strings</a></h1><p>Since it seems that a lot of the overhead is in parsing and splitting strings, why not just operate on the underlying bytes instead? Credit to valyala for <a href=https://www.reddit.com/r/golang/comments/6dhbwv/faster_command_line_tools_in_golang/di3wo37/>their version</a>, which reads and splits on <code>bytes</code> instead of <code>string</code>. Here&rsquo;s my version of their code, with an additional twist from a <a href=https://stackoverflow.com/a/27217267>Stack Overflow post</a> which allows us to use a faster string to integer parsing method, assuming that the input values we are summing are always positive integers.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>package</span> main
+</code></pre></div><p>I won&rsquo;t go into the <code>pprof</code> output for this one, but you can see that the reason it&rsquo;s slower is because of <code>runtime.procyield</code>, due to all our goroutines. I probably could have tried to do some things with <code>sync/atomic</code> instead of using a mutex on the struct, but spinning up goroutines for such a small file doesn&rsquo;t make much sense in this case anyway. If the file was larger, perhaps we&rsquo;d get the benefit of using all cores, but for input of this size it just isn&rsquo;t worth it.</p>
+<h1 id=v4-stop-using-strings class=anchor-link><a href=#v4-stop-using-strings>V4: Stop using strings</a></h1>
+<p>Since it seems that a lot of the overhead is in parsing and splitting strings, why not just operate on the underlying bytes instead? Credit to valyala for <a href=https://www.reddit.com/r/golang/comments/6dhbwv/faster_command_line_tools_in_golang/di3wo37/>their version</a>, which reads and splits on <code>bytes</code> instead of <code>string</code>. Here&rsquo;s my version of their code, with an additional twist from a <a href=https://stackoverflow.com/a/27217267>Stack Overflow post</a> which allows us to use a faster string to integer parsing method, assuming that the input values we are summing are always positive integers.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>package</span> main
 
 <span style=color:#069;font-weight:700>import</span> (
 	<span style=color:#c30>&#34;bufio&#34;</span>
@@ -287,10 +409,12 @@ ok  	github.com/adamdrake/faster-command-line-tools-in-nim/Go/v4	4.482s
 	}
 	<span style=color:#069;font-weight:700>return</span> val, <span style=color:#069;font-weight:700>nil</span>
 }
-</code></pre></div><p>Now, instead of reading in the line as a string and then splitting the string on the delimiter with <code>strings.Split()</code>, we&rsquo;re reading in the line as a bytestring, and using the <code>bytes.IndexByte()</code> function to find the index of the delimiter in the bytestring. We loop through the bytestring by finding the current delimiter (which corresponds to the command line arguments we received for key index and value index), and sum the values as always. How much do we save by operating on the bytes instead of the strings? A lot.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>max_key: <span style=color:#f60>2006</span> sum: <span style=color:#f60>22569013</span>
+</code></pre></div><p>Now, instead of reading in the line as a string and then splitting the string on the delimiter with <code>strings.Split()</code>, we&rsquo;re reading in the line as a bytestring, and using the <code>bytes.IndexByte()</code> function to find the index of the delimiter in the bytestring. We loop through the bytestring by finding the current delimiter (which corresponds to the command line arguments we received for key index and value index), and sum the values as always. How much do we save by operating on the bytes instead of the strings? A lot.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>max_key: <span style=color:#f60>2006</span> sum: <span style=color:#f60>22569013</span>
 Benchmark_processFile-4   	       1	<span style=color:#f60>1517321373</span> ns/op
 PASS
-</code></pre></div><p>Great! This approach cut our runtime by about 60%, and it&rsquo;s still pretty usable as production code. It&rsquo;s not too customized, it still fits the requirements of the original problem definition of key column and value column being command line arguments, and it&rsquo;s pretty readable. Where is the time mostly spent?</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#555>(</span>pprof<span style=color:#555>)</span> text
+</code></pre></div><p>Great! This approach cut our runtime by about 60%, and it&rsquo;s still pretty usable as production code. It&rsquo;s not too customized, it still fits the requirements of the original problem definition of key column and value column being command line arguments, and it&rsquo;s pretty readable. Where is the time mostly spent?</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#555>(</span>pprof<span style=color:#555>)</span> text
 1200ms of 1500ms total <span style=color:#555>(</span>80.00%<span style=color:#555>)</span>
 Showing top <span style=color:#f60>10</span> nodes out of <span style=color:#f60>41</span> <span style=color:#555>(</span>cum &gt;<span style=color:#555>=</span> 50ms<span style=color:#555>)</span>
       flat  flat%   sum%        cum   cum%
@@ -304,7 +428,8 @@ Showing top <span style=color:#f60>10</span> nodes out of <span style=color:#f60
       70ms  4.67% 72.00%       70ms  4.67%  runtime.memeqbody
       70ms  4.67% 76.67%       80ms  5.33%  syscall.Syscall
       50ms  3.33% 80.00%       50ms  3.33%  github.com/adamdrake/faster-command-line-tools-in-nim/Go/v5.atoi
-</code></pre></div><p>Most of the time is spent splitting the bytes and getting the key/value pairs, as expected. Let&rsquo;s <code>list getKeyVal</code> to take a closer look.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>260ms      670ms <span style=color:#555>(</span>flat, cum<span style=color:#555>)</span> 44.67% of Total
+</code></pre></div><p>Most of the time is spent splitting the bytes and getting the key/value pairs, as expected. Let&rsquo;s <code>list getKeyVal</code> to take a closer look.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>260ms      670ms <span style=color:#555>(</span>flat, cum<span style=color:#555>)</span> 44.67% of Total
          .          .     51:	var tabIndex int
          .          .     52:	var k <span style=color:#555>[]</span>byte
          .          .     53:	var v <span style=color:#555>[]</span>byte
@@ -330,7 +455,10 @@ Showing top <span style=color:#f60>10</span> nodes out of <span style=color:#f60
       40ms       90ms     73:	val, _ :<span style=color:#555>=</span> atoi<span style=color:#555>(</span>v<span style=color:#555>)</span>
       60ms      280ms     74:	<span style=color:#069;font-weight:700>return</span> string<span style=color:#555>(</span>k<span style=color:#555>)</span>, val
          .          .     75:<span style=color:#555>}</span>
-</code></pre></div><p>We can see that the most time is spent getting the index of the bytes, and some on string casting for the key (so that we can use it as the map key). In a practical scenario, we&rsquo;d probably stop here since, as mentioned above, this is probably about as fast as the code will get while still being sufficiently general, readable, etc. We can do better though, if we break the requirements of the original comparison.</p><h1 id=v5-lets-go-nuts class=anchor-link><a href=#v5-lets-go-nuts>V5: Let&rsquo;s go nuts</a></h1><p>Let&rsquo;s put some of the practical concerns aside for the moment and focus on what we know about the problem. First, we are trusting our input data, which we&rsquo;d normally be more careful about in a real-world situation. With that in mind, we can change the definitions of our <code>atoi()</code> function so that it doesn&rsquo;t do any error checking, and so that it only operates on <code>[]byte</code> and returns <code>int</code>. Here&rsquo;s what the simplified <code>atoi</code> looks like.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>atoi</span>(s []<span style=color:#078;font-weight:700>byte</span>) <span style=color:#078;font-weight:700>int</span> {
+</code></pre></div><p>We can see that the most time is spent getting the index of the bytes, and some on string casting for the key (so that we can use it as the map key). In a practical scenario, we&rsquo;d probably stop here since, as mentioned above, this is probably about as fast as the code will get while still being sufficiently general, readable, etc. We can do better though, if we break the requirements of the original comparison.</p>
+<h1 id=v5-lets-go-nuts class=anchor-link><a href=#v5-lets-go-nuts>V5: Let&rsquo;s go nuts</a></h1>
+<p>Let&rsquo;s put some of the practical concerns aside for the moment and focus on what we know about the problem. First, we are trusting our input data, which we&rsquo;d normally be more careful about in a real-world situation. With that in mind, we can change the definitions of our <code>atoi()</code> function so that it doesn&rsquo;t do any error checking, and so that it only operates on <code>[]byte</code> and returns <code>int</code>. Here&rsquo;s what the simplified <code>atoi</code> looks like.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>atoi</span>(s []<span style=color:#078;font-weight:700>byte</span>) <span style=color:#078;font-weight:700>int</span> {
 	i <span style=color:#555>:=</span> <span style=color:#f60>0</span>
 	x <span style=color:#555>:=</span> <span style=color:#f60>0</span>
 	<span style=color:#069;font-weight:700>for</span> ; i &lt; <span style=color:#366>len</span>(s); i<span style=color:#555>++</span> {
@@ -339,7 +467,9 @@ Showing top <span style=color:#f60>10</span> nodes out of <span style=color:#f60
 	}
 	<span style=color:#069;font-weight:700>return</span> x
 }
-</code></pre></div><p>We also know that the keys and values are always integers, so we could use an <code>int</code> type instead of <code>string</code> in the map keys, and we could also remove the <code>string(k)</code> cast in the <code>getKeyVal()</code> implementation above. However, we know in this case that we want the value between the first and second separator, and between the second and third separator, every time. So in this contrived instance, we don&rsquo;t actually need to iterate and check delimiters. We can just treat the entire line like the bytestring it is, and only find the indexes for the first, second, and third instances of the delimiter.</p><p>Another important fact is that, for this dataset, we know the largest key. Therefore, instead of a map that we previously saw was costing us about 800ms to increment, we can use an array. In this case, our integer key will be the index, and the value at that index will be the sum for that key. With that in mind, we have a highly customised, but <strong>SUPER FAST</strong> version below.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>main</span>() {
+</code></pre></div><p>We also know that the keys and values are always integers, so we could use an <code>int</code> type instead of <code>string</code> in the map keys, and we could also remove the <code>string(k)</code> cast in the <code>getKeyVal()</code> implementation above. However, we know in this case that we want the value between the first and second separator, and between the second and third separator, every time. So in this contrived instance, we don&rsquo;t actually need to iterate and check delimiters. We can just treat the entire line like the bytestring it is, and only find the indexes for the first, second, and third instances of the delimiter.</p>
+<p>Another important fact is that, for this dataset, we know the largest key. Therefore, instead of a map that we previously saw was costing us about 800ms to increment, we can use an array. In this case, our integer key will be the index, and the value at that index will be the sum for that key. With that in mind, we have a highly customised, but <strong>SUPER FAST</strong> version below.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>main</span>() {
 
 	file, err <span style=color:#555>:=</span> os.<span style=color:#c0f>Open</span>(os.Args[<span style=color:#f60>1</span>])
 	<span style=color:#069;font-weight:700>defer</span> file.<span style=color:#c0f>Close</span>()
@@ -375,13 +505,15 @@ Showing top <span style=color:#f60>10</span> nodes out of <span style=color:#f60
 	}
 	fmt.<span style=color:#c0f>Printf</span>(<span style=color:#c30>&#34;max_key: %d sum: %d\n&#34;</span>, k, v)
 }
-</code></pre></div><p>What&rsquo;s the <code>pprof</code> result?</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>Benchmark_processFile-4   	max_key: <span style=color:#f60>2006</span> sum: <span style=color:#f60>22569013</span>
+</code></pre></div><p>What&rsquo;s the <code>pprof</code> result?</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>Benchmark_processFile-4   	max_key: <span style=color:#f60>2006</span> sum: <span style=color:#f60>22569013</span>
 max_key: <span style=color:#f60>2006</span> sum: <span style=color:#f60>22569013</span>
 max_key: <span style=color:#f60>2006</span> sum: <span style=color:#f60>22569013</span>
 max_key: <span style=color:#f60>2006</span> sum: <span style=color:#f60>22569013</span>
 max_key: <span style=color:#f60>2006</span> sum: <span style=color:#f60>22569013</span>
        3	 <span style=color:#f60>482369483</span> ns/op
-</code></pre></div><p>It&rsquo;s crazy fast! This version finishes in 0.482s (482ms) on my machine. Where is the most time spent now? (Note that because the benchmark ran multiple times in order to get a stable timing for the run, the <code>pprof</code> results are the sum of all the runs.)</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>      20ms      1.26s     38:	<span style=color:#069;font-weight:700>for</span> scanner.Scan<span style=color:#555>()</span> <span style=color:#555>{</span>
+</code></pre></div><p>It&rsquo;s crazy fast! This version finishes in 0.482s (482ms) on my machine. Where is the most time spent now? (Note that because the benchmark ran multiple times in order to get a stable timing for the run, the <code>pprof</code> results are the sum of all the runs.)</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>      20ms      1.26s     38:	<span style=color:#069;font-weight:700>for</span> scanner.Scan<span style=color:#555>()</span> <span style=color:#555>{</span>
       70ms       70ms     39:		line :<span style=color:#555>=</span> scanner.Bytes<span style=color:#555>()</span>
       40ms      200ms     40:		firstTab :<span style=color:#555>=</span> bytes.IndexByte<span style=color:#555>(</span>line, <span style=color:#c30>&#39;\t&#39;</span><span style=color:#555>)</span>
      190ms      330ms     41:		secondTab :<span style=color:#555>=</span> bytes.IndexByte<span style=color:#555>(</span>line<span style=color:#555>[</span>firstTab+1:<span style=color:#555>]</span>, <span style=color:#c30>&#39;\t&#39;</span><span style=color:#555>)</span> + firstTab + <span style=color:#f60>1</span>
@@ -390,7 +522,11 @@ max_key: <span style=color:#f60>2006</span> sum: <span style=color:#f60>22569013
       40ms      180ms     44:		<span style=color:#033>val</span> <span style=color:#555>=</span> atoi<span style=color:#555>(</span>line<span style=color:#555>[</span>secondTab+1 : thirdTab<span style=color:#555>])</span>
       70ms       70ms     45:		sumByKey<span style=color:#555>[</span>key<span style=color:#555>]</span> +<span style=color:#555>=</span> val
          .          .     46:	<span style=color:#555>}</span>
-</code></pre></div><p>Most of the time is spent indexing into the bytestring, which is what we expected. There may be some clever ways to reduce this, in addition to some data structures which would allow us to do the incrementing faster, but at this point we&rsquo;re pretty far down the path of optimizing past production usage, and hand-tuned Fortran/assembly isn&rsquo;t really the goal. In the end though, we processed a 184MB file, with 10,512,769 rows, in 0.482s.</p><p>Happy optimizing!</p><h1 id=updated-code class=anchor-link><a href=#updated-code>Updated code:</a></h1><p>Since the article was posted on Reddit and Hackernews, there was a user (Epiris) on Reddit who suggested some improvements. After their suggestions, below is the code and benchmarks for the updated version. It&rsquo;s important to note that a personal requirement I have for the code is that it cannot read all data into memory, since we must assume that the data stream could be arbitrarily large.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go>
+</code></pre></div><p>Most of the time is spent indexing into the bytestring, which is what we expected. There may be some clever ways to reduce this, in addition to some data structures which would allow us to do the incrementing faster, but at this point we&rsquo;re pretty far down the path of optimizing past production usage, and hand-tuned Fortran/assembly isn&rsquo;t really the goal. In the end though, we processed a 184MB file, with 10,512,769 rows, in 0.482s.</p>
+<p>Happy optimizing!</p>
+<h1 id=updated-code class=anchor-link><a href=#updated-code>Updated code:</a></h1>
+<p>Since the article was posted on Reddit and Hackernews, there was a user (Epiris) on Reddit who suggested some improvements. After their suggestions, below is the code and benchmarks for the updated version. It&rsquo;s important to note that a personal requirement I have for the code is that it cannot read all data into memory, since we must assume that the data stream could be arbitrarily large.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go>
 <span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>processLine</span>(b []<span style=color:#078;font-weight:700>byte</span>) (<span style=color:#078;font-weight:700>int</span>, <span style=color:#078;font-weight:700>int</span>) {
 	key <span style=color:#555>:=</span> <span style=color:#f60>0</span>
 	val <span style=color:#555>:=</span> <span style=color:#f60>0</span>
@@ -428,7 +564,8 @@ max_key: <span style=color:#f60>2006</span> sum: <span style=color:#f60>22569013
 
 }
 
-</code></pre></div><p>And here is the associated benchmark.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>Benchmark_processFile</span>(b <span style=color:#555>*</span>testing.B) {
+</code></pre></div><p>And here is the associated benchmark.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>Benchmark_processFile</span>(b <span style=color:#555>*</span>testing.B) {
 	file, err <span style=color:#555>:=</span> os.<span style=color:#c0f>Open</span>(<span style=color:#c30>&#34;../ngrams.tsv&#34;</span>)
 	<span style=color:#069;font-weight:700>defer</span> file.<span style=color:#c0f>Close</span>()
 	<span style=color:#069;font-weight:700>if</span> err <span style=color:#555>!=</span> <span style=color:#069;font-weight:700>nil</span> {
@@ -448,9 +585,52 @@ max_key: <span style=color:#f60>2006</span> sum: <span style=color:#f60>22569013
 		}
 	}
 }
-</code></pre></div><p>The output of the benchmarking:</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>Benchmark_processFile-4   	       5	 <span style=color:#f60>309631168</span> ns/op	    <span style=color:#f60>4152</span> B/op	       <span style=color:#f60>4</span> allocs/op
-</code></pre></div></div></div></section><div class="nav-box row"><div class=nav-left-menu><ul><li><a href=/>Latest</a> |</li><li><a href=/about.html>About</a> |</li><li><a href=/cases.html>Case Studies</a> |</li><li><a href=/contact.html>Contact</a> |</li><li><a href=/press.html>Press</a></li></ul></div></div><div class="footer-box row"><div class="footer-left col-md-6 col-xs-12"><div class="footer-bio content"><p><strong>Adam Drake</strong> leads technical business transformations in global and multi-cultural environments. He has a passion for helping companies become more productive by improving internal leadership capabilities, and accelerating product development through technology and data architecture guidance. Adam has served as a White House Presidential Innovation Fellow and is an IEEE Senior Member.</p></div></div><div class=footer-right><div class=social-icons><a href=https://github.com/adamdrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=https://twitter.com/aadrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=https://linkedin.com/in/aadrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=/index.xml><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABOElEQVRIib2WXXWEMBBGIyESkICDroPWQSNhHRQnrANwsOsAHFAJdXD7ALSz0wmZLrTfObwwkDs/X3ISwiIgAQPHaQBegxRwORCg1cpK/lopAKN6eQEaoAduwPsBoCFoSDAEVMDZSMotF0hBT8yV7gIBtMAb8Aw8ATEDTMDHHpClDm3VGVbjbKcXtGrSQCB6YL8FreoQLfXALJC099bPg4LVbMys6DpmazdOWHbzu+29AK0KO/Wdaf2SvaNaJGKfi0ntMxfIApcGP6mEflTudd0E1KqNWrKq86OgFSYr0wbplQMfBoEwC3ZVMpG7U98C3ZZFKmwHZRcDTjn3WaCqkPWLiPfemAWKBVCzMadszAJd+W7d1YjLOek9lY2ZnneoXR5vbPy/y0mmBUfqq50rLLHj8mFoRJwWnzknvtUm1yWnAAAAAElFTkSuQmCC width=64 height=64></a></div><div class=subscribe><form action=https://api.digitalmaneuver.com/subscribe method=get><input class=subscribe-field style=width:200px name=email placeholder=" Subscribe to newsletter? " type=text>
-<input class=subscribe-btn value=Yes! type=submit></form></div></div></div><div class="container has-text-centered footer-copyright"></div></body>
+</code></pre></div><p>The output of the benchmarking:</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>Benchmark_processFile-4   	       5	 <span style=color:#f60>309631168</span> ns/op	    <span style=color:#f60>4152</span> B/op	       <span style=color:#f60>4</span> allocs/op
+</code></pre></div>
+</div>
+</div>
+</section>
+<div class="nav-box row">
+<div class=nav-left-menu>
+<ul>
+<li><a href=/>Latest</a> | </li>
+<li><a href=/about.html>About</a> | </li>
+<li><a href=/cases.html>Case Studies</a> | </li>
+<li><a href=/contact.html>Contact</a> | </li>
+<li><a href=/press.html>Press</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-box row">
+<div class="footer-left col-md-6 col-xs-12">
+<div class="footer-bio content">
+<p><strong>Adam Drake</strong> leads technical business transformations in global and multi-cultural environments. He has a passion for helping companies become more productive by improving internal leadership capabilities, and accelerating product development through technology and data architecture guidance. Adam has served as a White House Presidential Innovation Fellow and is an IEEE Senior Member.</p>
+</div>
+</div>
+<div class=footer-right>
+<div class=social-icons>
+<a href=https://github.com/adamdrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=https://twitter.com/aadrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=https://linkedin.com/in/aadrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=/index.xml>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABOElEQVRIib2WXXWEMBBGIyESkICDroPWQSNhHRQnrANwsOsAHFAJdXD7ALSz0wmZLrTfObwwkDs/X3ISwiIgAQPHaQBegxRwORCg1cpK/lopAKN6eQEaoAduwPsBoCFoSDAEVMDZSMotF0hBT8yV7gIBtMAb8Aw8ATEDTMDHHpClDm3VGVbjbKcXtGrSQCB6YL8FreoQLfXALJC099bPg4LVbMys6DpmazdOWHbzu+29AK0KO/Wdaf2SvaNaJGKfi0ntMxfIApcGP6mEflTudd0E1KqNWrKq86OgFSYr0wbplQMfBoEwC3ZVMpG7U98C3ZZFKmwHZRcDTjn3WaCqkPWLiPfemAWKBVCzMadszAJd+W7d1YjLOek9lY2ZnneoXR5vbPy/y0mmBUfqq50rLLHj8mFoRJwWnzknvtUm1yWnAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+</div>
+<div class=subscribe>
+<form action=https://api.digitalmaneuver.com/subscribe method=get>
+<input class=subscribe-field style=width:200px name=email placeholder=" Subscribe to newsletter? " type=text>
+<input class=subscribe-btn value=Yes! type=submit>
+</form>
+</div>
+</div>
+</div>
+<div class="container has-text-centered footer-copyright">
+</div>
+</body>

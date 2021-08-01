@@ -1,24 +1,212 @@
-<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content="True"><meta name=MobileOptimized content="320"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer"><meta name=description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams."><title>Posts - Adam Drake</title><link href=/posts/index.xml rel=alternate type=application/rss+xml title="Adam Drake"><link rel="shortcut icon" href=/static/favicon.ico><link rel=stylesheet href=https://adamdrake.com/css/main.min.be12b679e5899a8805bab6348a0b4d7dc70275c3a131afa9cf3753df691719da.css integrity="sha256-vhK2eeWJmogFurY0igtNfccCdcOhMa+pzzdT32kXGdo=" media=screen><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://adamdrake.com/static/images/twitter-card.jpg"><meta name=twitter:title content="Posts"><meta name=twitter:description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams."><meta property="og:title" content="Posts"><meta property="og:description" content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams."><meta property="og:type" content="website"><meta property="og:url" content="https://adamdrake.com/posts.html"><meta property="og:image" content="https://adamdrake.com/static/images/twitter-card.jpg"></head><body><div class=title-box><div class=title-left><h1 class=name><a href=/>Adam Drake</a></h1></div><div class=title-right><div class=social-icons><a href=https://github.com/adamdrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=https://twitter.com/aadrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=https://linkedin.com/in/aadrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=/index.xml><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABOElEQVRIib2WXXWEMBBGIyESkICDroPWQSNhHRQnrANwsOsAHFAJdXD7ALSz0wmZLrTfObwwkDs/X3ISwiIgAQPHaQBegxRwORCg1cpK/lopAKN6eQEaoAduwPsBoCFoSDAEVMDZSMotF0hBT8yV7gIBtMAb8Aw8ATEDTMDHHpClDm3VGVbjbKcXtGrSQCB6YL8FreoQLfXALJC099bPg4LVbMys6DpmazdOWHbzu+29AK0KO/Wdaf2SvaNaJGKfi0ntMxfIApcGP6mEflTudd0E1KqNWrKq86OgFSYr0wbplQMfBoEwC3ZVMpG7U98C3ZZFKmwHZRcDTjn3WaCqkPWLiPfemAWKBVCzMadszAJd+W7d1YjLOek9lY2ZnneoXR5vbPy/y0mmBUfqq50rLLHj8mFoRJwWnzknvtUm1yWnAAAAAElFTkSuQmCC width=64 height=64></a></div><div class=subscribe><form action=https://api.digitalmaneuver.com/subscribe method=get><input class=subscribe-field style=width:200px name=email placeholder=" Subscribe to newsletter? " type=text>
-<input class=subscribe-btn value=Yes! type=submit></form></div></div></div><div class="nav-box row"><div class=nav-left-menu><ul><li><a href=/>Latest</a> |</li><li><a href=/about.html>About</a> |</li><li><a href=/cases.html>Case Studies</a> |</li><li><a href=/contact.html>Contact</a> |</li><li><a href=/press.html>Press</a></li></ul></div></div><section class=section><div class=container><div class=content><a href=https://applybyapi.com><button class=btn>Struggling to hire developers? Check out ApplyByAPI!</button></a><div class=page-title>Right Now</div></div><hr><div class=page-title>Recent Publications</div><article><h1 class=title><a href=https://adamdrake.com/rethinking-hiring.html>Rethinking hiring</a></h1><h2 class=subtitle>September 5, 2017</h2><div class=content>Rethink hiring: how automation helps tech startups get ahead Hiring is almost always difficult, especially when the hiring process isn&rsquo;t designed in a way that supports the company&rsquo;s objectives. In this article I&rsquo;ll outline a few key points to imagining and redesigning the hiring process. We&rsquo;ll discuss a focus on generating inbound applicant flow, minimizing steps in the hiring process by maximizing information gained at each step, and increasing use of automation throughout.
-<a href=https://adamdrake.com/rethinking-hiring.html>[Read more]</a></div></article><article><h1 class=title><a href=https://adamdrake.com/teammate-to-team-lead.html>Teammate to Team Lead</a></h1><h2 class=subtitle>August 1, 2017</h2><div class=content>Introduction Growing organizations go through many changes on the journey of scaling up. A common one is the creation of new teams, and consequently, new team leaders. As startups move from teams of people, to teams of teams, former peers become leaders and must learn to excel in their new role. How do you tackle the challenges of being viewed differently and commanding a new level of respect, while at the same time remaining humble and approachable to your team?
-<a href=https://adamdrake.com/teammate-to-team-lead.html>[Read more]</a></div></article><article><h1 class=title><a href=https://adamdrake.com/faster-command-line-tools-with-go.html>Faster command line tools with Go</a></h1><h2 class=subtitle>May 29, 2017</h2><div class=content>Update After some input from u/epiris on Reddit, I improved the code a bit further by changing the way bytestreams are scanned. Current fastest runtime is 0.308s for 10,512,769 rows, or about 34 Million rows per second. Since the file is 184 Megabytes, this is a processing speed of about 600 Megabytes per second, which is probably close to the read speed limit of my SSD.
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="chrome=1">
+<meta name=HandheldFriendly content="True">
+<meta name=MobileOptimized content="320">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=referrer content="no-referrer">
+<meta name=description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams.">
+<title>
+Posts - Adam Drake
+</title>
+<link href=/posts/index.xml rel=alternate type=application/rss+xml title="Adam Drake">
+<link rel="shortcut icon" href=/static/favicon.ico>
+<link rel=stylesheet href=https://adamdrake.com/css/main.min.be12b679e5899a8805bab6348a0b4d7dc70275c3a131afa9cf3753df691719da.css integrity="sha256-vhK2eeWJmogFurY0igtNfccCdcOhMa+pzzdT32kXGdo=" media=screen>
+<meta name=twitter:card content="summary_large_image">
+<meta name=twitter:image content="https://adamdrake.com/static/images/twitter-card.jpg">
+<meta name=twitter:title content="Posts">
+<meta name=twitter:description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams.">
+<meta property="og:title" content="Posts">
+<meta property="og:description" content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://adamdrake.com/posts.html"><meta property="og:image" content="https://adamdrake.com/static/images/twitter-card.jpg">
+</head>
+<body>
+<div class=title-box>
+<div class=title-left>
+<h1 class=name><a href=/>Adam Drake</a></h1>
+</div>
+<div class=title-right>
+<div class=social-icons>
+<a href=https://github.com/adamdrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=https://twitter.com/aadrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=https://linkedin.com/in/aadrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=/index.xml>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABOElEQVRIib2WXXWEMBBGIyESkICDroPWQSNhHRQnrANwsOsAHFAJdXD7ALSz0wmZLrTfObwwkDs/X3ISwiIgAQPHaQBegxRwORCg1cpK/lopAKN6eQEaoAduwPsBoCFoSDAEVMDZSMotF0hBT8yV7gIBtMAb8Aw8ATEDTMDHHpClDm3VGVbjbKcXtGrSQCB6YL8FreoQLfXALJC099bPg4LVbMys6DpmazdOWHbzu+29AK0KO/Wdaf2SvaNaJGKfi0ntMxfIApcGP6mEflTudd0E1KqNWrKq86OgFSYr0wbplQMfBoEwC3ZVMpG7U98C3ZZFKmwHZRcDTjn3WaCqkPWLiPfemAWKBVCzMadszAJd+W7d1YjLOek9lY2ZnneoXR5vbPy/y0mmBUfqq50rLLHj8mFoRJwWnzknvtUm1yWnAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+</div>
+<div class=subscribe>
+<a href=https://www.digitalmaneuver.com/#/portal>Subscribe to my newsletter</a>
+</div>
+</div>
+</div>
+<div class="nav-box row">
+<div class=nav-left-menu>
+<ul>
+<li><a href=/>Latest</a> | </li>
+<li><a href=/about.html>About</a> | </li>
+<li><a href=/cases.html>Case Studies</a> | </li>
+<li><a href=/contact.html>Contact</a> | </li>
+<li><a href=/press.html>Press</a></li>
+</ul>
+</div>
+</div>
+<section class=section>
+<div class=container>
+<div class=content>
+<a href=https://applybyapi.com><button class=btn>Struggling to hire developers? Check out ApplyByAPI!</button></a>
+<div class=page-title>Right Now</div>
+</div>
+<hr>
+<div class=page-title>Recent Publications</div>
+<article>
+<h1 class=title><a href=https://adamdrake.com/rethinking-hiring.html>Rethinking hiring</a></h1>
+<h2 class=subtitle>September 5, 2017</h2>
+<div class=content>
+Rethink hiring: how automation helps tech startups get ahead Hiring is almost always difficult, especially when the hiring process isn&rsquo;t designed in a way that supports the company&rsquo;s objectives. In this article I&rsquo;ll outline a few key points to imagining and redesigning the hiring process. We&rsquo;ll discuss a focus on generating inbound applicant flow, minimizing steps in the hiring process by maximizing information gained at each step, and increasing use of automation throughout.
+<a href=https://adamdrake.com/rethinking-hiring.html>[Read more]</a>
+</div>
+</article>
+<article>
+<h1 class=title><a href=https://adamdrake.com/teammate-to-team-lead.html>Teammate to Team Lead</a></h1>
+<h2 class=subtitle>August 1, 2017</h2>
+<div class=content>
+Introduction Growing organizations go through many changes on the journey of scaling up. A common one is the creation of new teams, and consequently, new team leaders. As startups move from teams of people, to teams of teams, former peers become leaders and must learn to excel in their new role. How do you tackle the challenges of being viewed differently and commanding a new level of respect, while at the same time remaining humble and approachable to your team?
+<a href=https://adamdrake.com/teammate-to-team-lead.html>[Read more]</a>
+</div>
+</article>
+<article>
+<h1 class=title><a href=https://adamdrake.com/faster-command-line-tools-with-go.html>Faster command line tools with Go</a></h1>
+<h2 class=subtitle>May 29, 2017</h2>
+<div class=content>
+Update After some input from u/epiris on Reddit, I improved the code a bit further by changing the way bytestreams are scanned. Current fastest runtime is 0.308s for 10,512,769 rows, or about 34 Million rows per second. Since the file is 184 Megabytes, this is a processing speed of about 600 Megabytes per second, which is probably close to the read speed limit of my SSD.
 It all started with a blog post, Faster Command Line Tools in D.
-<a href=https://adamdrake.com/faster-command-line-tools-with-go.html>[Read more]</a></div></article><article><h1 class=title><a href=https://adamdrake.com/enough-with-the-microservices.html>Enough with the microservices</a></h1><h2 class=subtitle>May 20, 2017</h2><div class=content>Tl;dr: Don’t even consider microservices unless you have a system that’s too complex to manage as a monolith. The majority of software systems should be built as a single monolithic application. Do pay attention to good modularity within that monolith, but don’t try to separate it into separate services.
+<a href=https://adamdrake.com/faster-command-line-tools-with-go.html>[Read more]</a>
+</div>
+</article>
+<article>
+<h1 class=title><a href=https://adamdrake.com/enough-with-the-microservices.html>Enough with the microservices</a></h1>
+<h2 class=subtitle>May 20, 2017</h2>
+<div class=content>
+Tl;dr: Don’t even consider microservices unless you have a system that’s too complex to manage as a monolith. The majority of software systems should be built as a single monolithic application. Do pay attention to good modularity within that monolith, but don’t try to separate it into separate services.
 &ndash; Martin Fowler
 If you can’t build a well-structured monolith, what makes you think microservices is the answer?
-<a href=https://adamdrake.com/enough-with-the-microservices.html>[Read more]</a></div></article><article><h1 class=title><a href=https://adamdrake.com/enough-with-the-microservices-chinese-translation.html>Enough with the microservices (Chinese translation)</a></h1><h2 class=subtitle>May 20, 2017</h2><div class=content><p>资深架构师Adam Drake在他的博客上分享了他对微服务的看法，他从自己的经验出发，结合Martin Fowler对微服务的见解，帮助想要采用微服务的公司重新审视微服务。以下内容已获得作者翻译授权，查看英文原文 <a href=/enough-with-the-microservices.html>Enough with the microservices。</a></p><p>简介</p><p>关于微服务的优势和劣势已经有过太多的讨论，不过我仍然看到很多成长型初创公司对它进行着盲目崇拜。冒着“重复发明轮子”的风险（Martin Fowler已经写过“Microservice Premium”的文章），我想把我的一些想法写下来，在必要的时候可以发给客户，也希望能够帮助人们避免犯下我之前见过的那些错误。在进行架构或技术选型时，将网络上找到的一些所谓的最佳实践文章作为指南，一旦做出了错误的决定，就要付出惨重的代价。如果能够帮助哪怕一个公司避免犯下这种错误，那么写这篇文章都是值得的。</p><a href=https://adamdrake.com/enough-with-the-microservices-chinese-translation.html>[Read more]</a></div></article><article><h1 class=title><a href=https://adamdrake.com/redis-performance-triage-handbook.html>Redis Performance Triage Handbook</a></h1><h2 class=subtitle>May 15, 2017</h2><div class=content>Intro I do a lot of work with growth-stage startups, and many of them use Redis for all sorts of things. Sometimes as a key/value store for caching, sometimes as a message queue, sometimes as a pub/sub message broker, etc. Redis is a great tool, with great performance, when used properly. However, I&rsquo;ve often seen cases where it is not used with good performance in mind, often to the detriment of system uptime and customer satisfaction.
-<a href=https://adamdrake.com/redis-performance-triage-handbook.html>[Read more]</a></div></article><article><h1 class=title><a href=https://adamdrake.com/an-unreasonably-deep-dive-into-project-euler-problem-3.html>An Unreasonably Deep Dive into Project Euler Problem 3</a></h1><h2 class=subtitle>May 14, 2017</h2><div class=content>Intro I&rsquo;ve been busy as usual for the last couple of months, and haven&rsquo;t really had time to extend the Project Euler series after Problem 1 and Problem 2 articles.
+<a href=https://adamdrake.com/enough-with-the-microservices.html>[Read more]</a>
+</div>
+</article>
+<article>
+<h1 class=title><a href=https://adamdrake.com/enough-with-the-microservices-chinese-translation.html>Enough with the microservices (Chinese translation)</a></h1>
+<h2 class=subtitle>May 20, 2017</h2>
+<div class=content>
+<p>资深架构师Adam Drake在他的博客上分享了他对微服务的看法，他从自己的经验出发，结合Martin Fowler对微服务的见解，帮助想要采用微服务的公司重新审视微服务。以下内容已获得作者翻译授权，查看英文原文 <a href=/enough-with-the-microservices.html>Enough with the microservices。</a></p>
+<p>简介</p>
+<p>关于微服务的优势和劣势已经有过太多的讨论，不过我仍然看到很多成长型初创公司对它进行着盲目崇拜。冒着“重复发明轮子”的风险（Martin Fowler已经写过“Microservice Premium”的文章），我想把我的一些想法写下来，在必要的时候可以发给客户，也希望能够帮助人们避免犯下我之前见过的那些错误。在进行架构或技术选型时，将网络上找到的一些所谓的最佳实践文章作为指南，一旦做出了错误的决定，就要付出惨重的代价。如果能够帮助哪怕一个公司避免犯下这种错误，那么写这篇文章都是值得的。</p>
+<a href=https://adamdrake.com/enough-with-the-microservices-chinese-translation.html>[Read more]</a>
+</div>
+</article>
+<article>
+<h1 class=title><a href=https://adamdrake.com/redis-performance-triage-handbook.html>Redis Performance Triage Handbook</a></h1>
+<h2 class=subtitle>May 15, 2017</h2>
+<div class=content>
+Intro I do a lot of work with growth-stage startups, and many of them use Redis for all sorts of things. Sometimes as a key/value store for caching, sometimes as a message queue, sometimes as a pub/sub message broker, etc. Redis is a great tool, with great performance, when used properly. However, I&rsquo;ve often seen cases where it is not used with good performance in mind, often to the detriment of system uptime and customer satisfaction.
+<a href=https://adamdrake.com/redis-performance-triage-handbook.html>[Read more]</a>
+</div>
+</article>
+<article>
+<h1 class=title><a href=https://adamdrake.com/an-unreasonably-deep-dive-into-project-euler-problem-3.html>An Unreasonably Deep Dive into Project Euler Problem 3</a></h1>
+<h2 class=subtitle>May 14, 2017</h2>
+<div class=content>
+Intro I&rsquo;ve been busy as usual for the last couple of months, and haven&rsquo;t really had time to extend the Project Euler series after Problem 1 and Problem 2 articles.
 However, I finally did set aside some time to play around with Problem 3: finding the largest prime factor of a number.
 Problem Statement The prime factors of 13195 are 5, 7, 13 and 29.
 What is the largest prime factor of the number 600851475143?
-<a href=https://adamdrake.com/an-unreasonably-deep-dive-into-project-euler-problem-3.html>[Read more]</a></div></article><article><h1 class=title><a href=https://adamdrake.com/the-ten-minute-reorg.html>The Ten-Minute Reorg</a></h1><h2 class=subtitle>March 26, 2017</h2><div class=content>I spend a lot of time working with growth-stage startups. I often see similar problems across companies when it comes to scaling up their tech teams. At a certain point, the intuitive way to grow a team breaks down, and a reorganization (&ldquo;reorg&rdquo;) is necessary in order to adopt a scalable structure. Where some companies may take months to design and execute a reorg, I prefer to handle the majority of it in about ten minutes.
-<a href=https://adamdrake.com/the-ten-minute-reorg.html>[Read more]</a></div></article><article><h1 class=title><a href=https://adamdrake.com/command-and-control.html>Command and Control</a></h1><h2 class=subtitle>January 28, 2017</h2><div class=content>Introduction When I advise organizations, they often ask if I have written down or somehow codified my perspectives on leadership and operations. Until now, the answer has been a polite not yet. I simply didn&rsquo;t believe I have accumulated sufficient experience to warrant writing something from a position of authority on the topic of leadership and operations in organizations. After much consideration and gentle prodding from advisory clients, I have come to understand that my perspective may be flawed.
-<a href=https://adamdrake.com/command-and-control.html>[Read more]</a></div></article><article><h1 class=title><a href=https://adamdrake.com/i-am-here-to-win.html>I am Here to Win</a></h1><h2 class=subtitle>January 26, 2017</h2><div class=content>I&rsquo;m not here to be right, I&rsquo;m here to win. That&rsquo;s a phrase I often keep in mind, especially when I feel my own ego getting the best of me or when I see someone else&rsquo;s ego affecting their judgment. In this context, win means making progress towards a larger strategic goal, likely by achieving some intermediate objective. So if you are playing to win and not just to be right then you are putting aside your own ego and emotional involvement in order to make progress towards a larger goal.
-<a href=https://adamdrake.com/i-am-here-to-win.html>[Read more]</a></div></article></div></section><section class=section><div class="container pager"><div class=pager-left><a class=button href=/posts/page/2.html>&lt;&lt; Newer</a></div><div class=pager-right><a class=button href=/posts/page/4.html>Older >></a></div></div></section><div class="nav-box row"><div class=nav-left-menu><ul><li><a href=/>Latest</a> |</li><li><a href=/about.html>About</a> |</li><li><a href=/cases.html>Case Studies</a> |</li><li><a href=/contact.html>Contact</a> |</li><li><a href=/press.html>Press</a></li></ul></div></div><div class="footer-box row"><div class="footer-left col-md-6 col-xs-12"><div class="footer-bio content"><p><strong>Adam Drake</strong> leads technical business transformations in global and multi-cultural environments. He has a passion for helping companies become more productive by improving internal leadership capabilities, and accelerating product development through technology and data architecture guidance. Adam has served as a White House Presidential Innovation Fellow and is an IEEE Senior Member.</p></div></div><div class=footer-right><div class=social-icons><a href=https://github.com/adamdrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=https://twitter.com/aadrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=https://linkedin.com/in/aadrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=/index.xml><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABOElEQVRIib2WXXWEMBBGIyESkICDroPWQSNhHRQnrANwsOsAHFAJdXD7ALSz0wmZLrTfObwwkDs/X3ISwiIgAQPHaQBegxRwORCg1cpK/lopAKN6eQEaoAduwPsBoCFoSDAEVMDZSMotF0hBT8yV7gIBtMAb8Aw8ATEDTMDHHpClDm3VGVbjbKcXtGrSQCB6YL8FreoQLfXALJC099bPg4LVbMys6DpmazdOWHbzu+29AK0KO/Wdaf2SvaNaJGKfi0ntMxfIApcGP6mEflTudd0E1KqNWrKq86OgFSYr0wbplQMfBoEwC3ZVMpG7U98C3ZZFKmwHZRcDTjn3WaCqkPWLiPfemAWKBVCzMadszAJd+W7d1YjLOek9lY2ZnneoXR5vbPy/y0mmBUfqq50rLLHj8mFoRJwWnzknvtUm1yWnAAAAAElFTkSuQmCC width=64 height=64></a></div><div class=subscribe><form action=https://api.digitalmaneuver.com/subscribe method=get><input class=subscribe-field style=width:200px name=email placeholder=" Subscribe to newsletter? " type=text>
-<input class=subscribe-btn value=Yes! type=submit></form></div></div></div><div class="container has-text-centered footer-copyright"></div></body>
+<a href=https://adamdrake.com/an-unreasonably-deep-dive-into-project-euler-problem-3.html>[Read more]</a>
+</div>
+</article>
+<article>
+<h1 class=title><a href=https://adamdrake.com/the-ten-minute-reorg.html>The Ten-Minute Reorg</a></h1>
+<h2 class=subtitle>March 26, 2017</h2>
+<div class=content>
+I spend a lot of time working with growth-stage startups. I often see similar problems across companies when it comes to scaling up their tech teams. At a certain point, the intuitive way to grow a team breaks down, and a reorganization (&ldquo;reorg&rdquo;) is necessary in order to adopt a scalable structure. Where some companies may take months to design and execute a reorg, I prefer to handle the majority of it in about ten minutes.
+<a href=https://adamdrake.com/the-ten-minute-reorg.html>[Read more]</a>
+</div>
+</article>
+<article>
+<h1 class=title><a href=https://adamdrake.com/command-and-control.html>Command and Control</a></h1>
+<h2 class=subtitle>January 28, 2017</h2>
+<div class=content>
+Introduction When I advise organizations, they often ask if I have written down or somehow codified my perspectives on leadership and operations. Until now, the answer has been a polite not yet. I simply didn&rsquo;t believe I have accumulated sufficient experience to warrant writing something from a position of authority on the topic of leadership and operations in organizations. After much consideration and gentle prodding from advisory clients, I have come to understand that my perspective may be flawed.
+<a href=https://adamdrake.com/command-and-control.html>[Read more]</a>
+</div>
+</article>
+<article>
+<h1 class=title><a href=https://adamdrake.com/i-am-here-to-win.html>I am Here to Win</a></h1>
+<h2 class=subtitle>January 26, 2017</h2>
+<div class=content>
+I&rsquo;m not here to be right, I&rsquo;m here to win. That&rsquo;s a phrase I often keep in mind, especially when I feel my own ego getting the best of me or when I see someone else&rsquo;s ego affecting their judgment. In this context, win means making progress towards a larger strategic goal, likely by achieving some intermediate objective. So if you are playing to win and not just to be right then you are putting aside your own ego and emotional involvement in order to make progress towards a larger goal.
+<a href=https://adamdrake.com/i-am-here-to-win.html>[Read more]</a>
+</div>
+</article>
+</div>
+</section>
+<section class=section>
+<div class="container pager">
+<div class=pager-left>
+<a class=button href=/posts/page/2.html>
+&lt;&lt; Newer </a> </div> <div class=pager-right>
+<a class=button href=/posts/page/4.html>
+Older >>
+</a>
+</div>
+</div>
+</section>
+<div class="nav-box row">
+<div class=nav-left-menu>
+<ul>
+<li><a href=/>Latest</a> | </li>
+<li><a href=/about.html>About</a> | </li>
+<li><a href=/cases.html>Case Studies</a> | </li>
+<li><a href=/contact.html>Contact</a> | </li>
+<li><a href=/press.html>Press</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-box row">
+<div class="footer-left col-md-6 col-xs-12">
+<div class="footer-bio content">
+<p><strong>Adam Drake</strong> leads technical business transformations in global and multi-cultural environments. He has a passion for helping companies become more productive by improving internal leadership capabilities, and accelerating product development through technology and data architecture guidance. Adam has served as a White House Presidential Innovation Fellow and is an IEEE Senior Member.</p>
+</div>
+</div>
+<div class=footer-right>
+<div class=social-icons>
+<a href=https://github.com/adamdrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=https://twitter.com/aadrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=https://linkedin.com/in/aadrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=/index.xml>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABOElEQVRIib2WXXWEMBBGIyESkICDroPWQSNhHRQnrANwsOsAHFAJdXD7ALSz0wmZLrTfObwwkDs/X3ISwiIgAQPHaQBegxRwORCg1cpK/lopAKN6eQEaoAduwPsBoCFoSDAEVMDZSMotF0hBT8yV7gIBtMAb8Aw8ATEDTMDHHpClDm3VGVbjbKcXtGrSQCB6YL8FreoQLfXALJC099bPg4LVbMys6DpmazdOWHbzu+29AK0KO/Wdaf2SvaNaJGKfi0ntMxfIApcGP6mEflTudd0E1KqNWrKq86OgFSYr0wbplQMfBoEwC3ZVMpG7U98C3ZZFKmwHZRcDTjn3WaCqkPWLiPfemAWKBVCzMadszAJd+W7d1YjLOek9lY2ZnneoXR5vbPy/y0mmBUfqq50rLLHj8mFoRJwWnzknvtUm1yWnAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+</div>
+<div class=subscribe>
+<form action=https://api.digitalmaneuver.com/subscribe method=get>
+<input class=subscribe-field style=width:200px name=email placeholder=" Subscribe to newsletter? " type=text>
+<input class=subscribe-btn value=Yes! type=submit>
+</form>
+</div>
+</div>
+</div>
+<div class="container has-text-centered footer-copyright">
+</div>
+</body>

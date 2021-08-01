@@ -1,18 +1,111 @@
-<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content="True"><meta name=MobileOptimized content="320"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer"><meta name=description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams."><title>An Unreasonably Deep Dive into Project Euler Problem 3 - Adam Drake</title><link rel="shortcut icon" href=/static/favicon.ico><link rel=stylesheet href=https://adamdrake.com/css/main.min.be12b679e5899a8805bab6348a0b4d7dc70275c3a131afa9cf3753df691719da.css integrity="sha256-vhK2eeWJmogFurY0igtNfccCdcOhMa+pzzdT32kXGdo=" media=screen><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://adamdrake.com/static/images/twitter-card.jpg"><meta name=twitter:title content="An Unreasonably Deep Dive into Project Euler Problem 3"><meta name=twitter:description content="Intro I&rsquo;ve been busy as usual for the last couple of months, and haven&rsquo;t really had time to extend the Project Euler series after Problem 1 and Problem 2 articles.
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="chrome=1">
+<meta name=HandheldFriendly content="True">
+<meta name=MobileOptimized content="320">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=referrer content="no-referrer">
+<meta name=description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams.">
+<title>
+An Unreasonably Deep Dive into Project Euler Problem 3 - Adam Drake
+</title>
+<link rel="shortcut icon" href=/static/favicon.ico>
+<link rel=stylesheet href=https://adamdrake.com/css/main.min.be12b679e5899a8805bab6348a0b4d7dc70275c3a131afa9cf3753df691719da.css integrity="sha256-vhK2eeWJmogFurY0igtNfccCdcOhMa+pzzdT32kXGdo=" media=screen>
+<meta name=twitter:card content="summary_large_image">
+<meta name=twitter:image content="https://adamdrake.com/static/images/twitter-card.jpg">
+<meta name=twitter:title content="An Unreasonably Deep Dive into Project Euler Problem 3">
+<meta name=twitter:description content="Intro I&rsquo;ve been busy as usual for the last couple of months, and haven&rsquo;t really had time to extend the Project Euler series after Problem 1 and Problem 2 articles.
 However, I finally did set aside some time to play around with Problem 3: finding the largest prime factor of a number.
 Problem Statement  The prime factors of 13195 are 5, 7, 13 and 29.
-What is the largest prime factor of the number 600851475143?"><meta property="og:title" content="An Unreasonably Deep Dive into Project Euler Problem 3"><meta property="og:description" content="Intro I&rsquo;ve been busy as usual for the last couple of months, and haven&rsquo;t really had time to extend the Project Euler series after Problem 1 and Problem 2 articles.
+What is the largest prime factor of the number 600851475143?">
+<meta property="og:title" content="An Unreasonably Deep Dive into Project Euler Problem 3">
+<meta property="og:description" content="Intro I&rsquo;ve been busy as usual for the last couple of months, and haven&rsquo;t really had time to extend the Project Euler series after Problem 1 and Problem 2 articles.
 However, I finally did set aside some time to play around with Problem 3: finding the largest prime factor of a number.
 Problem Statement  The prime factors of 13195 are 5, 7, 13 and 29.
-What is the largest prime factor of the number 600851475143?"><meta property="og:type" content="article"><meta property="og:url" content="https://adamdrake.com/an-unreasonably-deep-dive-into-project-euler-problem-3.html"><meta property="og:image" content="https://adamdrake.com/static/images/twitter-card.jpg"><meta property="article:section" content="posts"><meta property="article:published_time" content="2017-05-14T00:00:00+00:00"><meta property="article:modified_time" content="2017-05-14T00:00:00+00:00"></head><body><div class=title-box><div class=title-left><h1 class=name><a href=/>Adam Drake</a></h1></div><div class=title-right><div class=social-icons><a href=https://github.com/adamdrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=https://twitter.com/aadrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=https://linkedin.com/in/aadrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=/index.xml><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABOElEQVRIib2WXXWEMBBGIyESkICDroPWQSNhHRQnrANwsOsAHFAJdXD7ALSz0wmZLrTfObwwkDs/X3ISwiIgAQPHaQBegxRwORCg1cpK/lopAKN6eQEaoAduwPsBoCFoSDAEVMDZSMotF0hBT8yV7gIBtMAb8Aw8ATEDTMDHHpClDm3VGVbjbKcXtGrSQCB6YL8FreoQLfXALJC099bPg4LVbMys6DpmazdOWHbzu+29AK0KO/Wdaf2SvaNaJGKfi0ntMxfIApcGP6mEflTudd0E1KqNWrKq86OgFSYr0wbplQMfBoEwC3ZVMpG7U98C3ZZFKmwHZRcDTjn3WaCqkPWLiPfemAWKBVCzMadszAJd+W7d1YjLOek9lY2ZnneoXR5vbPy/y0mmBUfqq50rLLHj8mFoRJwWnzknvtUm1yWnAAAAAElFTkSuQmCC width=64 height=64></a></div><div class=subscribe><form action=https://api.digitalmaneuver.com/subscribe method=get><input class=subscribe-field style=width:200px name=email placeholder=" Subscribe to newsletter? " type=text>
-<input class=subscribe-btn value=Yes! type=submit></form></div></div></div><div class="nav-box row"><div class=nav-left-menu><ul><li><a href=/>Latest</a> |</li><li><a href=/about.html>About</a> |</li><li><a href=/cases.html>Case Studies</a> |</li><li><a href=/contact.html>Contact</a> |</li><li><a href=/press.html>Press</a></li></ul></div></div><section class=section><div class=container><a href=https://applybyapi.com><button class=btn>Struggling to hire developers? Check out ApplyByAPI!</button></a><h1 class=page-title>An Unreasonably Deep Dive into Project Euler Problem 3</h1><h2 class=content-date>May 14, 2017</h2><div class=share-links>Share this:
-<a class=twitter-share-button href="https://twitter.com/intent/tweet?text=Read%20An%20Unreasonably%20Deep%20Dive%20into%20Project%20Euler%20Problem%203%20https%3a%2f%2fadamdrake.com%2fan-unreasonably-deep-dive-into-project-euler-problem-3.html" onclick="return window.open(this.href,'twitter-share','width=550,height=235'),!1">twitter</a> //
-<a class=icon-facebook href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fadamdrake.com%2fan-unreasonably-deep-dive-into-project-euler-problem-3.html" onclick="return window.open(this.href,'facebook-share','width=580,height=296'),!1">facebook</a> //
-<a class=icon-linkedin href="https://www.linkedin.com/shareArticle?mini=true&url=https://adamdrake.com&title=An%20Unreasonably%20Deep%20Dive%20into%20Project%20Euler%20Problem%203&source=Adam%20Drake" onclick="return window.open(this.href,'linkedin-share','width=980,height=980'),!1">linkedin</a> //
-<a class=icon-google-plus href="https://plus.google.com/share?url=https%3a%2f%2fadamdrake.com%2fan-unreasonably-deep-dive-into-project-euler-problem-3.html" onclick="return window.open(this.href,'google-plus-share','width=490,height=530'),!1">google+</a></div><div class=content><h1 id=intro class=anchor-link><a href=#intro>Intro</a></h1><p>I&rsquo;ve been busy as usual for the last couple of months, and haven&rsquo;t really had time to extend the Project Euler series after <a href=/an-unreasonably-deep-dive-into-project-euler-problem-1.html>Problem 1</a> and <a href=/an-unreasonably-deep-dive-into-project-euler-problem-2.html>Problem 2</a> articles.</p><p>However, I finally did set aside some time to play around with Problem 3: finding the largest <a href=https://en.wikipedia.org/wiki/Prime_factor>prime factor</a> of a number.</p><h1 id=problem-statement class=anchor-link><a href=#problem-statement>Problem Statement</a></h1><blockquote><p>The prime factors of 13195 are 5, 7, 13 and 29.</p><p>What is the largest prime factor of the number 600851475143?</p></blockquote><h1 id=definitions-and-theorems class=anchor-link><a href=#definitions-and-theorems>Definitions and Theorems</a></h1><p><strong>Definition</strong>: For two integers a and b, we can say that a <em>divides</em> b, a is a <em>divisor</em> of b, b is a <em>multiple</em> of a, or a is a <em>factor</em> of b if, for some integer y, y*a=b.</p><p><strong>Definition</strong>: an integer n is <em>prime</em> if the only divisors of n are itself and 1. Note that 1 and -1 are divisors of every integer.</p><p><strong>Definition</strong>: a whole number n is <em>composite</em> if it is not prime. That is, it has some integer divisors beyond itself and 1.</p><p><strong>Theorem</strong> (Fundamental Theorem of Arithmetic): Every integer greater than 1 is either <strong>prime</strong>, or the <strong>product of primes</strong> (i.e., composite). Also, for composite number, the prime factorization is unique up to the order of the factors. There is 1, and only 1, prime factorization for a composite number.</p><p><strong>Proof</strong>: see <a href=https://en.wikipedia.org/wiki/Fundamental_theorem_of_arithmetic#Proof>Wikipedia</a></p><p>To start considering the problem, we know that the given number is either prime or composite (product of unique set of primes). We can assume the number is composite, otherwise the problem statement doesn&rsquo;t make much sense and/or is trivial.</p><p>We must therefore find the unique prime factors of the number, and then find which of those primes is largest.</p><h1 id=v1-brute-force class=anchor-link><a href=#v1-brute-force>V1: Brute force</a></h1><p>These sorts of approaches are often underestimated and can be very effective in practical applications. They&rsquo;re a good place to start.</p><p>A naive algorithm could be to loop through all the numbers from 2 to n-1, and check if each one divides n. If some number d does divide n, then put it in the list of divisors. After finding all the divisors, check each one to determine if it is prime. To check primality, loop through all the numbers between 3 and d-1 to check if one of the numbers is a divisor of d. If you find any such numbers, d is not prime and therefore not a prime factor of n. If you find no such number, then d divides n but d does not have any other divisors. Thus, d is prime. Thus, d is a prime factor of n.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>package</span> v1
+What is the largest prime factor of the number 600851475143?">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://adamdrake.com/an-unreasonably-deep-dive-into-project-euler-problem-3.html"><meta property="og:image" content="https://adamdrake.com/static/images/twitter-card.jpg"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2017-05-14T00:00:00+00:00">
+<meta property="article:modified_time" content="2017-05-14T00:00:00+00:00">
+</head>
+<body>
+<div class=title-box>
+<div class=title-left>
+<h1 class=name><a href=/>Adam Drake</a></h1>
+</div>
+<div class=title-right>
+<div class=social-icons>
+<a href=https://github.com/adamdrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=https://twitter.com/aadrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=https://linkedin.com/in/aadrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=/index.xml>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABOElEQVRIib2WXXWEMBBGIyESkICDroPWQSNhHRQnrANwsOsAHFAJdXD7ALSz0wmZLrTfObwwkDs/X3ISwiIgAQPHaQBegxRwORCg1cpK/lopAKN6eQEaoAduwPsBoCFoSDAEVMDZSMotF0hBT8yV7gIBtMAb8Aw8ATEDTMDHHpClDm3VGVbjbKcXtGrSQCB6YL8FreoQLfXALJC099bPg4LVbMys6DpmazdOWHbzu+29AK0KO/Wdaf2SvaNaJGKfi0ntMxfIApcGP6mEflTudd0E1KqNWrKq86OgFSYr0wbplQMfBoEwC3ZVMpG7U98C3ZZFKmwHZRcDTjn3WaCqkPWLiPfemAWKBVCzMadszAJd+W7d1YjLOek9lY2ZnneoXR5vbPy/y0mmBUfqq50rLLHj8mFoRJwWnzknvtUm1yWnAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+</div>
+<div class=subscribe>
+<a href=https://www.digitalmaneuver.com/#/portal>Subscribe to my newsletter</a>
+</div>
+</div>
+</div>
+<div class="nav-box row">
+<div class=nav-left-menu>
+<ul>
+<li><a href=/>Latest</a> | </li>
+<li><a href=/about.html>About</a> | </li>
+<li><a href=/cases.html>Case Studies</a> | </li>
+<li><a href=/contact.html>Contact</a> | </li>
+<li><a href=/press.html>Press</a></li>
+</ul>
+</div>
+</div>
+<section class=section>
+<div class=container>
+<a href=https://applybyapi.com><button class=btn>Struggling to hire developers? Check out ApplyByAPI!</button></a>
+<h1 class=page-title>An Unreasonably Deep Dive into Project Euler Problem 3</h1>
+<h2 class=content-date>May 14, 2017</h2>
+<div class=share-links>
+Share this:
+<a class=twitter-share-button href="https://twitter.com/intent/tweet?text=Read%20An%20Unreasonably%20Deep%20Dive%20into%20Project%20Euler%20Problem%203%20https%3a%2f%2fadamdrake.com%2fan-unreasonably-deep-dive-into-project-euler-problem-3.html" onclick="return window.open(this.href,'twitter-share','width=550,height=235'),!1">
+twitter
+</a> //
+<a class=icon-facebook href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fadamdrake.com%2fan-unreasonably-deep-dive-into-project-euler-problem-3.html" onclick="return window.open(this.href,'facebook-share','width=580,height=296'),!1">
+facebook
+</a> //
+<a class=icon-linkedin href="https://www.linkedin.com/shareArticle?mini=true&url=https://adamdrake.com&title=An%20Unreasonably%20Deep%20Dive%20into%20Project%20Euler%20Problem%203&source=Adam%20Drake" onclick="return window.open(this.href,'linkedin-share','width=980,height=980'),!1">
+linkedin
+</a> //
+<a class=icon-google-plus href="https://plus.google.com/share?url=https%3a%2f%2fadamdrake.com%2fan-unreasonably-deep-dive-into-project-euler-problem-3.html" onclick="return window.open(this.href,'google-plus-share','width=490,height=530'),!1">
+google+
+</a>
+</div>
+<div class=content>
+<h1 id=intro class=anchor-link><a href=#intro>Intro</a></h1>
+<p>I&rsquo;ve been busy as usual for the last couple of months, and haven&rsquo;t really had time to extend the Project Euler series after <a href=/an-unreasonably-deep-dive-into-project-euler-problem-1.html>Problem 1</a> and <a href=/an-unreasonably-deep-dive-into-project-euler-problem-2.html>Problem 2</a> articles.</p>
+<p>However, I finally did set aside some time to play around with Problem 3: finding the largest <a href=https://en.wikipedia.org/wiki/Prime_factor>prime factor</a> of a number.</p>
+<h1 id=problem-statement class=anchor-link><a href=#problem-statement>Problem Statement</a></h1>
+<blockquote>
+<p>The prime factors of 13195 are 5, 7, 13 and 29.</p>
+<p>What is the largest prime factor of the number 600851475143?</p>
+</blockquote>
+<h1 id=definitions-and-theorems class=anchor-link><a href=#definitions-and-theorems>Definitions and Theorems</a></h1>
+<p><strong>Definition</strong>: For two integers a and b, we can say that a <em>divides</em> b, a is a <em>divisor</em> of b, b is a <em>multiple</em> of a, or a is a <em>factor</em> of b if, for some integer y, y*a=b.</p>
+<p><strong>Definition</strong>: an integer n is <em>prime</em> if the only divisors of n are itself and 1. Note that 1 and -1 are divisors of every integer.</p>
+<p><strong>Definition</strong>: a whole number n is <em>composite</em> if it is not prime. That is, it has some integer divisors beyond itself and 1.</p>
+<p><strong>Theorem</strong> (Fundamental Theorem of Arithmetic): Every integer greater than 1 is either <strong>prime</strong>, or the <strong>product of primes</strong> (i.e., composite). Also, for composite number, the prime factorization is unique up to the order of the factors. There is 1, and only 1, prime factorization for a composite number.</p>
+<p><strong>Proof</strong>: see <a href=https://en.wikipedia.org/wiki/Fundamental_theorem_of_arithmetic#Proof>Wikipedia</a></p>
+<p>To start considering the problem, we know that the given number is either prime or composite (product of unique set of primes). We can assume the number is composite, otherwise the problem statement doesn&rsquo;t make much sense and/or is trivial.</p>
+<p>We must therefore find the unique prime factors of the number, and then find which of those primes is largest.</p>
+<h1 id=v1-brute-force class=anchor-link><a href=#v1-brute-force>V1: Brute force</a></h1>
+<p>These sorts of approaches are often underestimated and can be very effective in practical applications. They&rsquo;re a good place to start.</p>
+<p>A naive algorithm could be to loop through all the numbers from 2 to n-1, and check if each one divides n. If some number d does divide n, then put it in the list of divisors. After finding all the divisors, check each one to determine if it is prime. To check primality, loop through all the numbers between 3 and d-1 to check if one of the numbers is a divisor of d. If you find any such numbers, d is not prime and therefore not a prime factor of n. If you find no such number, then d divides n but d does not have any other divisors. Thus, d is prime. Thus, d is a prime factor of n.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>package</span> v1
 
 <span style=color:#09f;font-style:italic>// V1:
 </span><span style=color:#09f;font-style:italic>// Take a number n, calculate all its factors,
@@ -62,7 +155,8 @@ What is the largest prime factor of the number 600851475143?"><meta property="og
 	}
 	<span style=color:#069;font-weight:700>return</span> biggest
 }
-</code></pre></div><p>We have three functions: one which calculates all the factors of a given number, one which tests if a number is prime, and one which ties it all together (<code>LargestPrimeFactor</code>). While this solution is very inefficient, it does work for small numbers, so the logic is correct. We can see this by writing the necessary tests, using benchmark functions to look at performance of the functions and system.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>package</span> v1
+</code></pre></div><p>We have three functions: one which calculates all the factors of a given number, one which tests if a number is prime, and one which ties it all together (<code>LargestPrimeFactor</code>). While this solution is very inefficient, it does work for small numbers, so the logic is correct. We can see this by writing the necessary tests, using benchmark functions to look at performance of the functions and system.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>package</span> v1
 
 <span style=color:#069;font-weight:700>import</span> (
 	<span style=color:#c30>&#34;testing&#34;</span>
@@ -187,11 +281,15 @@ What is the largest prime factor of the number 600851475143?"><meta property="og
 		})
 	}
 }
-</code></pre></div><p>Note that in the <code>Benchmark_</code> functions, we are using the sub-test/sub-benchmark format, where we define multiple pieces of test data/test cases which can be run. In the benchmark case we are only using one, but we could easily increase that later if desired, so the flexibility is nice.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ go <span style=color:#366>test</span> -bench<span style=color:#555>=</span>. -benchmem
+</code></pre></div><p>Note that in the <code>Benchmark_</code> functions, we are using the sub-test/sub-benchmark format, where we define multiple pieces of test data/test cases which can be run. In the benchmark case we are only using one, but we could easily increase that later if desired, so the flexibility is nice.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ go <span style=color:#366>test</span> -bench<span style=color:#555>=</span>. -benchmem
 Benchmark_factors/benchmarkNumber-4         	            3000	    <span style=color:#f60>416669</span> ns/op	     <span style=color:#f60>248</span> B/op	       <span style=color:#f60>5</span> allocs/op
 Benchmark_LargestPrimeFactor/benchmarkNumber-4         	    2000	    <span style=color:#f60>625321</span> ns/op	     <span style=color:#f60>624</span> B/op	      <span style=color:#f60>28</span> allocs/op
 Benchmark_isPrime/benchmarkNumber-4                    	    3000	    <span style=color:#f60>414224</span> ns/op	     <span style=color:#f60>248</span> B/op	       <span style=color:#f60>5</span> allocs/op
-</code></pre></div><p>So far, not great for performance nor for memory allocations. Let&rsquo;s improve.</p><h1 id=v2-skip-the-even-numbers class=anchor-link><a href=#v2-skip-the-even-numbers>V2: Skip the even numbers</a></h1><p>By definition of <strong>prime</strong>, we know that 2 is the only even prime number. Since all other even numbers are divisible by 2, they have a divisor other than themselves and 1 - thus, they are not prime. Therefore, we can modify our solution to exclude checking whether or not these numbers are prime, and see if that speeds up the system. The code is almost the same as the previous version, with the difference being the addition of an <code>isEven()</code> function to check the parity of the number.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>package</span> v2
+</code></pre></div><p>So far, not great for performance nor for memory allocations. Let&rsquo;s improve.</p>
+<h1 id=v2-skip-the-even-numbers class=anchor-link><a href=#v2-skip-the-even-numbers>V2: Skip the even numbers</a></h1>
+<p>By definition of <strong>prime</strong>, we know that 2 is the only even prime number. Since all other even numbers are divisible by 2, they have a divisor other than themselves and 1 - thus, they are not prime. Therefore, we can modify our solution to exclude checking whether or not these numbers are prime, and see if that speeds up the system. The code is almost the same as the previous version, with the difference being the addition of an <code>isEven()</code> function to check the parity of the number.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>package</span> v2
 
 <span style=color:#069;font-weight:700>import</span> (
 	<span style=color:#c30>&#34;math&#34;</span>
@@ -251,7 +349,8 @@ Benchmark_isPrime/benchmarkNumber-4                    	    3000	    <span style
 	}
 	<span style=color:#069;font-weight:700>return</span> biggest
 }
-</code></pre></div><p>We use the same testing and benchmarking code as in V1, but with the addition of a test and benchmark for <code>isEven()</code>.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>Test_isEven</span>(t <span style=color:#555>*</span>testing.T) {
+</code></pre></div><p>We use the same testing and benchmarking code as in V1, but with the addition of a test and benchmark for <code>isEven()</code>.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>Test_isEven</span>(t <span style=color:#555>*</span>testing.T) {
 	<span style=color:#069;font-weight:700>type</span> args <span style=color:#069;font-weight:700>struct</span> {
 		n <span style=color:#078;font-weight:700>int</span>
 	}
@@ -291,14 +390,18 @@ Benchmark_isPrime/benchmarkNumber-4                    	    3000	    <span style
 		})
 	}
 }
-</code></pre></div><p>Since we are expecting fewer numbers to be checked, we would expect better performance, right?</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ go <span style=color:#366>test</span> -bench<span style=color:#555>=</span>. -benchmem
+</code></pre></div><p>Since we are expecting fewer numbers to be checked, we would expect better performance, right?</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ go <span style=color:#366>test</span> -bench<span style=color:#555>=</span>. -benchmem
 Benchmark_factors/benchmarkNumber-4         	            1000	   <span style=color:#f60>1903807</span> ns/op	     <span style=color:#f60>248</span> B/op	       <span style=color:#f60>5</span> allocs/op
 Benchmark_LargestPrimeFactor/benchmarkNumber-4         	     500	   <span style=color:#f60>2716207</span> ns/op	     <span style=color:#f60>624</span> B/op	      <span style=color:#f60>28</span> allocs/op
 Benchmark_isPrime/benchmarkNumber-4                    	    1000	   <span style=color:#f60>1905843</span> ns/op	     <span style=color:#f60>248</span> B/op	       <span style=color:#f60>5</span> allocs/op
 Benchmark_isEven/Odd_number,_3-4                       	50000000	      24.7 ns/op	       <span style=color:#f60>0</span> B/op	       <span style=color:#f60>0</span> allocs/op
-</code></pre></div><p><strong>WRONG!</strong> Though it doesn&rsquo;t look like our memory allocations have changed, performance is definitely worse than before - but by how much exactly? For this, we can use the helpful <a href=https://godoc.org/golang.org/x/tools/cmd/benchcmp><code>benchcmp</code></a> command. It&rsquo;s easy to install with just a <code>go get golang.org/x/tools/cmd/benchcmp</code>. The we can redirect the output of the V1 benchmark and the V2 benchmark to a file, and use benchcmp to compare the files.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ go <span style=color:#366>test</span> -bench<span style=color:#555>=</span>. -benchmem &gt; v1.bm
-</code></pre></div><p>And in the V2 package directory</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ go <span style=color:#366>test</span> -bench<span style=color:#555>=</span>. -benchmem &gt; v2.bm
-</code></pre></div><p>Then, with both files in the same directory, we can easily see what&rsquo;s going on.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ benchcmp v1.bm v2.bm
+</code></pre></div><p><strong>WRONG!</strong> Though it doesn&rsquo;t look like our memory allocations have changed, performance is definitely worse than before - but by how much exactly? For this, we can use the helpful <a href=https://godoc.org/golang.org/x/tools/cmd/benchcmp><code>benchcmp</code></a> command. It&rsquo;s easy to install with just a <code>go get golang.org/x/tools/cmd/benchcmp</code>. The we can redirect the output of the V1 benchmark and the V2 benchmark to a file, and use benchcmp to compare the files.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ go <span style=color:#366>test</span> -bench<span style=color:#555>=</span>. -benchmem &gt; v1.bm
+</code></pre></div><p>And in the V2 package directory</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ go <span style=color:#366>test</span> -bench<span style=color:#555>=</span>. -benchmem &gt; v2.bm
+</code></pre></div><p>Then, with both files in the same directory, we can easily see what&rsquo;s going on.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ benchcmp v1.bm v2.bm
 benchmark                                          old ns/op     new ns/op     delta
 Benchmark_factors/benchmarkNumber-4                <span style=color:#f60>414686</span>        <span style=color:#f60>1901842</span>       +358.62%
 Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>623854</span>        <span style=color:#f60>2723608</span>       +336.58%
@@ -313,18 +416,23 @@ benchmark                                          old bytes     new bytes     d
 Benchmark_factors/benchmarkNumber-4                <span style=color:#f60>248</span>           <span style=color:#f60>248</span>           +0.00%
 Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>624</span>           <span style=color:#f60>624</span>           +0.00%
 Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>248</span>           <span style=color:#f60>248</span>           +0.00%
-</code></pre></div><h1 id=v3 class=anchor-link><a href=#v3>V3</a></h1><p>It seems that in the new version, checking the parity of the numbers in order to avoid testing even numbers for primality is actually slower. We know from the <a href=/an-unreasonably-deep-dive-into-project-euler-problem-2.html>deep-dive into Project Euler Problem 2</a> that testing parity of numbers with a bitwise AND is <strong>much</strong> faster, so let&rsquo;s replace our naive implementation with that one and call it V3. There will be no other changes, so we will just swap out the implementation of <code>isEven()</code>.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>isEven</span>(x <span style=color:#078;font-weight:700>int</span>) <span style=color:#078;font-weight:700>bool</span> {
+</code></pre></div>
+<h1 id=v3 class=anchor-link><a href=#v3>V3</a></h1>
+<p>It seems that in the new version, checking the parity of the numbers in order to avoid testing even numbers for primality is actually slower. We know from the <a href=/an-unreasonably-deep-dive-into-project-euler-problem-2.html>deep-dive into Project Euler Problem 2</a> that testing parity of numbers with a bitwise AND is <strong>much</strong> faster, so let&rsquo;s replace our naive implementation with that one and call it V3. There will be no other changes, so we will just swap out the implementation of <code>isEven()</code>.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>isEven</span>(x <span style=color:#078;font-weight:700>int</span>) <span style=color:#078;font-weight:700>bool</span> {
 	<span style=color:#069;font-weight:700>if</span> x<span style=color:#555>&amp;</span><span style=color:#f60>1</span> <span style=color:#555>==</span> <span style=color:#f60>0</span> {
 		<span style=color:#069;font-weight:700>return</span> <span style=color:#069;font-weight:700>true</span>
 	}
 	<span style=color:#069;font-weight:700>return</span> <span style=color:#069;font-weight:700>false</span>
 }
-</code></pre></div><p>Now we can use the same tests and benchmarks, and see if we obtained better performance over V2, and therefore hopefully over V1.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ go <span style=color:#366>test</span> -bench<span style=color:#555>=</span>. -benchmem
+</code></pre></div><p>Now we can use the same tests and benchmarks, and see if we obtained better performance over V2, and therefore hopefully over V1.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ go <span style=color:#366>test</span> -bench<span style=color:#555>=</span>. -benchmem
 Benchmark_factors/benchmarkNumber-4         	           10000	    <span style=color:#f60>222491</span> ns/op	     <span style=color:#f60>248</span> B/op	       <span style=color:#f60>5</span> allocs/op
 Benchmark_LargestPrimeFactor/benchmarkNumber-4         	    5000	    <span style=color:#f60>345445</span> ns/op	     <span style=color:#f60>624</span> B/op	      <span style=color:#f60>28</span> allocs/op
 Benchmark_isPrime/benchmarkNumber-4                    	   10000	    <span style=color:#f60>223073</span> ns/op	     <span style=color:#f60>248</span> B/op	       <span style=color:#f60>5</span> allocs/op
 Benchmark_isEven/Odd_number,_3-4                      2000000000	      0.29 ns/op	       <span style=color:#f60>0</span> B/op	       <span style=color:#f60>0</span> allocs/op
-</code></pre></div><p>As before, the bitwise version is much faster for testing parity. Was there any performance improvement over V2, and hopefully over V1?</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ benchcmp v2.bm v3.bm
+</code></pre></div><p>As before, the bitwise version is much faster for testing parity. Was there any performance improvement over V2, and hopefully over V1?</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ benchcmp v2.bm v3.bm
 benchmark                                          old ns/op     new ns/op     delta
 Benchmark_factors/benchmarkNumber-4                <span style=color:#f60>2016066</span>       <span style=color:#f60>222356</span>        -88.97%
 Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>2915830</span>       <span style=color:#f60>358904</span>        -87.69%
@@ -342,7 +450,8 @@ Benchmark_factors/benchmarkNumber-4                <span style=color:#f60>248</s
 Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>624</span>           <span style=color:#f60>624</span>           +0.00%
 Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>248</span>           <span style=color:#f60>248</span>           +0.00%
 Benchmark_isEven/Odd_number,_3-4                   <span style=color:#f60>0</span>             <span style=color:#f60>0</span>             +0.00%
-</code></pre></div><p>Memory usage is the same, but the parity checking time was reduced by about 99%, so it&rsquo;s almost free now. Let&rsquo;s see if that bought us some significant improvement over the first version. Intuitively, we are skipping primality checks on half the numbers (the even ones greater than 2) so that should reduce the runtime by about half.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ benchcmp v1.bm v3.bm
+</code></pre></div><p>Memory usage is the same, but the parity checking time was reduced by about 99%, so it&rsquo;s almost free now. Let&rsquo;s see if that bought us some significant improvement over the first version. Intuitively, we are skipping primality checks on half the numbers (the even ones greater than 2) so that should reduce the runtime by about half.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ benchcmp v1.bm v3.bm
 benchmark                                          old ns/op     new ns/op     delta
 Benchmark_factors/benchmarkNumber-4                <span style=color:#f60>414686</span>        <span style=color:#f60>222356</span>        -46.38%
 Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>623854</span>        <span style=color:#f60>358904</span>        -42.47%
@@ -357,7 +466,14 @@ benchmark                                          old bytes     new bytes     d
 Benchmark_factors/benchmarkNumber-4                <span style=color:#f60>248</span>           <span style=color:#f60>248</span>           +0.00%
 Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>624</span>           <span style=color:#f60>624</span>           +0.00%
 Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>248</span>           <span style=color:#f60>248</span>           +0.00%
-</code></pre></div><p>That intuition seems to be correct. We reduced the runtime by about 50%. However, if we think about the properties of prime factors, we can take a different and <strong>MUCH</strong> faster approach to solving the problem.</p><h1 id=v4 class=anchor-link><a href=#v4>V4</a></h1><p>When we started out, we were given some number n and our naive solution was to check all the numbers from 3 to n-1 to see if they are divisors of n. If so, we then went on to check if the number is prime, and therefore a prime divisor. To check if a number is prime, we generated all its factors, and if there were no factors between 3 and n-1, inclusive, then the number is prime.</p><p>The problem is that we did a lot of extra work to check if a number is prime. The reasoning is this: if a number <strong>IS NOT</strong> prime, then it will have at least one divisor which is less than or equal to its square root. If a number has some divisors between 3 and the number, call them a and b, then the largest they can both be is a = b = sqrt(n) since a * b = n. Therefore, if one of the numbers is larger, then the other must be smaller. The two numbers pivot around the square root of n, and can be at most sqrt(n).</p><p>To see why this is true, consider the number 100, which has square root 10. In this case, a = b = 10. If a goes up to 20, b goes down to 5. If we want to know if a number is prime, we can simply check to see if it has any divisors less than its square root.</p><p>Additionally, instead of generating all factors and then checking if each is prime, we can simply start at 3 - the smallest possible factor - and work our way up to sqrt(n).</p><p>With that in mind, we can change our <code>isPrime()</code> function and check a much smaller set of numbers.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>isPrime</span>(n <span style=color:#078;font-weight:700>int</span>) <span style=color:#078;font-weight:700>bool</span> {
+</code></pre></div><p>That intuition seems to be correct. We reduced the runtime by about 50%. However, if we think about the properties of prime factors, we can take a different and <strong>MUCH</strong> faster approach to solving the problem.</p>
+<h1 id=v4 class=anchor-link><a href=#v4>V4</a></h1>
+<p>When we started out, we were given some number n and our naive solution was to check all the numbers from 3 to n-1 to see if they are divisors of n. If so, we then went on to check if the number is prime, and therefore a prime divisor. To check if a number is prime, we generated all its factors, and if there were no factors between 3 and n-1, inclusive, then the number is prime.</p>
+<p>The problem is that we did a lot of extra work to check if a number is prime. The reasoning is this: if a number <strong>IS NOT</strong> prime, then it will have at least one divisor which is less than or equal to its square root. If a number has some divisors between 3 and the number, call them a and b, then the largest they can both be is a = b = sqrt(n) since a * b = n. Therefore, if one of the numbers is larger, then the other must be smaller. The two numbers pivot around the square root of n, and can be at most sqrt(n).</p>
+<p>To see why this is true, consider the number 100, which has square root 10. In this case, a = b = 10. If a goes up to 20, b goes down to 5. If we want to know if a number is prime, we can simply check to see if it has any divisors less than its square root.</p>
+<p>Additionally, instead of generating all factors and then checking if each is prime, we can simply start at 3 - the smallest possible factor - and work our way up to sqrt(n).</p>
+<p>With that in mind, we can change our <code>isPrime()</code> function and check a much smaller set of numbers.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>isPrime</span>(n <span style=color:#078;font-weight:700>int</span>) <span style=color:#078;font-weight:700>bool</span> {
 	<span style=color:#069;font-weight:700>if</span> n <span style=color:#555>==</span> <span style=color:#f60>0</span> <span style=color:#555>||</span> n <span style=color:#555>==</span> <span style=color:#f60>1</span> <span style=color:#555>||</span> <span style=color:#c0f>isEven</span>(n) {
 		<span style=color:#069;font-weight:700>return</span> <span style=color:#069;font-weight:700>false</span>
 	}
@@ -371,7 +487,8 @@ Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>248</s
 	}
 	<span style=color:#069;font-weight:700>return</span> <span style=color:#069;font-weight:700>true</span>
 }
-</code></pre></div><p>Now we can run the same set of tests (which pass) and benchmarks again to see how much performance we gained (if any).</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ benchcmp v3.bm v4.bm
+</code></pre></div><p>Now we can run the same set of tests (which pass) and benchmarks again to see how much performance we gained (if any).</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ benchcmp v3.bm v4.bm
 ignoring Benchmark_factors/benchmarkNumber-4: before has <span style=color:#f60>1</span> instances, after has <span style=color:#f60>0</span>
 benchmark                                          old ns/op     new ns/op     delta
 Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>358904</span>        <span style=color:#f60>223015</span>        -37.86%
@@ -387,7 +504,9 @@ benchmark                                          old bytes     new bytes     d
 Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>624</span>           <span style=color:#f60>0</span>             -100.00%
 Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>248</span>           <span style=color:#f60>0</span>             -100.00%
 Benchmark_isEven/Odd_number,_3-4                   <span style=color:#f60>0</span>             <span style=color:#f60>0</span>             +0.00%
-</code></pre></div><p>Great! We now have 0 memory allocations, which will make things faster, and we check fewer numbers, which will also make things faster. This is demonstrated by the 99% reduction in runtime for <code>isPrime()</code> and a 38% reduction for finding the largest prime factor compared to V3.</p><p>If we compare to V1, we see that we are down about 64%.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ benchcmp v1.bm v4.bm
+</code></pre></div><p>Great! We now have 0 memory allocations, which will make things faster, and we check fewer numbers, which will also make things faster. This is demonstrated by the 99% reduction in runtime for <code>isPrime()</code> and a 38% reduction for finding the largest prime factor compared to V3.</p>
+<p>If we compare to V1, we see that we are down about 64%.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ benchcmp v1.bm v4.bm
 ignoring Benchmark_factors/benchmarkNumber-4: before has <span style=color:#f60>1</span> instances, after has <span style=color:#f60>0</span>
 benchmark                                          old ns/op     new ns/op     delta
 Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>623854</span>        <span style=color:#f60>223015</span>        -64.25%
@@ -400,7 +519,10 @@ Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>5</spa
 benchmark                                          old bytes     new bytes     delta
 Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>624</span>           <span style=color:#f60>0</span>             -100.00%
 Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>248</span>           <span style=color:#f60>0</span>             -100.00%
-</code></pre></div><h1 id=bonus-round-v5 class=anchor-link><a href=#bonus-round-v5>Bonus round: V5</a></h1><p>If we wanted to squeeze out a bit more performance (without going on to more advanced methods like the <a href=https://en.wikipedia.org/wiki/General_number_field_sieve>General Number Field Sieve</a>, the current top performer for prime factorization) we can take advantage again of the fact that all primes larger than 2 are odd. With this fact in mind, we only need to check odd divisors, and when checking for primality, we need only check odd numbers. This removes the call to <code>isEven()</code> entirely, since we don&rsquo;t need to check for that now, but it does make our <code>isPrime()</code> implementation more brittle since we are assuming the caller is always providing odd numbers.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>package</span> v5
+</code></pre></div>
+<h1 id=bonus-round-v5 class=anchor-link><a href=#bonus-round-v5>Bonus round: V5</a></h1>
+<p>If we wanted to squeeze out a bit more performance (without going on to more advanced methods like the <a href=https://en.wikipedia.org/wiki/General_number_field_sieve>General Number Field Sieve</a>, the current top performer for prime factorization) we can take advantage again of the fact that all primes larger than 2 are odd. With this fact in mind, we only need to check odd divisors, and when checking for primality, we need only check odd numbers. This removes the call to <code>isEven()</code> entirely, since we don&rsquo;t need to check for that now, but it does make our <code>isPrime()</code> implementation more brittle since we are assuming the caller is always providing odd numbers.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>package</span> v5
 
 <span style=color:#069;font-weight:700>import</span> (
 	<span style=color:#c30>&#34;math&#34;</span>
@@ -431,7 +553,8 @@ Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>248</s
 	}
 	<span style=color:#069;font-weight:700>return</span> biggest
 }
-</code></pre></div><p>Now we start at 3 and increment by 2 in each loop, which will only test odd numbers. The performance is a bit better, but we&rsquo;re starting to get only marginal benefits at this point.</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>
+</code></pre></div><p>Now we start at 3 and increment by 2 in each loop, which will only test odd numbers. The performance is a bit better, but we&rsquo;re starting to get only marginal benefits at this point.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>
 $ benchcmp v4.bm v5.bm
 ignoring Benchmark_isEven/Odd_number,_3-4: before has <span style=color:#f60>1</span> instances, after has <span style=color:#f60>0</span>
 benchmark                                          old ns/op     new ns/op     delta
@@ -445,7 +568,8 @@ Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>0</spa
 benchmark                                          old bytes     new bytes     delta
 Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>0</span>             <span style=color:#f60>0</span>             +0.00%
 Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>0</span>             <span style=color:#f60>0</span>             +0.00%
-</code></pre></div><p>We get another 10% or so increase overall compared to V4. What about compared to our original implementation?</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ benchcmp v1.bm v5.bm
+</code></pre></div><p>We get another 10% or so increase overall compared to V4. What about compared to our original implementation?</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ benchcmp v1.bm v5.bm
 ignoring Benchmark_factors/benchmarkNumber-4: before has <span style=color:#f60>1</span> instances, after has <span style=color:#f60>0</span>
 benchmark                                          old ns/op     new ns/op     delta
 Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>623854</span>        <span style=color:#f60>201270</span>        -67.74%
@@ -458,10 +582,55 @@ Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>5</spa
 benchmark                                          old bytes     new bytes     delta
 Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>624</span>           <span style=color:#f60>0</span>             -100.00%
 Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>248</span>           <span style=color:#f60>0</span>             -100.00%
-</code></pre></div><p>Overall, we are down about 68% for the small benchmark number provided in the challenge. Let&rsquo;s try a bigger number and see if the percentages change as the numbers increase (they should). The random number I first typed originally was so slow to compute with V1 that I cancelled the benchmark. I&rsquo;ve replaced it with a random 10 digit number <code>8275832758</code>. Here are the results (I removed all the benchmark data that was the same as before).</p><div class=highlight><pre style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ benchcmp v1.1.bm v5.1.bm
+</code></pre></div><p>Overall, we are down about 68% for the small benchmark number provided in the challenge. Let&rsquo;s try a bigger number and see if the percentages change as the numbers increase (they should). The random number I first typed originally was so slow to compute with V1 that I cancelled the benchmark. I&rsquo;ve replaced it with a random 10 digit number <code>8275832758</code>. Here are the results (I removed all the benchmark data that was the same as before).</p>
+<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ benchcmp v1.1.bm v5.1.bm
 Benchmark_isPrime/8275832758-4                     <span style=color:#f60>275850428911</span>     <span style=color:#f60>9771163</span>       -100.00%
-</code></pre></div><p>I tried to also do the benchmark for <code>LargestPrimeFactor()</code> as well, but <code>go test</code> died mysteriously due to a SIGQUIT somewhere. Perhaps a bug report is in order.</p><h1 id=outro class=anchor-link><a href=#outro>Outro</a></h1><p>At this point, we aren&rsquo;t getting much more in the way of performance improvements, so there&rsquo;s no need to carry out more changes to this algorithm. If we want to have better performance, especially for numbers with a greater number of digits, we will have to change the algorithm and use something more intelligent and parallelizable (there are other sieves for which this is possible).</p></div></div></section><div class="nav-box row"><div class=nav-left-menu><ul><li><a href=/>Latest</a> |</li><li><a href=/about.html>About</a> |</li><li><a href=/cases.html>Case Studies</a> |</li><li><a href=/contact.html>Contact</a> |</li><li><a href=/press.html>Press</a></li></ul></div></div><div class="footer-box row"><div class="footer-left col-md-6 col-xs-12"><div class="footer-bio content"><p><strong>Adam Drake</strong> leads technical business transformations in global and multi-cultural environments. He has a passion for helping companies become more productive by improving internal leadership capabilities, and accelerating product development through technology and data architecture guidance. Adam has served as a White House Presidential Innovation Fellow and is an IEEE Senior Member.</p></div></div><div class=footer-right><div class=social-icons><a href=https://github.com/adamdrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=https://twitter.com/aadrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=https://linkedin.com/in/aadrake><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64></a>
-<a href=/index.xml><img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABOElEQVRIib2WXXWEMBBGIyESkICDroPWQSNhHRQnrANwsOsAHFAJdXD7ALSz0wmZLrTfObwwkDs/X3ISwiIgAQPHaQBegxRwORCg1cpK/lopAKN6eQEaoAduwPsBoCFoSDAEVMDZSMotF0hBT8yV7gIBtMAb8Aw8ATEDTMDHHpClDm3VGVbjbKcXtGrSQCB6YL8FreoQLfXALJC099bPg4LVbMys6DpmazdOWHbzu+29AK0KO/Wdaf2SvaNaJGKfi0ntMxfIApcGP6mEflTudd0E1KqNWrKq86OgFSYr0wbplQMfBoEwC3ZVMpG7U98C3ZZFKmwHZRcDTjn3WaCqkPWLiPfemAWKBVCzMadszAJd+W7d1YjLOek9lY2ZnneoXR5vbPy/y0mmBUfqq50rLLHj8mFoRJwWnzknvtUm1yWnAAAAAElFTkSuQmCC width=64 height=64></a></div><div class=subscribe><form action=https://api.digitalmaneuver.com/subscribe method=get><input class=subscribe-field style=width:200px name=email placeholder=" Subscribe to newsletter? " type=text>
-<input class=subscribe-btn value=Yes! type=submit></form></div></div></div><div class="container has-text-centered footer-copyright"></div></body>
+</code></pre></div><p>I tried to also do the benchmark for <code>LargestPrimeFactor()</code> as well, but <code>go test</code> died mysteriously due to a SIGQUIT somewhere. Perhaps a bug report is in order.</p>
+<h1 id=outro class=anchor-link><a href=#outro>Outro</a></h1>
+<p>At this point, we aren&rsquo;t getting much more in the way of performance improvements, so there&rsquo;s no need to carry out more changes to this algorithm. If we want to have better performance, especially for numbers with a greater number of digits, we will have to change the algorithm and use something more intelligent and parallelizable (there are other sieves for which this is possible).</p>
+</div>
+</div>
+</section>
+<div class="nav-box row">
+<div class=nav-left-menu>
+<ul>
+<li><a href=/>Latest</a> | </li>
+<li><a href=/about.html>About</a> | </li>
+<li><a href=/cases.html>Case Studies</a> | </li>
+<li><a href=/contact.html>Contact</a> | </li>
+<li><a href=/press.html>Press</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-box row">
+<div class="footer-left col-md-6 col-xs-12">
+<div class="footer-bio content">
+<p><strong>Adam Drake</strong> leads technical business transformations in global and multi-cultural environments. He has a passion for helping companies become more productive by improving internal leadership capabilities, and accelerating product development through technology and data architecture guidance. Adam has served as a White House Presidential Innovation Fellow and is an IEEE Senior Member.</p>
+</div>
+</div>
+<div class=footer-right>
+<div class=social-icons>
+<a href=https://github.com/adamdrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=https://twitter.com/aadrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=https://linkedin.com/in/aadrake>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+<a href=/index.xml>
+<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABOElEQVRIib2WXXWEMBBGIyESkICDroPWQSNhHRQnrANwsOsAHFAJdXD7ALSz0wmZLrTfObwwkDs/X3ISwiIgAQPHaQBegxRwORCg1cpK/lopAKN6eQEaoAduwPsBoCFoSDAEVMDZSMotF0hBT8yV7gIBtMAb8Aw8ATEDTMDHHpClDm3VGVbjbKcXtGrSQCB6YL8FreoQLfXALJC099bPg4LVbMys6DpmazdOWHbzu+29AK0KO/Wdaf2SvaNaJGKfi0ntMxfIApcGP6mEflTudd0E1KqNWrKq86OgFSYr0wbplQMfBoEwC3ZVMpG7U98C3ZZFKmwHZRcDTjn3WaCqkPWLiPfemAWKBVCzMadszAJd+W7d1YjLOek9lY2ZnneoXR5vbPy/y0mmBUfqq50rLLHj8mFoRJwWnzknvtUm1yWnAAAAAElFTkSuQmCC width=64 height=64>
+</a>
+</div>
+<div class=subscribe>
+<form action=https://api.digitalmaneuver.com/subscribe method=get>
+<input class=subscribe-field style=width:200px name=email placeholder=" Subscribe to newsletter? " type=text>
+<input class=subscribe-btn value=Yes! type=submit>
+</form>
+</div>
+</div>
+</div>
+<div class="container has-text-centered footer-copyright">
+</div>
+</body>
