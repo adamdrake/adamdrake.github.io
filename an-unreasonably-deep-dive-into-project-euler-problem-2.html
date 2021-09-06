@@ -11,7 +11,7 @@
 An Unreasonably Deep Dive into Project Euler Problem 2 - Adam Drake
 </title>
 <link rel="shortcut icon" href=/static/favicon.ico>
-<link rel=stylesheet href=https://adamdrake.com/css/main.min.be12b679e5899a8805bab6348a0b4d7dc70275c3a131afa9cf3753df691719da.css integrity="sha256-vhK2eeWJmogFurY0igtNfccCdcOhMa+pzzdT32kXGdo=" media=screen>
+<link rel=stylesheet href=https://adamdrake.com/sass/style.min.4b0d3fd52024283b14d542e540f013de2976b7a9ca4436a50d9555c6a678c3be.css integrity="sha256-Sw0/1SAkKDsU1ULlQPAT3il2t6nKRDalDZVVxqZ4w74=" crossorigin=anonymous media=screen>
 <meta name=twitter:card content="summary_large_image">
 <meta name=twitter:image content="https://adamdrake.com/static/images/twitter-card.jpg">
 <meta name=twitter:title content="An Unreasonably Deep Dive into Project Euler Problem 2">
@@ -51,9 +51,9 @@ By considering the terms in the Fibonacci sequence whose values do not exceed fo
 <img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABOElEQVRIib2WXXWEMBBGIyESkICDroPWQSNhHRQnrANwsOsAHFAJdXD7ALSz0wmZLrTfObwwkDs/X3ISwiIgAQPHaQBegxRwORCg1cpK/lopAKN6eQEaoAduwPsBoCFoSDAEVMDZSMotF0hBT8yV7gIBtMAb8Aw8ATEDTMDHHpClDm3VGVbjbKcXtGrSQCB6YL8FreoQLfXALJC099bPg4LVbMys6DpmazdOWHbzu+29AK0KO/Wdaf2SvaNaJGKfi0ntMxfIApcGP6mEflTudd0E1KqNWrKq86OgFSYr0wbplQMfBoEwC3ZVMpG7U98C3ZZFKmwHZRcDTjn3WaCqkPWLiPfemAWKBVCzMadszAJd+W7d1YjLOek9lY2ZnneoXR5vbPy/y0mmBUfqq50rLLHj8mFoRJwWnzknvtUm1yWnAAAAAElFTkSuQmCC width=64 height=64>
 </a>
 </div>
-<div class=subscribe>
+<button class="subscribe subscribe-btn">
 <a href=https://www.digitalmaneuver.com/#/portal>Subscribe to my newsletter</a>
-</div>
+</button>
 </div>
 </div>
 <div class="nav-box row">
@@ -82,9 +82,6 @@ facebook
 </a> //
 <a class=icon-linkedin href="https://www.linkedin.com/shareArticle?mini=true&url=https://adamdrake.com&title=An%20Unreasonably%20Deep%20Dive%20into%20Project%20Euler%20Problem%202&source=Adam%20Drake" onclick="return window.open(this.href,'linkedin-share','width=980,height=980'),!1">
 linkedin
-</a> //
-<a class=icon-google-plus href="https://plus.google.com/share?url=https%3a%2f%2fadamdrake.com%2fan-unreasonably-deep-dive-into-project-euler-problem-2.html" onclick="return window.open(this.href,'google-plus-share','width=490,height=530'),!1">
-google+
 </a>
 </div>
 <div class=content>
@@ -201,7 +198,7 @@ google+
 	}
 }
 </code></pre></div><p>Which gives us passing tests and a new benchmark number.</p>
-<pre><code>BenchmarkSumEvenFibsSlice-4               200000              6210 ns/op
+<pre tabindex=0><code>BenchmarkSumEvenFibsSlice-4               200000              6210 ns/op
 </code></pre><p>This is a faster approach compared to the recursive solution, by a lot. In fact the recursive solution takes about 7400 times longer, so we&rsquo;re on the right track.</p>
 <p>Now that we have an iterative solution, many newcomers to Go will think that it makes sense to spin off a thread/goroutine to do the calculations and pass the results back over a channel for our function to use.</p>
 <h1 id=winner-a-simple-loop class=anchor-link><a href=#winner-a-simple-loop>Winner: a simple loop</a></h1>
@@ -229,7 +226,7 @@ google+
 		<span style=color:#c0f>sumEvenFibsLoop</span>(LIMIT)
 	}
 }
-</code></pre></div><pre><code>BenchmarkSumEvenFibsLoop-4                300000              5535 ns/op
+</code></pre></div><pre tabindex=0><code>BenchmarkSumEvenFibsLoop-4                300000              5535 ns/op
 </code></pre><p>The performance of this approach is the best so far, but just barely. It outperforms the slice approach, but not by much.</p>
 <h1 id=digression-channels class=anchor-link><a href=#digression-channels>Digression: Channels</a></h1>
 <p>A common thing newcomers do when they pick up Go is they reach for channels and goroutines. Although these are awesome tools and it&rsquo;s great they are so easy to use in the language, they aren&rsquo;t always good for performance. The short reason is that channels are essentially a mutable data structure, and therefore require locks. Locks are an enemy of performance, so in many tasks you will slow down your computations if you use channels and goroutines.</p>
@@ -279,7 +276,7 @@ google+
 	}
 }
 </code></pre></div><p>All the tests pass, and we can get a look at the performance of the channels approach.</p>
-<pre><code>BenchmarkSumEvenFibsChannel-4             100000             18677 ns/op
+<pre tabindex=0><code>BenchmarkSumEvenFibsChannel-4             100000             18677 ns/op
 </code></pre><p>At 18,677 ns/op the channels approach takes around 3 times as long as the slices approach, and about 3.4 times as long as the simple loop, so although channels and goroutines are a wonderful part of the language, they are not a good fit for all problems.</p>
 <h1 id=digression-solution-by-approximation class=anchor-link><a href=#digression-solution-by-approximation>Digression: Solution by approximation</a></h1>
 <p>It was briefly mentioned earlier that the runtime complexity of the recursive solution is <code>O(Phi^n)</code> where <code>Phi</code> is the <a href=https://en.wikipedia.org/wiki/Golden_ratio#Relationship_to_Fibonacci_sequence>Golden Ratio</a>. With some further analysis you can show that the Nth Fibonacci number can be approximated by <code>1/sqrt(5) * Phi^(n+1)</code>. We can use this method to generate our Fibonacci numbers as well.</p>
@@ -309,7 +306,7 @@ google+
 	}
 }
 </code></pre></div><p>However, although we have a closed-form solution it is not yet faster than our simple loop implementation.</p>
-<pre><code>BenchmarkSumEvenFibsApprox-4              200000              7769 ns/op
+<pre tabindex=0><code>BenchmarkSumEvenFibsApprox-4              200000              7769 ns/op
 </code></pre><p>Part of the reason for this is because for the numbers we&rsquo;re dealing with, which fit into 64 bit integers, the simple loop has an apparently linear time complexity. However, once we get into arbitrarily large numbers and need something from <code>math/big</code> then we won&rsquo;t have the same performance characteristics and the closed-form solution may be faster, even though it does contain exponentiation. Recall that <a href=https://en.wikipedia.org/wiki/Exponentiation_by_squaring>exponentiation by squaring</a> has a computational complexity of about <code>O(log n)</code>.</p>
 <h1 id=bonus-round-bitwise-and-for-evenodd-checking class=anchor-link><a href=#bonus-round-bitwise-and-for-evenodd-checking>Bonus Round: Bitwise and for even/odd checking</a></h1>
 <p>Although the fastest approach we tested was the simple loop, we were still using the <code>isEven()</code> function, which used modular arithmetic to tell us if the integer was even or not. I also wanted to check to see if there would be a significant speedup from switching to <a href=https://en.wikipedia.org/wiki/Bitwise_operation#AND>bitwise operations</a> to check the <a href=https://en.wikipedia.org/wiki/Parity_(mathematics)>parity</a> of the numbers.</p>
@@ -322,14 +319,14 @@ google+
 }
 </code></pre></div><p>I had benchmarks for <code>isEven()</code> before and after.</p>
 <p>Before:</p>
-<pre><code>BenchmarkIsEvenEven-4                   30000000                43.5 ns/op
+<pre tabindex=0><code>BenchmarkIsEvenEven-4                   30000000                43.5 ns/op
 BenchmarkIsEvenOdd-4                    30000000                44.8 ns/op
 </code></pre><p>After:</p>
-<pre><code>BenchmarkIsEvenEven-4                   2000000000               0.34 ns/op
+<pre tabindex=0><code>BenchmarkIsEvenEven-4                   2000000000               0.34 ns/op
 BenchmarkIsEvenOdd-4                    2000000000               0.34 ns/op
 </code></pre><p>This is a performance improvement of <strong>130 times</strong>.</p>
 <p>When we use this bitwise version for the parity checking in the other algorithms, we see the expected speedups.</p>
-<pre><code>BenchmarkSumEvenFibsSlice-4              3000000               455 ns/op
+<pre tabindex=0><code>BenchmarkSumEvenFibsSlice-4              3000000               455 ns/op
 BenchmarkSumEvenFibsRecursion-4               30          46208502 ns/op
 BenchmarkSumEvenFibsLoop-4              30000000                49.7 ns/op
 BenchmarkSumEvenFibsChannel-4             100000             11670 ns/op
@@ -345,7 +342,7 @@ BenchmarkSumEvenFibsApprox-4             1000000              1766 ns/op
 	<span style=color:#069;font-weight:700>return</span> sum
 }
 </code></pre></div><p>Which cuts off a bit more time, about 11%.</p>
-<pre><code>BenchmarkSumEvenFibsLoop-4      30000000                44.0 ns/op
+<pre tabindex=0><code>BenchmarkSumEvenFibsLoop-4      30000000                44.0 ns/op
 </code></pre>
 <h1 id=conclusion class=anchor-link><a href=#conclusion>Conclusion</a></h1>
 <p>Project Euler problems, in addition to fun programming exercises, can be great ways to refresh mathematics and computer science skills you may have forgotten or may not have used in a while. For this problem alone we got into time and memory complexity, recurence relations, recursion, channels and goroutines, bitwise operations, and testing and benchmarking in Go.</p>
@@ -385,12 +382,9 @@ BenchmarkSumEvenFibsApprox-4             1000000              1766 ns/op
 <img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABOElEQVRIib2WXXWEMBBGIyESkICDroPWQSNhHRQnrANwsOsAHFAJdXD7ALSz0wmZLrTfObwwkDs/X3ISwiIgAQPHaQBegxRwORCg1cpK/lopAKN6eQEaoAduwPsBoCFoSDAEVMDZSMotF0hBT8yV7gIBtMAb8Aw8ATEDTMDHHpClDm3VGVbjbKcXtGrSQCB6YL8FreoQLfXALJC099bPg4LVbMys6DpmazdOWHbzu+29AK0KO/Wdaf2SvaNaJGKfi0ntMxfIApcGP6mEflTudd0E1KqNWrKq86OgFSYr0wbplQMfBoEwC3ZVMpG7U98C3ZZFKmwHZRcDTjn3WaCqkPWLiPfemAWKBVCzMadszAJd+W7d1YjLOek9lY2ZnneoXR5vbPy/y0mmBUfqq50rLLHj8mFoRJwWnzknvtUm1yWnAAAAAElFTkSuQmCC width=64 height=64>
 </a>
 </div>
-<div class=subscribe>
-<form action=https://api.digitalmaneuver.com/subscribe method=get>
-<input class=subscribe-field style=width:200px name=email placeholder=" Subscribe to newsletter? " type=text>
-<input class=subscribe-btn value=Yes! type=submit>
-</form>
-</div>
+<button class="subscribe subscribe-btn">
+<a href=https://www.digitalmaneuver.com/#/portal>Subscribe to my newsletter</a>
+</button>
 </div>
 </div>
 <div class="container has-text-centered footer-copyright">
