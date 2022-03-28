@@ -1,440 +1,197 @@
-<!doctype html><html lang=en>
-<head>
-<meta charset=utf-8>
-<meta http-equiv=x-ua-compatible content="chrome=1">
-<meta name=HandheldFriendly content="True">
-<meta name=MobileOptimized content="320">
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=referrer content="no-referrer">
-<meta name=description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams.">
-<title>
-Big Data, Small Machine - Adam Drake
-</title>
-<link rel="shortcut icon" href=/static/favicon.ico>
-<link rel=stylesheet href=https://adamdrake.com/sass/style.min.a413c0798309dd1ab28bd9f9ff8e6472c76e69f14068707081b5a01351efe34e.css integrity="sha256-pBPAeYMJ3Rqyi9n5/45kcsduafFAaHBwgbWgE1Hv404=" crossorigin=anonymous media=screen>
-<meta name=twitter:card content="summary_large_image">
-<meta name=twitter:image content="https://adamdrake.com/static/images/twitter-card.jpg">
-<meta name=twitter:title content="Big Data, Small Machine">
-<meta name=twitter:description content="Introduction I was honored to be invited by DevTO to give a talk at their May meetup. The organizers were keen to have someone speak about high-performance machine learning, and I was happy to oblige.
-The general thesis of the talk is that, for the purposes of machine learning, setting up large compute clusters is wholly unnecessary. Furthermore, it should generally be considered harmful as those efforts are extremely time consuming and detract from solving the actual machine learning problem at hand.">
-<meta property="og:title" content="Big Data, Small Machine">
-<meta property="og:description" content="Introduction I was honored to be invited by DevTO to give a talk at their May meetup. The organizers were keen to have someone speak about high-performance machine learning, and I was happy to oblige.
-The general thesis of the talk is that, for the purposes of machine learning, setting up large compute clusters is wholly unnecessary. Furthermore, it should generally be considered harmful as those efforts are extremely time consuming and detract from solving the actual machine learning problem at hand.">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://adamdrake.com/big-data-small-machine.html"><meta property="og:image" content="https://adamdrake.com/static/images/twitter-card.jpg"><meta property="article:section" content="posts">
-<meta property="article:published_time" content="2018-05-28T00:00:00+00:00">
-<meta property="article:modified_time" content="2018-05-28T00:00:00+00:00">
-</head>
-<body>
-<div class=title-box>
-<div class=title-left>
-<h1 class=name><a href=/>Adam Drake</a></h1>
-</div>
-<div class=title-right>
-<div class=social-icons>
-<a href=https://github.com/adamdrake>
-<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64>
-</a>
-<a href=https://twitter.com/aadrake>
-<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64>
-</a>
-<a href=https://linkedin.com/in/aadrake>
-<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64>
-</a>
-</div>
-<button class="subscribe subscribe-btn">
-<a href=https://www.digitalmaneuver.com/#/portal>Subscribe to newsletter</a>
-</button>
-</div>
-</div>
-<div class="nav-box row">
-<div class=nav-left-menu>
-<ul>
-<li><a href=/>Latest</a> | </li>
-<li><a href=/about.html>About</a> | </li>
-<li><a href=/cases.html>Case Studies</a> | </li>
-<li><a href=/contact.html>Contact</a> | </li>
-<li><a href=/press.html>Press</a></li>
-</ul>
-</div>
-</div>
-<section class=section>
-<div class=container>
-<a href=https://applybyapi.com><button class="cta btn">Struggling to hire developers? Check out ApplyByAPI!</button></a>
-<h1 class=page-title>Big Data, Small Machine</h1>
-<h2 class=content-date>May 28, 2018</h2>
-<div class=share-links>
-Share this:
-<a class=twitter-share-button href="https://twitter.com/intent/tweet?text=Read%20Big%20Data%2c%20Small%20Machine%20https%3a%2f%2fadamdrake.com%2fbig-data-small-machine.html" onclick="return window.open(this.href,'twitter-share','width=550,height=235'),!1">
-twitter
-</a> //
-<a class=icon-facebook href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fadamdrake.com%2fbig-data-small-machine.html" onclick="return window.open(this.href,'facebook-share','width=580,height=296'),!1">
-facebook
-</a> //
-<a class=icon-linkedin href="https://www.linkedin.com/shareArticle?mini=true&url=https://adamdrake.com&title=Big%20Data%2c%20Small%20Machine&source=Adam%20Drake" onclick="return window.open(this.href,'linkedin-share','width=980,height=980'),!1">
-linkedin
-</a>
-</div>
-<div class=content>
-<h1 id=introduction class=anchor-link><a href=#introduction>Introduction</a></h1>
-<p>I was honored to be invited by <a href=https://www.meetup.com/DevTOEvents/events/250716245/>DevTO</a> to give a talk at their May meetup. The organizers were keen to have someone speak about high-performance machine learning, and I was happy to oblige.</p>
-<p>The general thesis of the talk is that, for the purposes of machine learning, setting up large compute clusters is wholly unnecessary. Furthermore, it should generally be considered harmful as those efforts are extremely time consuming and detract from solving the actual machine learning problem at hand.</p>
-<p>To illustrate the point, I showed an online learning approach to binary classification problems using logistic regression with adaptive learning rates. While some might dismiss this approach as too simplistic or ineffective, consider that it is not very different from what Google was (is?) using for some of their online advertising prediction systems. This was described in the wonderful paper <a href=https://www.eecs.tufts.edu/%7Edsculley/papers/ad-click-prediction.pdf>Ad Click Prediction: a View from the Trenches</a>.</p>
-<p>As in previous summaries of my lectures, I&rsquo;ll reference select slides by section header and provide the explanation that went along with the slide, including some elaboration I may not have had time for in the lecture itself.</p>
-<h1 id=claims class=anchor-link><a href=#claims>Claims</a></h1>
-<p>In my lecture I made a few general claims:</p>
-<ul>
-<li>RAM in machines used to process data is growing more quickly than the data itself</li>
-<li>There are many techniques for dealing with so-called <em>Big Data</em> and none of which involve clusters or heavy data infrastructure components like Kafka, Hadoop, Spark, and so on</li>
-<li>One machine is fine for machine learning tasks, i.e., actually training ML models</li>
-</ul>
-<h1 id=step-0-more-ram class=anchor-link><a href=#step-0-more-ram>Step 0: More RAM</a></h1>
-<p>If you have a data set that is too big to fit into memory, you can consider getting access to more memory.</p>
-<p>We know from <a href=https://www.kdnuggets.com/2015/11/big-ram-big-data-size-datasets.html>other articles</a> and surveys done by KDnuggets that the size of data sets people actually analyze seems to be growing at around 20% per year. Additionally, this data tells us that most analytics professionals deal with data sets that are below 100GB or so in size.</p>
-<p>We also know from looking at historical RAM availability on EC2 instances (just as an example) that the yearly increase in RAM on these instances is faster than the 20% yearly increase in data set size.</p>
-<table>
-<thead>
-<tr>
-<th>Year</th>
-<th>Type</th>
-<th>RAM (GiB)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>2007</td>
-<td>m1.xlarge</td>
-<td>15</td>
-</tr>
-<tr>
-<td>2009</td>
-<td>m2.4xlarge</td>
-<td>68</td>
-</tr>
-<tr>
-<td>2012</td>
-<td>hs1.8xlarge</td>
-<td>117</td>
-</tr>
-<tr>
-<td>2014</td>
-<td>r3.8xlarge</td>
-<td>244</td>
-</tr>
-<tr>
-<td>2016</td>
-<td>x1.32xlarge</td>
-<td>1952</td>
-</tr>
-<tr>
-<td>2017/8</td>
-<td>x1e.32xlarge</td>
-<td>3904</td>
-</tr>
-</tbody>
-</table>
-<p>So for a lot of people, a single AWS instance circa 2012 would have been sufficient to perform all the necessary work for a machine learning task. Nevermind of course, that the currently available high memory instances provide <strong>4TB</strong> of RAM, which is far more than the data set sizes most analytics professionals deal with.</p>
-<p>Lastly, note that Tyan makes a motherboard which can currently accomodate 12.3TB of RAM, which is up from 6TB around 2016.</p>
-<p>When all this is taken together, most people can do all the analytics and machine learning tasks they need to do on a single machine with adequate memory. This completely obviates the need for infrastructure like Hadoop, Spark, and so on for training machine learning models (though they may have their place in preprocessing).</p>
-<h1 id=step-1-sampling class=anchor-link><a href=#step-1-sampling>Step 1: Sampling</a></h1>
-<p>Consider though that perhaps you still have too much data to fit into RAM, or you simply want to train your model more quickly with approximately the same level of accuracy. In that case, just don&rsquo;t use all the available training data!</p>
-<p>In the last years, it has somehow become fashionable to completely ignore centuries of mathematical and statistical progress and instead insist that, in order to make a useful model, all data must be analyzed. This perspective became even more generally accepted in the last decade or so, and especially after Halevy, Norvig, and Periera published <a href=https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/35179.pdf>The Unreasonable Effectiveness of Data</a> (PDF).</p>
-<p>Truths to having a larger training set notwithstanding, just because a larger data set for training may yield better results does not mean that using the larger training set yields <strong>significantly</strong> better results. Often, the marginal increase in performance of a machine learning model from adding additional data is just not worth the additional annoyance of having to deal with the more complicated methods and infrastructure components that may be required to use all of the data.</p>
-<p>More data might beat better algorithms, as the saying goes, but perhaps not by much.</p>
-<p>This problem is particularly clear in the online advertising space and predicting clicks on advertisements. It is not unusual to display an advertisement 10,000 times in order to achieve just 20 clicks. In other words, approximately 99.8% of the data set will be views of ads that do not result in a click.</p>
-<p>With a data set that has such biased class distribution, you could probably randomly eliminate 90% of the views and still have a similar performance from your classifier. In other words, if you had 100GB of training data, you would only have to bother with processing 10GB instead. This of course requires nothing particularly special in terms of hardware, and can be completed on many modern laptops.</p>
-<h1 id=what-if-sampling-doesnt-work--try-streaming class=anchor-link><a href=#what-if-sampling-doesnt-work--try-streaming>What if sampling doesn&rsquo;t work? Try streaming!</a></h1>
-<p>There might be cases when sampling isn&rsquo;t an option, or won&rsquo;t work for some reason, and the data is too large to fit into RAM.</p>
-<p>In other words, we will transform the problem from a batch-based approach of training a model on a set of data to an online-based approach where our model is learning as it receives data from a stream. Think about it like building a system that takes requests to feed the model learning information, or obtain a prediction, instead of a model that takes in a large chunk of data in order to calculate model weights. In doing this, we also change from a focus of how much data our model can handle at one time, to how many Requests Per Second (RPS) our system is capable of handling. Higher RPS means we can handle more data, in less time.</p>
-<p>To think in terms of streams with machine learning models, we need three basic things:</p>
-<ol>
-<li>A data source that can emit requests/events</li>
-<li>A method of stateless feature extraction, so that obtaining features doesn&rsquo;t depend on other requests in the (potentially infinite) stream</li>
-<li>A machine learning model that supports incremental learning</li>
-</ol>
-<h2 id=data-source class=anchor-link><a href=#data-source>Data Source</a></h2>
-<p>If we have a large file, we can simply read it in one record/request at a time. A simple way of doing this with a generator in Python might look something like:</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#069;font-weight:700>def</span> <span style=color:#c0f>getRequest</span>(path, numFeatures):
-    count <span style=color:#555>=</span> <span style=color:#f60>0</span>
-    <span style=color:#069;font-weight:700>for</span> i, line <span style=color:#000;font-weight:700>in</span> <span style=color:#366>enumerate</span>(<span style=color:#366>open</span>(path)):
-        <span style=color:#069;font-weight:700>if</span> i <span style=color:#555>==</span> <span style=color:#f60>0</span>:
-            <span style=color:#09f;font-style:italic># do whatever you want at initialization</span>
-            x <span style=color:#555>=</span> [<span style=color:#f60>0</span>] <span style=color:#555>*</span> numFeatures <span style=color:#09f;font-style:italic># So we don&#39;t need to create a new x every time</span>
-            <span style=color:#069;font-weight:700>continue</span>
-        <span style=color:#069;font-weight:700>for</span> t, feat  <span style=color:#000;font-weight:700>in</span> <span style=color:#366>enumerate</span>(line<span style=color:#555>.</span>strip()<span style=color:#555>.</span>split(<span style=color:#c30>&#39;,&#39;</span>)):
-            <span style=color:#069;font-weight:700>if</span> t <span style=color:#555>==</span> <span style=color:#f60>0</span>:
-                y <span style=color:#555>=</span> feat <span style=color:#09f;font-style:italic># assuming first position in request is some kind of label</span>
-            <span style=color:#069;font-weight:700>else</span>:
-                <span style=color:#09f;font-style:italic># do something with the features</span>
-                x[m] <span style=color:#555>=</span> feat
-        <span style=color:#069;font-weight:700>yield</span> (count, x, y)
-</code></pre></div><p>Or alternatively, if we are using Pandas we can simply pass in the <code>chunksize</code> parameter to a method like <code>read_csv()</code>:</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python>reader <span style=color:#555>=</span> pd<span style=color:#555>.</span>read_csv(<span style=color:#c30>&#39;blah.csv&#39;</span>, chunksize<span style=color:#555>=</span><span style=color:#f60>10000</span>)
-
-<span style=color:#069;font-weight:700>for</span> chunk <span style=color:#000;font-weight:700>in</span> reader:
-    doSomething(chunk)
-</code></pre></div><p>That covers the need to transform a file that is too large to fit into memory into a stream of data we can easily process.</p>
-<h2 id=stateless-feature-extraction class=anchor-link><a href=#stateless-feature-extraction>Stateless Feature Extraction</a></h2>
-<p>Hello, hashing trick!</p>
-<p>This slide was a bit difficult to fully explain given the time constraints of the lecture and density of the information. The short version is that we will convert a request into an array of integers by concatenating each feature name and value in the request, and then taking a hash of that result.</p>
-<p>For example, if the feature is <code>firstName</code> and the value is <code>Adam</code> then we would hash <code>firstNameAdam</code> and obtain some number, say <code>18445008</code>. This number will then serve as the index for that particular feature name/feature value combination in our array of weights in our model. This allows us to do a few extremely important things in a large-scale/sparse learning scenario:</p>
-<ol>
-<li>We do not need to know the features in advance, since a feature name/value combination always reliably hashes to the same weight</li>
-<li>By deciding how many weights (<code>modelWeights</code>) we want our model to have up front, likely dictated by our RAM constraints, we can control RAM usage very precisely by simply taking the hash modulo the number of weights <code>18445008 % modelWeights</code>.</li>
-<li>Since we are not storing any mappings between features and values and so on, we can save a lot of additional RAM. We can simply adjust weights in the model by going to the resulting index in the weights array directly from the hash.</li>
-</ol>
-<p>With the above in mind, the <em>hashing trick</em> is a very important and useful tool when data is large but RAM is in tight supply. This is equally true on smaller systems like embedded devices, which will become increasingly popular as analytics tasks are more distributed. Embedded devices also typically do not have nearly as much RAM as a large EC2 instance. If you only have an embedded device with 10MB of RAM to spare, you can simply limit the number of weights in your model accordingly. It&rsquo;s amazing how accurate a model you can produce if you are using 32 bit floats and have 4MB of memory available.</p>
-<h2 id=incremental-learning class=anchor-link><a href=#incremental-learning>Incremental Learning</a></h2>
-<p>Once we have the stream and the hashing trick on hand (if needed) we can provide the features to our model <code>N</code> request at a time, or even one request at a time, as long as the model is one that supports incremental learning. There are many such models available in scikit-learn, but here we will just use our own in the form of logistic regression with adaptive learning rates.</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#09f;font-style:italic># Turn the request into a list of hash values</span>
-x <span style=color:#555>=</span> [<span style=color:#f60>0</span>]  <span style=color:#09f;font-style:italic># 0 is the index of the bias term</span>
-<span style=color:#069;font-weight:700>for</span> key, value <span style=color:#000;font-weight:700>in</span> request<span style=color:#555>.</span>items():
-    index <span style=color:#555>=</span> <span style=color:#366>int</span>(value <span style=color:#555>+</span> key[<span style=color:#f60>1</span>:], <span style=color:#f60>16</span>) <span style=color:#555>%</span> D
-    x<span style=color:#555>.</span>append(index)
-
-<span style=color:#09f;font-style:italic># Get the prediction for the given request (now transformed to hash values)</span>
-wTx <span style=color:#555>=</span> <span style=color:#f60>0.</span>
-<span style=color:#069;font-weight:700>for</span> i <span style=color:#000;font-weight:700>in</span> x:  <span style=color:#09f;font-style:italic># do wTx</span>
-    wTx <span style=color:#555>+=</span> w[i] <span style=color:#09f;font-style:italic># w[i] * x[i], but if i in x we got x[i] = 1.</span>
-p <span style=color:#555>=</span> <span style=color:#f60>1.</span> <span style=color:#555>/</span> (<span style=color:#f60>1.</span> <span style=color:#555>+</span> exp(<span style=color:#555>-</span><span style=color:#366>max</span>(<span style=color:#366>min</span>(wTx, <span style=color:#f60>20.</span>), <span style=color:#555>-</span><span style=color:#f60>20.</span>)))
-
-<span style=color:#09f;font-style:italic># Update the loss</span>
-p <span style=color:#555>=</span> <span style=color:#366>max</span>(<span style=color:#366>min</span>(p, <span style=color:#f60>1.</span> <span style=color:#555>-</span> <span style=color:#f60>10e-12</span>), <span style=color:#f60>10e-12</span>)
-loss <span style=color:#555>+=</span> <span style=color:#555>-</span>log(p) <span style=color:#069;font-weight:700>if</span> y <span style=color:#555>==</span> <span style=color:#f60>1.</span> <span style=color:#069;font-weight:700>else</span> <span style=color:#555>-</span>log(<span style=color:#f60>1.</span> <span style=color:#555>-</span> p)
-
-<span style=color:#09f;font-style:italic># Update the weights</span>
-<span style=color:#069;font-weight:700>for</span> i <span style=color:#000;font-weight:700>in</span> x:
-    <span style=color:#09f;font-style:italic># alpha / (sqrt(n) + 1) is the adaptive learning rate heuristic</span>
-    <span style=color:#09f;font-style:italic># (p - y) * x[i] is the current gradient</span>
-    <span style=color:#09f;font-style:italic># note that in our case, if i in x then x[i] = 1</span>
-    w[i] <span style=color:#555>-=</span> (p <span style=color:#555>-</span> y) <span style=color:#555>*</span> alpha <span style=color:#555>/</span> (sqrt(n[i]) <span style=color:#555>+</span> <span style=color:#f60>1.</span>)
-    n[i] <span style=color:#555>+=</span> <span style=color:#f60>1.</span>
-</code></pre></div><p>To the best of my recollection, this code was originally provided by tinrtgu on the Kaggle forums some years ago, and it&rsquo;s a great example of how to do machine learning with limited RAM.</p>
-<h1 id=performance class=anchor-link><a href=#performance>Performance</a></h1>
-<h2 id=v1 class=anchor-link><a href=#v1>V1</a></h2>
-<p>In testing on my laptop with some old data, I was able to use the above code to train a model at a rate of ~20,000 RPS. This is respectable, and there are few people who have to deal with online machine learning systems that have to handle more load than that. However, that&rsquo;s usually the kind of situation that causes companies to contact me for technical help, so I explored further.</p>
-<h2 id=v2 class=anchor-link><a href=#v2>V2</a></h2>
-<p>What&rsquo;s the first thing someone should do when CPython isn&rsquo;t fast enough? Try PyPy!</p>
-<p>Simply by running the script with PyPy instead of the regular CPython interpreter, I got a performance increase of 3.5x (74,000 RPS vs 20,000 RPS).</p>
-<p>I cannot overemphasize how important this step is if your company uses Python in your data processing activities and things are too slow. You may be able to speed them up dramatically without making a single modification to your code, thus allowing you to work on other important business problems. If your Python is too slow, TRY PYPY!</p>
-<h2 id=v3 class=anchor-link><a href=#v3>V3</a></h2>
-<p>One problem with Python in these scenarios is that Python is single-threaded by default and therefore will not avail itself of additional processor cores on the machine. We&rsquo;d really like to use all cores, and just place some locks around the critical weight arrays so as to prevent non-atomic modifications by multiple threads or processes.</p>
-<p>However, due to the Global Interpreter Lock (GIL) in CPython, only a single Python <strong>thread</strong> can execute bytecode at any given time. Because of that, we have to spawn multiple processes using the <code>multiprocessing</code> library. In this scenario, each process is essentially running its own copy of the Python interpreter. Then you can do things like use a <code>RawArray</code> from <code>multiprocessing.sharedctypes</code> if you want to have multiple processes operate on a single chunk of memory.</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#069;font-weight:700>from</span> <span style=color:#0cf;font-weight:700>multiprocessing.sharedctypes</span> <span style=color:#069;font-weight:700>import</span> RawArray
-<span style=color:#069;font-weight:700>from</span> <span style=color:#0cf;font-weight:700>multiprocessing</span> <span style=color:#069;font-weight:700>import</span> Process
-<span style=color:#069;font-weight:700>import</span> <span style=color:#0cf;font-weight:700>time</span>
-<span style=color:#069;font-weight:700>import</span> <span style=color:#0cf;font-weight:700>random</span>
-
-<span style=color:#069;font-weight:700>def</span> <span style=color:#c0f>incr</span>(arr, i):
-    time<span style=color:#555>.</span>sleep(random<span style=color:#555>.</span>randint(<span style=color:#f60>1</span>, <span style=color:#f60>4</span>))
-    arr[i] <span style=color:#555>+=</span> <span style=color:#f60>1</span>
-    <span style=color:#366>print</span>(arr[:])
-
-arr <span style=color:#555>=</span> RawArray(<span style=color:#c30>&#39;d&#39;</span>, <span style=color:#f60>10</span>)
-
-procs <span style=color:#555>=</span> [Process(target<span style=color:#555>=</span>incr, args<span style=color:#555>=</span>(arr,i)) <span style=color:#069;font-weight:700>for</span> i <span style=color:#000;font-weight:700>in</span> <span style=color:#366>range</span>(<span style=color:#f60>10</span>)]
-
-<span style=color:#069;font-weight:700>for</span> p <span style=color:#000;font-weight:700>in</span> procs:
-    p<span style=color:#555>.</span>start()
-<span style=color:#069;font-weight:700>for</span> p <span style=color:#000;font-weight:700>in</span> procs:
-    p<span style=color:#555>.</span>join()
-<span style=color:#c30>&#39;&#39;&#39;
-</span><span style=color:#c30>[0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0]
-</span><span style=color:#c30>[0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0]
-</span><span style=color:#c30>[0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0]
-</span><span style=color:#c30>[0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0]
-</span><span style=color:#c30>[0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0]
-</span><span style=color:#c30>[0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0]
-</span><span style=color:#c30>[0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0]
-</span><span style=color:#c30>[0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0]
-</span><span style=color:#c30>[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0]
-</span><span style=color:#c30>[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
-</span><span style=color:#c30>&#39;&#39;&#39;</span>
-</code></pre></div><p>In practice, the standard way to handle this would be to place the requests we want to process into a work queue, and then have multiple worker processes pull from the queue and do all the processing tasks from the code in the Incremental Learning section above. This looks something like the following.</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#069;font-weight:700>from</span> <span style=color:#0cf;font-weight:700>multiprocessing</span> <span style=color:#069;font-weight:700>import</span> Queue
-
-procs <span style=color:#555>=</span> [Process(target<span style=color:#555>=</span>worker, args<span style=color:#555>=</span>(q, w, n, D, alpha, loss, count,)) \
-        <span style=color:#069;font-weight:700>for</span> x <span style=color:#000;font-weight:700>in</span> <span style=color:#366>range</span>(<span style=color:#f60>4</span>)]
-<span style=color:#069;font-weight:700>for</span> p <span style=color:#000;font-weight:700>in</span> procs:
-    p<span style=color:#555>.</span>start()
-
-<span style=color:#069;font-weight:700>for</span> t, row <span style=color:#000;font-weight:700>in</span> <span style=color:#366>enumerate</span>(DictReader(<span style=color:#366>open</span>(train))):
-    q<span style=color:#555>.</span>put(row)
-</code></pre></div>
-<h3 id=bad-news class=anchor-link><a href=#bad-news>Bad news&mldr;</a></h3>
-<p>Unfortunately, the code above is actually <strong>slower</strong> than the single-threaded version. Why, you ask?</p>
-<p><img src=/static/talks/DRAKE-adam-20180528-devto-python-multiproc-call-graph.png alt="Call graph"></p>
-<p>If we have a look at the call graph above, we can see that we&rsquo;re spending about 64% of the run time waiting to acquire access to the queue. This is a common issue in multi-threaded programming, and while it could be potentially, partially, ameliorated by doing things like putting more than one request in the queue at a time (i.e., using a mini-batch approach), the fact is that we&rsquo;re having to do a lot of gymnastics to make Python faster at this point. For such a small program, maybe Python isn&rsquo;t the best tool for the job.</p>
-<h2 id=v4---hello-go class=anchor-link><a href=#v4---hello-go>V4 - Hello Go!</a></h2>
-<p>Thankfully, Go is a pretty straightforward language, and also reasonably fast. For a program like this, it could be a good fit. We can easily port the Python version of the code over to Go. Besides the braces, it looks about the same.</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go>  <span style=color:#09f;font-style:italic>// Hash the request values
-</span><span style=color:#09f;font-style:italic></span>    <span style=color:#069;font-weight:700>for</span> i, v <span style=color:#555>:=</span> <span style=color:#069;font-weight:700>range</span> request {
-        hashResult <span style=color:#555>:=</span> <span style=color:#c0f>hash</span>([]<span style=color:#366>byte</span>(fields[i] <span style=color:#555>+</span> v)) <span style=color:#555>%</span> <span style=color:#366>int</span>(D)
-        x[i<span style=color:#555>+</span><span style=color:#f60>1</span>] = <span style=color:#366>int</span>(math.<span style=color:#c0f>Abs</span>(<span style=color:#366>float64</span>(hashResult)))
-    }
-
-    <span style=color:#09f;font-style:italic>// Get the prediction for the given request (now transformed to hash values)
-</span><span style=color:#09f;font-style:italic></span>    wTx <span style=color:#555>:=</span> <span style=color:#f60>0.0</span>
-    <span style=color:#069;font-weight:700>for</span> _, v <span style=color:#555>:=</span> <span style=color:#069;font-weight:700>range</span> x {
-        wTx <span style=color:#555>+=</span> (<span style=color:#555>*</span>w)[v]
-    }
-    p <span style=color:#555>:=</span> <span style=color:#f60>1.0</span> <span style=color:#555>/</span> (<span style=color:#f60>1.0</span> <span style=color:#555>+</span> math.<span style=color:#c0f>Exp</span>(<span style=color:#555>-</span>math.<span style=color:#c0f>Max</span>(math.<span style=color:#c0f>Min</span>(wTx, <span style=color:#f60>20.0</span>), <span style=color:#555>-</span><span style=color:#f60>20.0</span>)))
-
-    <span style=color:#09f;font-style:italic>// Update the loss
-</span><span style=color:#09f;font-style:italic></span>    p = math.<span style=color:#c0f>Max</span>(math.<span style=color:#c0f>Min</span>(p, <span style=color:#f60>1.</span><span style=color:#555>-</span>math.<span style=color:#c0f>Pow</span>(<span style=color:#f60>10</span>, <span style=color:#555>-</span><span style=color:#f60>12</span>)), math.<span style=color:#c0f>Pow</span>(<span style=color:#f60>10</span>, <span style=color:#555>-</span><span style=color:#f60>12</span>))
-    <span style=color:#069;font-weight:700>if</span> y <span style=color:#555>==</span> <span style=color:#f60>1</span> {
-        <span style=color:#555>*</span>loss <span style=color:#555>+=</span> <span style=color:#555>-</span>math.<span style=color:#c0f>Log</span>(p)
-    } <span style=color:#069;font-weight:700>else</span> {
-        <span style=color:#555>*</span>loss <span style=color:#555>+=</span> <span style=color:#555>-</span>math.<span style=color:#c0f>Log</span>(<span style=color:#f60>1.0</span> <span style=color:#555>-</span> p)
-    }
-
-    <span style=color:#09f;font-style:italic>// Update the weights
-</span><span style=color:#09f;font-style:italic></span>    <span style=color:#069;font-weight:700>for</span> _, v <span style=color:#555>:=</span> <span style=color:#069;font-weight:700>range</span> x {
-        (<span style=color:#555>*</span>w)[v] = (<span style=color:#555>*</span>w)[v] <span style=color:#555>-</span> (p<span style=color:#555>-</span><span style=color:#366>float64</span>(y))<span style=color:#555>*</span>alpha<span style=color:#555>/</span>(math.<span style=color:#c0f>Sqrt</span>((<span style=color:#555>*</span>n)[v])<span style=color:#555>+</span><span style=color:#f60>1.0</span>)
-        (<span style=color:#555>*</span>n)[v]<span style=color:#555>++</span>
-    }
-</code></pre></div><p>This port of the model runs at 186,000 RPS, which is about a <strong>9x</strong> speedup over the CPython version! For most companies or purposes, we could simply stop here since most of the time anything more than an order of magnitude speedup isn&rsquo;t required before moving on to the next bottleneck. However, we can still do better!</p>
-<h1 id=v5---multicore class=anchor-link><a href=#v5---multicore>V5 - Multicore!</a></h1>
-<p>Now we&rsquo;re getting somewhere.</p>
-<p>Since we&rsquo;re using Go instead of CPython, it&rsquo;s now trivial to run our code across all of our processor cores. We simple wrap the code above in a function called <code>worker</code> and then we spawn multiple workers which consume our input and do the processing. We also make sure to use a <code>sync.Mutex</code> to lock the shared memory so as to prevent multiple processes writing from memory or corrupting things.</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>for</span> i <span style=color:#555>:=</span> <span style=color:#f60>0</span>; i &lt; <span style=color:#f60>5</span>; i<span style=color:#555>++</span> {
-        wg.<span style=color:#c0f>Add</span>(<span style=color:#f60>1</span>)
-        <span style=color:#069;font-weight:700>go</span> <span style=color:#c0f>worker</span>(input, fields, <span style=color:#555>&amp;</span>w, <span style=color:#555>&amp;</span>n, D, alpha, <span style=color:#555>&amp;</span>loss, <span style=color:#555>&amp;</span>count, <span style=color:#555>&amp;</span>wg, mutex)
-    }
-</code></pre></div><p>This gets us further improvement, with the resulting processing speed being 253,000 RPS.</p>
-<h2 id=more-efficient-locking class=anchor-link><a href=#more-efficient-locking>More efficient locking?</a></h2>
-<p>The Go version of our code is much faster than our original CPython version (and the PyPy) version, which makes sense as it is a faster language in general and is also using multiple CPU cores. However, we&rsquo;re still being slowed down due to the workers having to wait to acquire locks before they can update the weights in our model.</p>
-<p>It&rsquo;s definitely worth asking how to make that faster, and there are certainly ways to go about that. One example could be round-robin updates as described in this <a href=https://papers.nips.cc/paper/3888-slow-learners-are-fast.pdf>NIPS paper</a>.</p>
-<p>However, it could also be worth asking a different question.</p>
-<h2 id=what-if-we-just-ditch-the-locks class=anchor-link><a href=#what-if-we-just-ditch-the-locks>What if we just ditch the locks?</a></h2>
-<p>This is the question examined in the paper <a href=https://arxiv.org/abs/1106.5730>HOGWILD!: A Lock-Free Approach to Parallelizing Stochastic Gradient Descent</a>.</p>
-<p>The short answer is that when you are dealing with sparse data, as we are in this case, you can just remove the locks and let your processes run hog wild on the memory (hence the name) without any issues. In fact, any collisions or erroneous updates that do happen seem to add a kind of smoothing effect, resulting in the models performing better than predicted!</p>
-<p>So what happens to our code if we remove the locks from the workers?</p>
-<h2 id=v6---hogwild class=anchor-link><a href=#v6---hogwild>V6 - HOGWILD!</a></h2>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>import</span> (
-	<span style=color:#c30>&#34;fmt&#34;</span>
-	<span style=color:#c30>&#34;hash/fnv&#34;</span>
-	<span style=color:#c30>&#34;math&#34;</span>
-	<span style=color:#c30>&#34;strings&#34;</span>
-	<span style=color:#c30>&#34;sync&#34;</span>
-	<span style=color:#c30>&#34;time&#34;</span>
-
-	fstream <span style=color:#c30>&#34;github.com/adamdrake/gofstream&#34;</span>
-)
-
-<span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>hash</span>(s []<span style=color:#078;font-weight:700>byte</span>) <span style=color:#078;font-weight:700>int</span> {
-	h <span style=color:#555>:=</span> fnv.<span style=color:#c0f>New64a</span>()
-	h.<span style=color:#c0f>Write</span>(s)
-	<span style=color:#069;font-weight:700>return</span> <span style=color:#366>int</span>(h.<span style=color:#c0f>Sum64</span>())
-}
-
-<span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>worker</span>(recs <span style=color:#069;font-weight:700>chan</span> <span style=color:#078;font-weight:700>string</span>, fields []<span style=color:#078;font-weight:700>string</span>, w, n <span style=color:#555>*</span>[]<span style=color:#078;font-weight:700>float64</span>, D, alpha <span style=color:#078;font-weight:700>float64</span>, loss <span style=color:#555>*</span><span style=color:#078;font-weight:700>float64</span>, count <span style=color:#555>*</span><span style=color:#078;font-weight:700>int</span>, wg <span style=color:#555>*</span>sync.WaitGroup) {
-	<span style=color:#069;font-weight:700>defer</span> wg.<span style=color:#c0f>Done</span>()
-	<span style=color:#069;font-weight:700>for</span> r <span style=color:#555>:=</span> <span style=color:#069;font-weight:700>range</span> recs {
-		request <span style=color:#555>:=</span> strings.<span style=color:#c0f>Split</span>(r, <span style=color:#c30>&#34;,&#34;</span>)
-
-		<span style=color:#555>*</span>count<span style=color:#555>++</span>
-		y <span style=color:#555>:=</span> <span style=color:#f60>0</span>
-		<span style=color:#069;font-weight:700>if</span> request[<span style=color:#f60>1</span>] <span style=color:#555>==</span> <span style=color:#c30>&#34;1&#34;</span> {
-			y = <span style=color:#f60>1</span>
-		}
-
-		request = request[<span style=color:#f60>2</span>:]             <span style=color:#09f;font-style:italic>// ignore label and id
-</span><span style=color:#09f;font-style:italic></span>		x <span style=color:#555>:=</span> <span style=color:#366>make</span>([]<span style=color:#078;font-weight:700>int</span>, <span style=color:#366>len</span>(request)<span style=color:#555>+</span><span style=color:#f60>1</span>) <span style=color:#09f;font-style:italic>// need length plus one for zero at front
-</span><span style=color:#09f;font-style:italic></span>		x[<span style=color:#f60>0</span>] = <span style=color:#f60>0</span>
-		<span style=color:#069;font-weight:700>for</span> i, v <span style=color:#555>:=</span> <span style=color:#069;font-weight:700>range</span> request {
-			hashResult <span style=color:#555>:=</span> <span style=color:#c0f>hash</span>([]<span style=color:#366>byte</span>(fields[i]<span style=color:#555>+</span>v)) <span style=color:#555>%</span> <span style=color:#366>int</span>(D)
-			x[i<span style=color:#555>+</span><span style=color:#f60>1</span>] = <span style=color:#366>int</span>(math.<span style=color:#c0f>Abs</span>(<span style=color:#366>float64</span>(hashResult)))
-		}
-
-		<span style=color:#09f;font-style:italic>// Get the prediction for the given request (now transformed to hash values)
-</span><span style=color:#09f;font-style:italic></span>		wTx <span style=color:#555>:=</span> <span style=color:#f60>0.0</span>
-		<span style=color:#069;font-weight:700>for</span> _, v <span style=color:#555>:=</span> <span style=color:#069;font-weight:700>range</span> x {
-			wTx <span style=color:#555>+=</span> (<span style=color:#555>*</span>w)[v]
-		}
-		p <span style=color:#555>:=</span> <span style=color:#f60>1.0</span> <span style=color:#555>/</span> (<span style=color:#f60>1.0</span> <span style=color:#555>+</span> math.<span style=color:#c0f>Exp</span>(<span style=color:#555>-</span>math.<span style=color:#c0f>Max</span>(math.<span style=color:#c0f>Min</span>(wTx, <span style=color:#f60>20.0</span>), <span style=color:#555>-</span><span style=color:#f60>20.0</span>)))
-
-		<span style=color:#09f;font-style:italic>// Update the loss
-</span><span style=color:#09f;font-style:italic></span>		p = math.<span style=color:#c0f>Max</span>(math.<span style=color:#c0f>Min</span>(p, <span style=color:#f60>1.</span><span style=color:#555>-</span>math.<span style=color:#c0f>Pow</span>(<span style=color:#f60>10</span>, <span style=color:#555>-</span><span style=color:#f60>12</span>)), math.<span style=color:#c0f>Pow</span>(<span style=color:#f60>10</span>, <span style=color:#555>-</span><span style=color:#f60>12</span>))
-		<span style=color:#069;font-weight:700>if</span> y <span style=color:#555>==</span> <span style=color:#f60>1</span> {
-			<span style=color:#555>*</span>loss <span style=color:#555>+=</span> <span style=color:#555>-</span>math.<span style=color:#c0f>Log</span>(p)
-		} <span style=color:#069;font-weight:700>else</span> {
-			<span style=color:#555>*</span>loss <span style=color:#555>+=</span> <span style=color:#555>-</span>math.<span style=color:#c0f>Log</span>(<span style=color:#f60>1.0</span> <span style=color:#555>-</span> p)
-		}
-
-		<span style=color:#09f;font-style:italic>// Update the weights
-</span><span style=color:#09f;font-style:italic></span>		<span style=color:#069;font-weight:700>for</span> _, v <span style=color:#555>:=</span> <span style=color:#069;font-weight:700>range</span> x {
-			(<span style=color:#555>*</span>w)[v] = (<span style=color:#555>*</span>w)[v] <span style=color:#555>-</span> (p<span style=color:#555>-</span><span style=color:#366>float64</span>(y))<span style=color:#555>*</span>alpha<span style=color:#555>/</span>(math.<span style=color:#c0f>Sqrt</span>((<span style=color:#555>*</span>n)[v])<span style=color:#555>+</span><span style=color:#f60>1.0</span>)
-			(<span style=color:#555>*</span>n)[v]<span style=color:#555>++</span>
-		}
-	}
-}
-
-<span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>main</span>() {
-	start <span style=color:#555>:=</span> time.<span style=color:#c0f>Now</span>()
-	D <span style=color:#555>:=</span> math.<span style=color:#c0f>Pow</span>(<span style=color:#f60>2</span>, <span style=color:#f60>20</span>) <span style=color:#09f;font-style:italic>// number of weights use for learning
-</span><span style=color:#09f;font-style:italic></span>	alpha <span style=color:#555>:=</span> <span style=color:#f60>0.1</span>         <span style=color:#09f;font-style:italic>// learning rate for sgd optimization
-</span><span style=color:#09f;font-style:italic></span>	w <span style=color:#555>:=</span> <span style=color:#366>make</span>([]<span style=color:#078;font-weight:700>float64</span>, <span style=color:#366>int</span>(D))
-	n <span style=color:#555>:=</span> <span style=color:#366>make</span>([]<span style=color:#078;font-weight:700>float64</span>, <span style=color:#366>int</span>(D))
-	loss <span style=color:#555>:=</span> <span style=color:#f60>0.0</span>
-	count <span style=color:#555>:=</span> <span style=color:#f60>0</span>
-
-	data, _ <span style=color:#555>:=</span> fstream.<span style=color:#c0f>New</span>(<span style=color:#c30>&#34;../train.csv&#34;</span>, <span style=color:#f60>10000</span>)
-	fields <span style=color:#555>:=</span> strings.<span style=color:#c0f>Split</span>(<span style=color:#555>&lt;-</span>data, <span style=color:#c30>&#34;,&#34;</span>)
-	<span style=color:#069;font-weight:700>var</span> wg sync.WaitGroup
-
-	<span style=color:#069;font-weight:700>for</span> i <span style=color:#555>:=</span> <span style=color:#f60>0</span>; i &lt; <span style=color:#f60>5</span>; i<span style=color:#555>++</span> {
-		wg.<span style=color:#c0f>Add</span>(<span style=color:#f60>1</span>)
-		<span style=color:#069;font-weight:700>go</span> <span style=color:#c0f>worker</span>(data, fields, <span style=color:#555>&amp;</span>w, <span style=color:#555>&amp;</span>n, D, alpha, <span style=color:#555>&amp;</span>loss, <span style=color:#555>&amp;</span>count, <span style=color:#555>&amp;</span>wg)
-	}
-	wg.<span style=color:#c0f>Wait</span>()
-	fmt.<span style=color:#c0f>Println</span>(<span style=color:#c30>&#34;Run time is&#34;</span>, time.<span style=color:#c0f>Since</span>(start))
-	fmt.<span style=color:#c0f>Println</span>(<span style=color:#c30>&#34;loss&#34;</span>, loss<span style=color:#555>/</span><span style=color:#366>float64</span>(count))
-	fmt.<span style=color:#c0f>Println</span>(<span style=color:#c30>&#34;RPS&#34;</span>, <span style=color:#366>float64</span>(count)<span style=color:#555>/</span>time.<span style=color:#c0f>Since</span>(start).<span style=color:#c0f>Seconds</span>())
-}
-</code></pre></div><p>The code above gets us to 366,000 RPS on my laptop, which has an <strong>18x</strong> speedup over the CPython version. The Go code is also not optimized, and could pretty easily be made even faster.</p>
-<p>As a side node, the solution above is not completely lock-free, as there is still locking going on from the buffered channel <code>data</code>.</p>
-<h1 id=conclusion class=anchor-link><a href=#conclusion>Conclusion</a></h1>
-<p>There has been quite a bit of hype surrounding <em>Big Data</em> and the tooling required to deal with it, largely from companies whose entire business model revolves around selling you the tools to processes larger data sets. However, in many cases those tools are completely unnecessary and harmful to the focus and priorities of your development teams, not to mention your budget. As an example, see a previous article of mine where I did a quick demonstration of how simple command-line tools on a laptop <a href=/command-line-tools-can-be-235x-faster-than-your-hadoop-cluster.html>can be 235x faster than a Hadoop cluster</a>.</p>
-<p>What we&rsquo;ve really done above is transform a batch-oriented machine learning problem into a streaming/online learning problem. This provides us with much more flexibility in terms of how much memory is required to achieve the objective (in this case, binary classification) and is wholly independent of input data size. Transforming problems like this into stream-based problems is a very valuable technique.</p>
-<p>In this article we&rsquo;ve seen that it&rsquo;s relatively easy to deal with data sets larger than your RAM, or in fact infinitely large. Using these techniques, you can probably process the data at a rate limited only by the read speed of your SSD!</p>
-</div>
-</div>
-</section>
-<div class="nav-box row">
-<div class=nav-left-menu>
-<ul>
-<li><a href=/>Latest</a> | </li>
-<li><a href=/about.html>About</a> | </li>
-<li><a href=/cases.html>Case Studies</a> | </li>
-<li><a href=/contact.html>Contact</a> | </li>
-<li><a href=/press.html>Press</a></li>
-</ul>
-</div>
-</div>
-<div class="footer-box row">
-<div class="footer-left col-md-6 col-xs-12">
-<div class="footer-bio content">
-<p><strong>Adam Drake</strong> leads technical business transformations in global and multi-cultural environments. He has a passion for helping companies become more productive by improving internal leadership capabilities, and accelerating product development through technology and data architecture guidance. Adam has served as a White House Presidential Innovation Fellow and is an IEEE Senior Member.</p>
-</div>
-</div>
-<div class=footer-right>
-<div class=social-icons>
-<a href=https://github.com/adamdrake>
-<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64>
-</a>
-<a href=https://twitter.com/aadrake>
-<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64>
-</a>
-<a href=https://linkedin.com/in/aadrake>
-<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64>
-</a>
-</div>
-<button class="subscribe subscribe-btn">
-<a href=https://www.digitalmaneuver.com/#/portal>Subscribe to newsletter</a>
-</button>
-</div>
-</div>
-<div class="container has-text-centered footer-copyright">
-</div>
-</body>
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=mobile-web-app-capable content="yes"><meta name=viewport content="width=device-width,initial-scale=1"><title>Big Data, Small Machine - Adam Drake</title><meta name=description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams."><link rel="shortcut icon" href=https://adamdrake.com/static/favicon.ico><link rel=authorization_endpoint href=https://indieauth.com/auth><link rel=token_endpoint href=https://tokens.indieauth.com/token><link rel=me href=https://github.com/adamdrake><link rel=me href=https://twitter.com/aadrake><link rel=stylesheet href=https://adamdrake.com/css/style.min.css crossorigin=anonymous media=screen><meta property="og:url" content="https://adamdrake.com"><meta property="og:title" content="Adam Drake"><meta property="og:site_name" content="Adam Drake"><meta property="og:type" content="website"><meta property="og:description" content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams."><meta property="og:image" content="/static/images/twitter-card.jpg"><meta name=twitter:title content="Adam Drake"><meta name=twitter:description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams."><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/static/images/twitter-card.jpg"></head><body><header><section><div class="header flex row"><div class="header__item flex row"><a id=site__name href=https://adamdrake.com>Adam Drake</a></div><div class="flex row"><nav aria-label="page menu" class="flex row"><ul role=menubar class="flex row"><li role=none><a class=sidebar-nav-itemmenu__item href=/ title>Latest</a></li><li role=none><a class=sidebar-nav-itemmenu__item href=/about.html title>About</a></li><li role=none><a class=sidebar-nav-itemmenu__item href=/cases.html title>Case Studies</a></li><li role=none><a class=sidebar-nav-itemmenu__item href=/contact.html title>Contact</a></li><li role=none><a class="sidebar-nav-item activemenu__item" href=/posts.html title=Posts>Posts</a></li><li role=none><a class=sidebar-nav-itemmenu__item href=/press.html title>Press</a></li><li><button class="subscribe subscribe-btn">
+<a href=https://www.digitalmaneuver.com/#/portal>Subscribe to newsletter</a></button></li></ul></nav></div></div></section></header><main aria-role=main><section><ul id=feed__ul><li class="feed__li h-entry"><div class=feed__content><time class="hidden dt-published">2018-05-28 00:00:00 +0000 UTC</time><div class="flex properties__row"><div rel=author class="flex left p-author h-card hidden"><img class=u-photo src=https://adamdrake.com/static/images/adam_drake_240.jpg alt="Adam Drake" id=author-img><div><p rel=me class=p-name id=author-name>Adam Drake</p><p class=properties>May 28, 2018</p></div></div><div class="flex right properties"></div></div><article class="md p-summary e-content"><h1 class=p-name>Big Data, Small Machine</h1><h1 id=introduction class=anchor-link><a href=#introduction>Introduction</a></h1><p>I was honored to be invited by <a href=https://www.meetup.com/DevTOEvents/events/250716245/>DevTO</a> to give a talk at their May meetup. The organizers were keen to have someone speak about high-performance machine learning, and I was happy to oblige.</p><p>The general thesis of the talk is that, for the purposes of machine learning, setting up large compute clusters is wholly unnecessary. Furthermore, it should generally be considered harmful as those efforts are extremely time consuming and detract from solving the actual machine learning problem at hand.</p><p>To illustrate the point, I showed an online learning approach to binary classification problems using logistic regression with adaptive learning rates. While some might dismiss this approach as too simplistic or ineffective, consider that it is not very different from what Google was (is?) using for some of their online advertising prediction systems. This was described in the wonderful paper <a href=https://www.eecs.tufts.edu/%7Edsculley/papers/ad-click-prediction.pdf>Ad Click Prediction: a View from the Trenches</a>.</p><p>As in previous summaries of my lectures, I&rsquo;ll reference select slides by section header and provide the explanation that went along with the slide, including some elaboration I may not have had time for in the lecture itself.</p><h1 id=claims class=anchor-link><a href=#claims>Claims</a></h1><p>In my lecture I made a few general claims:</p><ul><li>RAM in machines used to process data is growing more quickly than the data itself</li><li>There are many techniques for dealing with so-called <em>Big Data</em> and none of which involve clusters or heavy data infrastructure components like Kafka, Hadoop, Spark, and so on</li><li>One machine is fine for machine learning tasks, i.e., actually training ML models</li></ul><h1 id=step-0-more-ram class=anchor-link><a href=#step-0-more-ram>Step 0: More RAM</a></h1><p>If you have a data set that is too big to fit into memory, you can consider getting access to more memory.</p><p>We know from <a href=https://www.kdnuggets.com/2015/11/big-ram-big-data-size-datasets.html>other articles</a> and surveys done by KDnuggets that the size of data sets people actually analyze seems to be growing at around 20% per year. Additionally, this data tells us that most analytics professionals deal with data sets that are below 100GB or so in size.</p><p>We also know from looking at historical RAM availability on EC2 instances (just as an example) that the yearly increase in RAM on these instances is faster than the 20% yearly increase in data set size.</p><table><thead><tr><th>Year</th><th>Type</th><th>RAM (GiB)</th></tr></thead><tbody><tr><td>2007</td><td>m1.xlarge</td><td>15</td></tr><tr><td>2009</td><td>m2.4xlarge</td><td>68</td></tr><tr><td>2012</td><td>hs1.8xlarge</td><td>117</td></tr><tr><td>2014</td><td>r3.8xlarge</td><td>244</td></tr><tr><td>2016</td><td>x1.32xlarge</td><td>1952</td></tr><tr><td>2017/8</td><td>x1e.32xlarge</td><td>3904</td></tr></tbody></table><p>So for a lot of people, a single AWS instance circa 2012 would have been sufficient to perform all the necessary work for a machine learning task. Nevermind of course, that the currently available high memory instances provide <strong>4TB</strong> of RAM, which is far more than the data set sizes most analytics professionals deal with.</p><p>Lastly, note that Tyan makes a motherboard which can currently accomodate 12.3TB of RAM, which is up from 6TB around 2016.</p><p>When all this is taken together, most people can do all the analytics and machine learning tasks they need to do on a single machine with adequate memory. This completely obviates the need for infrastructure like Hadoop, Spark, and so on for training machine learning models (though they may have their place in preprocessing).</p><h1 id=step-1-sampling class=anchor-link><a href=#step-1-sampling>Step 1: Sampling</a></h1><p>Consider though that perhaps you still have too much data to fit into RAM, or you simply want to train your model more quickly with approximately the same level of accuracy. In that case, just don&rsquo;t use all the available training data!</p><p>In the last years, it has somehow become fashionable to completely ignore centuries of mathematical and statistical progress and instead insist that, in order to make a useful model, all data must be analyzed. This perspective became even more generally accepted in the last decade or so, and especially after Halevy, Norvig, and Periera published <a href=https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/35179.pdf>The Unreasonable Effectiveness of Data</a> (PDF).</p><p>Truths to having a larger training set notwithstanding, just because a larger data set for training may yield better results does not mean that using the larger training set yields <strong>significantly</strong> better results. Often, the marginal increase in performance of a machine learning model from adding additional data is just not worth the additional annoyance of having to deal with the more complicated methods and infrastructure components that may be required to use all of the data.</p><p>More data might beat better algorithms, as the saying goes, but perhaps not by much.</p><p>This problem is particularly clear in the online advertising space and predicting clicks on advertisements. It is not unusual to display an advertisement 10,000 times in order to achieve just 20 clicks. In other words, approximately 99.8% of the data set will be views of ads that do not result in a click.</p><p>With a data set that has such biased class distribution, you could probably randomly eliminate 90% of the views and still have a similar performance from your classifier. In other words, if you had 100GB of training data, you would only have to bother with processing 10GB instead. This of course requires nothing particularly special in terms of hardware, and can be completed on many modern laptops.</p><h1 id=what-if-sampling-doesnt-work--try-streaming class=anchor-link><a href=#what-if-sampling-doesnt-work--try-streaming>What if sampling doesn&rsquo;t work? Try streaming!</a></h1><p>There might be cases when sampling isn&rsquo;t an option, or won&rsquo;t work for some reason, and the data is too large to fit into RAM.</p><p>In other words, we will transform the problem from a batch-based approach of training a model on a set of data to an online-based approach where our model is learning as it receives data from a stream. Think about it like building a system that takes requests to feed the model learning information, or obtain a prediction, instead of a model that takes in a large chunk of data in order to calculate model weights. In doing this, we also change from a focus of how much data our model can handle at one time, to how many Requests Per Second (RPS) our system is capable of handling. Higher RPS means we can handle more data, in less time.</p><p>To think in terms of streams with machine learning models, we need three basic things:</p><ol><li>A data source that can emit requests/events</li><li>A method of stateless feature extraction, so that obtaining features doesn&rsquo;t depend on other requests in the (potentially infinite) stream</li><li>A machine learning model that supports incremental learning</li></ol><h2 id=data-source class=anchor-link><a href=#data-source>Data Source</a></h2><p>If we have a large file, we can simply read it in one record/request at a time. A simple way of doing this with a generator in Python might look something like:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>getRequest</span>(path, numFeatures):
+</span></span><span style=display:flex><span>    count <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> i, line <span style=color:#f92672>in</span> enumerate(open(path)):
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> i <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>:
+</span></span><span style=display:flex><span>            <span style=color:#75715e># do whatever you want at initialization</span>
+</span></span><span style=display:flex><span>            x <span style=color:#f92672>=</span> [<span style=color:#ae81ff>0</span>] <span style=color:#f92672>*</span> numFeatures <span style=color:#75715e># So we don&#39;t need to create a new x every time</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>continue</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> t, feat  <span style=color:#f92672>in</span> enumerate(line<span style=color:#f92672>.</span>strip()<span style=color:#f92672>.</span>split(<span style=color:#e6db74>&#39;,&#39;</span>)):
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> t <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>:
+</span></span><span style=display:flex><span>                y <span style=color:#f92672>=</span> feat <span style=color:#75715e># assuming first position in request is some kind of label</span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>                <span style=color:#75715e># do something with the features</span>
+</span></span><span style=display:flex><span>                x[m] <span style=color:#f92672>=</span> feat
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>yield</span> (count, x, y)
+</span></span></code></pre></div><p>Or alternatively, if we are using Pandas we can simply pass in the <code>chunksize</code> parameter to a method like <code>read_csv()</code>:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>reader <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>read_csv(<span style=color:#e6db74>&#39;blah.csv&#39;</span>, chunksize<span style=color:#f92672>=</span><span style=color:#ae81ff>10000</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> chunk <span style=color:#f92672>in</span> reader:
+</span></span><span style=display:flex><span>    doSomething(chunk)
+</span></span></code></pre></div><p>That covers the need to transform a file that is too large to fit into memory into a stream of data we can easily process.</p><h2 id=stateless-feature-extraction class=anchor-link><a href=#stateless-feature-extraction>Stateless Feature Extraction</a></h2><p>Hello, hashing trick!</p><p>This slide was a bit difficult to fully explain given the time constraints of the lecture and density of the information. The short version is that we will convert a request into an array of integers by concatenating each feature name and value in the request, and then taking a hash of that result.</p><p>For example, if the feature is <code>firstName</code> and the value is <code>Adam</code> then we would hash <code>firstNameAdam</code> and obtain some number, say <code>18445008</code>. This number will then serve as the index for that particular feature name/feature value combination in our array of weights in our model. This allows us to do a few extremely important things in a large-scale/sparse learning scenario:</p><ol><li>We do not need to know the features in advance, since a feature name/value combination always reliably hashes to the same weight</li><li>By deciding how many weights (<code>modelWeights</code>) we want our model to have up front, likely dictated by our RAM constraints, we can control RAM usage very precisely by simply taking the hash modulo the number of weights <code>18445008 % modelWeights</code>.</li><li>Since we are not storing any mappings between features and values and so on, we can save a lot of additional RAM. We can simply adjust weights in the model by going to the resulting index in the weights array directly from the hash.</li></ol><p>With the above in mind, the <em>hashing trick</em> is a very important and useful tool when data is large but RAM is in tight supply. This is equally true on smaller systems like embedded devices, which will become increasingly popular as analytics tasks are more distributed. Embedded devices also typically do not have nearly as much RAM as a large EC2 instance. If you only have an embedded device with 10MB of RAM to spare, you can simply limit the number of weights in your model accordingly. It&rsquo;s amazing how accurate a model you can produce if you are using 32 bit floats and have 4MB of memory available.</p><h2 id=incremental-learning class=anchor-link><a href=#incremental-learning>Incremental Learning</a></h2><p>Once we have the stream and the hashing trick on hand (if needed) we can provide the features to our model <code>N</code> request at a time, or even one request at a time, as long as the model is one that supports incremental learning. There are many such models available in scikit-learn, but here we will just use our own in the form of logistic regression with adaptive learning rates.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># Turn the request into a list of hash values</span>
+</span></span><span style=display:flex><span>x <span style=color:#f92672>=</span> [<span style=color:#ae81ff>0</span>]  <span style=color:#75715e># 0 is the index of the bias term</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> key, value <span style=color:#f92672>in</span> request<span style=color:#f92672>.</span>items():
+</span></span><span style=display:flex><span>    index <span style=color:#f92672>=</span> int(value <span style=color:#f92672>+</span> key[<span style=color:#ae81ff>1</span>:], <span style=color:#ae81ff>16</span>) <span style=color:#f92672>%</span> D
+</span></span><span style=display:flex><span>    x<span style=color:#f92672>.</span>append(index)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Get the prediction for the given request (now transformed to hash values)</span>
+</span></span><span style=display:flex><span>wTx <span style=color:#f92672>=</span> <span style=color:#ae81ff>0.</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> i <span style=color:#f92672>in</span> x:  <span style=color:#75715e># do wTx</span>
+</span></span><span style=display:flex><span>    wTx <span style=color:#f92672>+=</span> w[i] <span style=color:#75715e># w[i] * x[i], but if i in x we got x[i] = 1.</span>
+</span></span><span style=display:flex><span>p <span style=color:#f92672>=</span> <span style=color:#ae81ff>1.</span> <span style=color:#f92672>/</span> (<span style=color:#ae81ff>1.</span> <span style=color:#f92672>+</span> exp(<span style=color:#f92672>-</span>max(min(wTx, <span style=color:#ae81ff>20.</span>), <span style=color:#f92672>-</span><span style=color:#ae81ff>20.</span>)))
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Update the loss</span>
+</span></span><span style=display:flex><span>p <span style=color:#f92672>=</span> max(min(p, <span style=color:#ae81ff>1.</span> <span style=color:#f92672>-</span> <span style=color:#ae81ff>10e-12</span>), <span style=color:#ae81ff>10e-12</span>)
+</span></span><span style=display:flex><span>loss <span style=color:#f92672>+=</span> <span style=color:#f92672>-</span>log(p) <span style=color:#66d9ef>if</span> y <span style=color:#f92672>==</span> <span style=color:#ae81ff>1.</span> <span style=color:#66d9ef>else</span> <span style=color:#f92672>-</span>log(<span style=color:#ae81ff>1.</span> <span style=color:#f92672>-</span> p)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Update the weights</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> i <span style=color:#f92672>in</span> x:
+</span></span><span style=display:flex><span>    <span style=color:#75715e># alpha / (sqrt(n) + 1) is the adaptive learning rate heuristic</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># (p - y) * x[i] is the current gradient</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># note that in our case, if i in x then x[i] = 1</span>
+</span></span><span style=display:flex><span>    w[i] <span style=color:#f92672>-=</span> (p <span style=color:#f92672>-</span> y) <span style=color:#f92672>*</span> alpha <span style=color:#f92672>/</span> (sqrt(n[i]) <span style=color:#f92672>+</span> <span style=color:#ae81ff>1.</span>)
+</span></span><span style=display:flex><span>    n[i] <span style=color:#f92672>+=</span> <span style=color:#ae81ff>1.</span>
+</span></span></code></pre></div><p>To the best of my recollection, this code was originally provided by tinrtgu on the Kaggle forums some years ago, and it&rsquo;s a great example of how to do machine learning with limited RAM.</p><h1 id=performance class=anchor-link><a href=#performance>Performance</a></h1><h2 id=v1 class=anchor-link><a href=#v1>V1</a></h2><p>In testing on my laptop with some old data, I was able to use the above code to train a model at a rate of ~20,000 RPS. This is respectable, and there are few people who have to deal with online machine learning systems that have to handle more load than that. However, that&rsquo;s usually the kind of situation that causes companies to contact me for technical help, so I explored further.</p><h2 id=v2 class=anchor-link><a href=#v2>V2</a></h2><p>What&rsquo;s the first thing someone should do when CPython isn&rsquo;t fast enough? Try PyPy!</p><p>Simply by running the script with PyPy instead of the regular CPython interpreter, I got a performance increase of 3.5x (74,000 RPS vs 20,000 RPS).</p><p>I cannot overemphasize how important this step is if your company uses Python in your data processing activities and things are too slow. You may be able to speed them up dramatically without making a single modification to your code, thus allowing you to work on other important business problems. If your Python is too slow, TRY PYPY!</p><h2 id=v3 class=anchor-link><a href=#v3>V3</a></h2><p>One problem with Python in these scenarios is that Python is single-threaded by default and therefore will not avail itself of additional processor cores on the machine. We&rsquo;d really like to use all cores, and just place some locks around the critical weight arrays so as to prevent non-atomic modifications by multiple threads or processes.</p><p>However, due to the Global Interpreter Lock (GIL) in CPython, only a single Python <strong>thread</strong> can execute bytecode at any given time. Because of that, we have to spawn multiple processes using the <code>multiprocessing</code> library. In this scenario, each process is essentially running its own copy of the Python interpreter. Then you can do things like use a <code>RawArray</code> from <code>multiprocessing.sharedctypes</code> if you want to have multiple processes operate on a single chunk of memory.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> multiprocessing.sharedctypes <span style=color:#f92672>import</span> RawArray
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> multiprocessing <span style=color:#f92672>import</span> Process
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> time
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> random
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>incr</span>(arr, i):
+</span></span><span style=display:flex><span>    time<span style=color:#f92672>.</span>sleep(random<span style=color:#f92672>.</span>randint(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>4</span>))
+</span></span><span style=display:flex><span>    arr[i] <span style=color:#f92672>+=</span> <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>    print(arr[:])
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>arr <span style=color:#f92672>=</span> RawArray(<span style=color:#e6db74>&#39;d&#39;</span>, <span style=color:#ae81ff>10</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>procs <span style=color:#f92672>=</span> [Process(target<span style=color:#f92672>=</span>incr, args<span style=color:#f92672>=</span>(arr,i)) <span style=color:#66d9ef>for</span> i <span style=color:#f92672>in</span> range(<span style=color:#ae81ff>10</span>)]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> p <span style=color:#f92672>in</span> procs:
+</span></span><span style=display:flex><span>    p<span style=color:#f92672>.</span>start()
+</span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> p <span style=color:#f92672>in</span> procs:
+</span></span><span style=display:flex><span>    p<span style=color:#f92672>.</span>join()
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#39;&#39;&#39;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>[0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>[0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>[0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>[0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>[0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>[0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>[0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>[0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>&#39;&#39;&#39;</span>
+</span></span></code></pre></div><p>In practice, the standard way to handle this would be to place the requests we want to process into a work queue, and then have multiple worker processes pull from the queue and do all the processing tasks from the code in the Incremental Learning section above. This looks something like the following.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> multiprocessing <span style=color:#f92672>import</span> Queue
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>procs <span style=color:#f92672>=</span> [Process(target<span style=color:#f92672>=</span>worker, args<span style=color:#f92672>=</span>(q, w, n, D, alpha, loss, count,)) \
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> x <span style=color:#f92672>in</span> range(<span style=color:#ae81ff>4</span>)]
+</span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> p <span style=color:#f92672>in</span> procs:
+</span></span><span style=display:flex><span>    p<span style=color:#f92672>.</span>start()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> t, row <span style=color:#f92672>in</span> enumerate(DictReader(open(train))):
+</span></span><span style=display:flex><span>    q<span style=color:#f92672>.</span>put(row)
+</span></span></code></pre></div><h3 id=bad-news class=anchor-link><a href=#bad-news>Bad news&mldr;</a></h3><p>Unfortunately, the code above is actually <strong>slower</strong> than the single-threaded version. Why, you ask?</p><p><img class=enclosure src=/static/talks/DRAKE-adam-20180528-devto-python-multiproc-call-graph.png alt="Call graph"></p><p>If we have a look at the call graph above, we can see that we&rsquo;re spending about 64% of the run time waiting to acquire access to the queue. This is a common issue in multi-threaded programming, and while it could be potentially, partially, ameliorated by doing things like putting more than one request in the queue at a time (i.e., using a mini-batch approach), the fact is that we&rsquo;re having to do a lot of gymnastics to make Python faster at this point. For such a small program, maybe Python isn&rsquo;t the best tool for the job.</p><h2 id=v4---hello-go class=anchor-link><a href=#v4---hello-go>V4 - Hello Go!</a></h2><p>Thankfully, Go is a pretty straightforward language, and also reasonably fast. For a program like this, it could be a good fit. We can easily port the Python version of the code over to Go. Besides the braces, it looks about the same.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span>  <span style=color:#75715e>// Hash the request values
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span>, <span style=color:#a6e22e>v</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>request</span> {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>hashResult</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>hash</span>([]byte(<span style=color:#a6e22e>fields</span>[<span style=color:#a6e22e>i</span>] <span style=color:#f92672>+</span> <span style=color:#a6e22e>v</span>)) <span style=color:#f92672>%</span> int(<span style=color:#a6e22e>D</span>)
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>x</span>[<span style=color:#a6e22e>i</span><span style=color:#f92672>+</span><span style=color:#ae81ff>1</span>] = int(<span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Abs</span>(float64(<span style=color:#a6e22e>hashResult</span>)))
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Get the prediction for the given request (now transformed to hash values)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#a6e22e>wTx</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0.0</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>v</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>x</span> {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>wTx</span> <span style=color:#f92672>+=</span> (<span style=color:#f92672>*</span><span style=color:#a6e22e>w</span>)[<span style=color:#a6e22e>v</span>]
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>p</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>1.0</span> <span style=color:#f92672>/</span> (<span style=color:#ae81ff>1.0</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Exp</span>(<span style=color:#f92672>-</span><span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Max</span>(<span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Min</span>(<span style=color:#a6e22e>wTx</span>, <span style=color:#ae81ff>20.0</span>), <span style=color:#f92672>-</span><span style=color:#ae81ff>20.0</span>)))
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Update the loss
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#a6e22e>p</span> = <span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Max</span>(<span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Min</span>(<span style=color:#a6e22e>p</span>, <span style=color:#ae81ff>1.</span><span style=color:#f92672>-</span><span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Pow</span>(<span style=color:#ae81ff>10</span>, <span style=color:#f92672>-</span><span style=color:#ae81ff>12</span>)), <span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Pow</span>(<span style=color:#ae81ff>10</span>, <span style=color:#f92672>-</span><span style=color:#ae81ff>12</span>))
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>y</span> <span style=color:#f92672>==</span> <span style=color:#ae81ff>1</span> {
+</span></span><span style=display:flex><span>        <span style=color:#f92672>*</span><span style=color:#a6e22e>loss</span> <span style=color:#f92672>+=</span> <span style=color:#f92672>-</span><span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Log</span>(<span style=color:#a6e22e>p</span>)
+</span></span><span style=display:flex><span>    } <span style=color:#66d9ef>else</span> {
+</span></span><span style=display:flex><span>        <span style=color:#f92672>*</span><span style=color:#a6e22e>loss</span> <span style=color:#f92672>+=</span> <span style=color:#f92672>-</span><span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Log</span>(<span style=color:#ae81ff>1.0</span> <span style=color:#f92672>-</span> <span style=color:#a6e22e>p</span>)
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Update the weights
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>v</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>x</span> {
+</span></span><span style=display:flex><span>        (<span style=color:#f92672>*</span><span style=color:#a6e22e>w</span>)[<span style=color:#a6e22e>v</span>] = (<span style=color:#f92672>*</span><span style=color:#a6e22e>w</span>)[<span style=color:#a6e22e>v</span>] <span style=color:#f92672>-</span> (<span style=color:#a6e22e>p</span><span style=color:#f92672>-</span>float64(<span style=color:#a6e22e>y</span>))<span style=color:#f92672>*</span><span style=color:#a6e22e>alpha</span><span style=color:#f92672>/</span>(<span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Sqrt</span>((<span style=color:#f92672>*</span><span style=color:#a6e22e>n</span>)[<span style=color:#a6e22e>v</span>])<span style=color:#f92672>+</span><span style=color:#ae81ff>1.0</span>)
+</span></span><span style=display:flex><span>        (<span style=color:#f92672>*</span><span style=color:#a6e22e>n</span>)[<span style=color:#a6e22e>v</span>]<span style=color:#f92672>++</span>
+</span></span><span style=display:flex><span>    }
+</span></span></code></pre></div><p>This port of the model runs at 186,000 RPS, which is about a <strong>9x</strong> speedup over the CPython version! For most companies or purposes, we could simply stop here since most of the time anything more than an order of magnitude speedup isn&rsquo;t required before moving on to the next bottleneck. However, we can still do better!</p><h1 id=v5---multicore class=anchor-link><a href=#v5---multicore>V5 - Multicore!</a></h1><p>Now we&rsquo;re getting somewhere.</p><p>Since we&rsquo;re using Go instead of CPython, it&rsquo;s now trivial to run our code across all of our processor cores. We simple wrap the code above in a function called <code>worker</code> and then we spawn multiple workers which consume our input and do the processing. We also make sure to use a <code>sync.Mutex</code> to lock the shared memory so as to prevent multiple processes writing from memory or corrupting things.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span> &lt; <span style=color:#ae81ff>5</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>wg</span>.<span style=color:#a6e22e>Add</span>(<span style=color:#ae81ff>1</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>go</span> <span style=color:#a6e22e>worker</span>(<span style=color:#a6e22e>input</span>, <span style=color:#a6e22e>fields</span>, <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>w</span>, <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>n</span>, <span style=color:#a6e22e>D</span>, <span style=color:#a6e22e>alpha</span>, <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>loss</span>, <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>count</span>, <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>wg</span>, <span style=color:#a6e22e>mutex</span>)
+</span></span><span style=display:flex><span>    }
+</span></span></code></pre></div><p>This gets us further improvement, with the resulting processing speed being 253,000 RPS.</p><h2 id=more-efficient-locking class=anchor-link><a href=#more-efficient-locking>More efficient locking?</a></h2><p>The Go version of our code is much faster than our original CPython version (and the PyPy) version, which makes sense as it is a faster language in general and is also using multiple CPU cores. However, we&rsquo;re still being slowed down due to the workers having to wait to acquire locks before they can update the weights in our model.</p><p>It&rsquo;s definitely worth asking how to make that faster, and there are certainly ways to go about that. One example could be round-robin updates as described in this <a href=https://papers.nips.cc/paper/3888-slow-learners-are-fast.pdf>NIPS paper</a>.</p><p>However, it could also be worth asking a different question.</p><h2 id=what-if-we-just-ditch-the-locks class=anchor-link><a href=#what-if-we-just-ditch-the-locks>What if we just ditch the locks?</a></h2><p>This is the question examined in the paper <a href=https://arxiv.org/abs/1106.5730>HOGWILD!: A Lock-Free Approach to Parallelizing Stochastic Gradient Descent</a>.</p><p>The short answer is that when you are dealing with sparse data, as we are in this case, you can just remove the locks and let your processes run hog wild on the memory (hence the name) without any issues. In fact, any collisions or erroneous updates that do happen seem to add a kind of smoothing effect, resulting in the models performing better than predicted!</p><p>So what happens to our code if we remove the locks from the workers?</p><h2 id=v6---hogwild class=anchor-link><a href=#v6---hogwild>V6 - HOGWILD!</a></h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;hash/fnv&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;math&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;strings&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;sync&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;time&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fstream</span> <span style=color:#e6db74>&#34;github.com/adamdrake/gofstream&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>hash</span>(<span style=color:#a6e22e>s</span> []<span style=color:#66d9ef>byte</span>) <span style=color:#66d9ef>int</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>h</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>fnv</span>.<span style=color:#a6e22e>New64a</span>()
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>h</span>.<span style=color:#a6e22e>Write</span>(<span style=color:#a6e22e>s</span>)
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> int(<span style=color:#a6e22e>h</span>.<span style=color:#a6e22e>Sum64</span>())
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>worker</span>(<span style=color:#a6e22e>recs</span> <span style=color:#66d9ef>chan</span> <span style=color:#66d9ef>string</span>, <span style=color:#a6e22e>fields</span> []<span style=color:#66d9ef>string</span>, <span style=color:#a6e22e>w</span>, <span style=color:#a6e22e>n</span> <span style=color:#f92672>*</span>[]<span style=color:#66d9ef>float64</span>, <span style=color:#a6e22e>D</span>, <span style=color:#a6e22e>alpha</span> <span style=color:#66d9ef>float64</span>, <span style=color:#a6e22e>loss</span> <span style=color:#f92672>*</span><span style=color:#66d9ef>float64</span>, <span style=color:#a6e22e>count</span> <span style=color:#f92672>*</span><span style=color:#66d9ef>int</span>, <span style=color:#a6e22e>wg</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>sync</span>.<span style=color:#a6e22e>WaitGroup</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>defer</span> <span style=color:#a6e22e>wg</span>.<span style=color:#a6e22e>Done</span>()
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>r</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>recs</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>request</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>strings</span>.<span style=color:#a6e22e>Split</span>(<span style=color:#a6e22e>r</span>, <span style=color:#e6db74>&#34;,&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>		<span style=color:#f92672>*</span><span style=color:#a6e22e>count</span><span style=color:#f92672>++</span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>y</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>request</span>[<span style=color:#ae81ff>1</span>] <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;1&#34;</span> {
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>y</span> = <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>request</span> = <span style=color:#a6e22e>request</span>[<span style=color:#ae81ff>2</span>:]             <span style=color:#75715e>// ignore label and id
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>		<span style=color:#a6e22e>x</span> <span style=color:#f92672>:=</span> make([]<span style=color:#66d9ef>int</span>, len(<span style=color:#a6e22e>request</span>)<span style=color:#f92672>+</span><span style=color:#ae81ff>1</span>) <span style=color:#75715e>// need length plus one for zero at front
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>		<span style=color:#a6e22e>x</span>[<span style=color:#ae81ff>0</span>] = <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span>, <span style=color:#a6e22e>v</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>request</span> {
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>hashResult</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>hash</span>([]byte(<span style=color:#a6e22e>fields</span>[<span style=color:#a6e22e>i</span>]<span style=color:#f92672>+</span><span style=color:#a6e22e>v</span>)) <span style=color:#f92672>%</span> int(<span style=color:#a6e22e>D</span>)
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>x</span>[<span style=color:#a6e22e>i</span><span style=color:#f92672>+</span><span style=color:#ae81ff>1</span>] = int(<span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Abs</span>(float64(<span style=color:#a6e22e>hashResult</span>)))
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>		<span style=color:#75715e>// Get the prediction for the given request (now transformed to hash values)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>		<span style=color:#a6e22e>wTx</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0.0</span>
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>v</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>x</span> {
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>wTx</span> <span style=color:#f92672>+=</span> (<span style=color:#f92672>*</span><span style=color:#a6e22e>w</span>)[<span style=color:#a6e22e>v</span>]
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>p</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>1.0</span> <span style=color:#f92672>/</span> (<span style=color:#ae81ff>1.0</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Exp</span>(<span style=color:#f92672>-</span><span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Max</span>(<span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Min</span>(<span style=color:#a6e22e>wTx</span>, <span style=color:#ae81ff>20.0</span>), <span style=color:#f92672>-</span><span style=color:#ae81ff>20.0</span>)))
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>		<span style=color:#75715e>// Update the loss
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>		<span style=color:#a6e22e>p</span> = <span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Max</span>(<span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Min</span>(<span style=color:#a6e22e>p</span>, <span style=color:#ae81ff>1.</span><span style=color:#f92672>-</span><span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Pow</span>(<span style=color:#ae81ff>10</span>, <span style=color:#f92672>-</span><span style=color:#ae81ff>12</span>)), <span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Pow</span>(<span style=color:#ae81ff>10</span>, <span style=color:#f92672>-</span><span style=color:#ae81ff>12</span>))
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>y</span> <span style=color:#f92672>==</span> <span style=color:#ae81ff>1</span> {
+</span></span><span style=display:flex><span>			<span style=color:#f92672>*</span><span style=color:#a6e22e>loss</span> <span style=color:#f92672>+=</span> <span style=color:#f92672>-</span><span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Log</span>(<span style=color:#a6e22e>p</span>)
+</span></span><span style=display:flex><span>		} <span style=color:#66d9ef>else</span> {
+</span></span><span style=display:flex><span>			<span style=color:#f92672>*</span><span style=color:#a6e22e>loss</span> <span style=color:#f92672>+=</span> <span style=color:#f92672>-</span><span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Log</span>(<span style=color:#ae81ff>1.0</span> <span style=color:#f92672>-</span> <span style=color:#a6e22e>p</span>)
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>		<span style=color:#75715e>// Update the weights
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>		<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>v</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>x</span> {
+</span></span><span style=display:flex><span>			(<span style=color:#f92672>*</span><span style=color:#a6e22e>w</span>)[<span style=color:#a6e22e>v</span>] = (<span style=color:#f92672>*</span><span style=color:#a6e22e>w</span>)[<span style=color:#a6e22e>v</span>] <span style=color:#f92672>-</span> (<span style=color:#a6e22e>p</span><span style=color:#f92672>-</span>float64(<span style=color:#a6e22e>y</span>))<span style=color:#f92672>*</span><span style=color:#a6e22e>alpha</span><span style=color:#f92672>/</span>(<span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Sqrt</span>((<span style=color:#f92672>*</span><span style=color:#a6e22e>n</span>)[<span style=color:#a6e22e>v</span>])<span style=color:#f92672>+</span><span style=color:#ae81ff>1.0</span>)
+</span></span><span style=display:flex><span>			(<span style=color:#f92672>*</span><span style=color:#a6e22e>n</span>)[<span style=color:#a6e22e>v</span>]<span style=color:#f92672>++</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>start</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Now</span>()
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>D</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Pow</span>(<span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>20</span>) <span style=color:#75715e>// number of weights use for learning
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>alpha</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0.1</span>         <span style=color:#75715e>// learning rate for sgd optimization
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>w</span> <span style=color:#f92672>:=</span> make([]<span style=color:#66d9ef>float64</span>, int(<span style=color:#a6e22e>D</span>))
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>n</span> <span style=color:#f92672>:=</span> make([]<span style=color:#66d9ef>float64</span>, int(<span style=color:#a6e22e>D</span>))
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>loss</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0.0</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>count</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>data</span>, <span style=color:#a6e22e>_</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>fstream</span>.<span style=color:#a6e22e>New</span>(<span style=color:#e6db74>&#34;../train.csv&#34;</span>, <span style=color:#ae81ff>10000</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fields</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>strings</span>.<span style=color:#a6e22e>Split</span>(<span style=color:#f92672>&lt;-</span><span style=color:#a6e22e>data</span>, <span style=color:#e6db74>&#34;,&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>var</span> <span style=color:#a6e22e>wg</span> <span style=color:#a6e22e>sync</span>.<span style=color:#a6e22e>WaitGroup</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span> &lt; <span style=color:#ae81ff>5</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>wg</span>.<span style=color:#a6e22e>Add</span>(<span style=color:#ae81ff>1</span>)
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>go</span> <span style=color:#a6e22e>worker</span>(<span style=color:#a6e22e>data</span>, <span style=color:#a6e22e>fields</span>, <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>w</span>, <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>n</span>, <span style=color:#a6e22e>D</span>, <span style=color:#a6e22e>alpha</span>, <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>loss</span>, <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>count</span>, <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>wg</span>)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>wg</span>.<span style=color:#a6e22e>Wait</span>()
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Run time is&#34;</span>, <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Since</span>(<span style=color:#a6e22e>start</span>))
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;loss&#34;</span>, <span style=color:#a6e22e>loss</span><span style=color:#f92672>/</span>float64(<span style=color:#a6e22e>count</span>))
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;RPS&#34;</span>, float64(<span style=color:#a6e22e>count</span>)<span style=color:#f92672>/</span><span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Since</span>(<span style=color:#a6e22e>start</span>).<span style=color:#a6e22e>Seconds</span>())
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>The code above gets us to 366,000 RPS on my laptop, which has an <strong>18x</strong> speedup over the CPython version. The Go code is also not optimized, and could pretty easily be made even faster.</p><p>As a side node, the solution above is not completely lock-free, as there is still locking going on from the buffered channel <code>data</code>.</p><h1 id=conclusion class=anchor-link><a href=#conclusion>Conclusion</a></h1><p>There has been quite a bit of hype surrounding <em>Big Data</em> and the tooling required to deal with it, largely from companies whose entire business model revolves around selling you the tools to processes larger data sets. However, in many cases those tools are completely unnecessary and harmful to the focus and priorities of your development teams, not to mention your budget. As an example, see a previous article of mine where I did a quick demonstration of how simple command-line tools on a laptop <a href=/command-line-tools-can-be-235x-faster-than-your-hadoop-cluster.html>can be 235x faster than a Hadoop cluster</a>.</p><p>What we&rsquo;ve really done above is transform a batch-oriented machine learning problem into a streaming/online learning problem. This provides us with much more flexibility in terms of how much memory is required to achieve the objective (in this case, binary classification) and is wholly independent of input data size. Transforming problems like this into stream-based problems is a very valuable technique.</p><p>In this article we&rsquo;ve seen that it&rsquo;s relatively easy to deal with data sets larger than your RAM, or in fact infinitely large. Using these techniques, you can probably process the data at a rate limited only by the read speed of your SSD!</p><a class=hidden href=https://brid.gy/publish/mastodon></a>
+<a class=hidden href=https://brid.gy/publish/twitter></a>
+<a class=hidden href=https://fed.brid.gy/></a>
+<data class=p-bridgy-omit-link value=false></data></article></div><div id=webmentions></div></li></ul></section></main><hr><footer class="flex col"><section class="footer-bio content"><p><strong>Adam Drake</strong> leads technical business transformations in global and multi-cultural environments. He has a passion for helping companies become more productive by improving internal leadership capabilities, and accelerating product development through technology and data architecture guidance. Adam has served as a White House Presidential Innovation Fellow and is an IEEE Senior Member.</p></section><button class="subscribe subscribe-btn">
+<a href=https://www.digitalmaneuver.com/#/portal>Subscribe to newsletter</a></button><div class=social-icons><a rel=me href=https://github.com/adamdrake title=GitHub><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg></a><a rel=me href=https://linkedin.com/in/aadrake title=LinkedIn><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-linkedin"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a><a rel=me href=https://twitter.com/aadrake title=Twitter><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter"><path d="M23 3a10.9 10.9.0 01-3.14 1.53 4.48 4.48.0 00-7.86 3v1A10.66 10.66.0 013 4s-4 9 5 13a11.64 11.64.0 01-7 2c9 5 20 0 20-11.5a4.5 4.5.0 00-.08-.83A7.72 7.72.0 0023 3z"/></svg></a></div></footer></body></html>

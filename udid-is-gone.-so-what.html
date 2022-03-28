@@ -1,91 +1,13 @@
-<!doctype html><html lang=en>
-<head>
-<meta charset=utf-8>
-<meta http-equiv=x-ua-compatible content="chrome=1">
-<meta name=HandheldFriendly content="True">
-<meta name=MobileOptimized content="320">
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=referrer content="no-referrer">
-<meta name=description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams.">
-<title>
-UDID is Gone. So What? - Adam Drake
-</title>
-<link rel="shortcut icon" href=/static/favicon.ico>
-<link rel=stylesheet href=https://adamdrake.com/sass/style.min.a413c0798309dd1ab28bd9f9ff8e6472c76e69f14068707081b5a01351efe34e.css integrity="sha256-pBPAeYMJ3Rqyi9n5/45kcsduafFAaHBwgbWgE1Hv404=" crossorigin=anonymous media=screen>
-<meta name=twitter:card content="summary_large_image">
-<meta name=twitter:image content="https://adamdrake.com/static/images/twitter-card.jpg">
-<meta name=twitter:title content="UDID is Gone.  So What?">
-<meta name=twitter:description content="The last week has seen quite a bit of commotion in the mobile world as Apple has started enforcing their long-awaited deprecation of the use of the UDID. Honestly, I&rsquo;m not sure what all the fuss is about. This change was announced by Apple last summer, so everyone has had nearly a year to prepare for it. The general set of questions I&rsquo;ve seen on the topic can be reduced to the following.">
-<meta property="og:title" content="UDID is Gone.  So What?">
-<meta property="og:description" content="The last week has seen quite a bit of commotion in the mobile world as Apple has started enforcing their long-awaited deprecation of the use of the UDID. Honestly, I&rsquo;m not sure what all the fuss is about. This change was announced by Apple last summer, so everyone has had nearly a year to prepare for it. The general set of questions I&rsquo;ve seen on the topic can be reduced to the following.">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://adamdrake.com/udid-is-gone.-so-what.html"><meta property="og:image" content="https://adamdrake.com/static/images/twitter-card.jpg"><meta property="article:section" content="posts">
-<meta property="article:published_time" content="2012-03-31T00:00:00+00:00">
-<meta property="article:modified_time" content="2012-03-31T00:00:00+00:00">
-</head>
-<body>
-<div class=title-box>
-<div class=title-left>
-<h1 class=name><a href=/>Adam Drake</a></h1>
-</div>
-<div class=title-right>
-<div class=social-icons>
-<a href=https://github.com/adamdrake>
-<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64>
-</a>
-<a href=https://twitter.com/aadrake>
-<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64>
-</a>
-<a href=https://linkedin.com/in/aadrake>
-<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64>
-</a>
-</div>
-<button class="subscribe subscribe-btn">
-<a href=https://www.digitalmaneuver.com/#/portal>Subscribe to newsletter</a>
-</button>
-</div>
-</div>
-<div class="nav-box row">
-<div class=nav-left-menu>
-<ul>
-<li><a href=/>Latest</a> | </li>
-<li><a href=/about.html>About</a> | </li>
-<li><a href=/cases.html>Case Studies</a> | </li>
-<li><a href=/contact.html>Contact</a> | </li>
-<li><a href=/press.html>Press</a></li>
-</ul>
-</div>
-</div>
-<section class=section>
-<div class=container>
-<a href=https://applybyapi.com><button class="cta btn">Struggling to hire developers? Check out ApplyByAPI!</button></a>
-<h1 class=page-title>UDID is Gone. So What?</h1>
-<h2 class=content-date>March 31, 2012</h2>
-<div class=share-links>
-Share this:
-<a class=twitter-share-button href="https://twitter.com/intent/tweet?text=Read%20UDID%20is%20Gone.%20%20So%20What%3f%20https%3a%2f%2fadamdrake.com%2fudid-is-gone.-so-what.html" onclick="return window.open(this.href,'twitter-share','width=550,height=235'),!1">
-twitter
-</a> //
-<a class=icon-facebook href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fadamdrake.com%2fudid-is-gone.-so-what.html" onclick="return window.open(this.href,'facebook-share','width=580,height=296'),!1">
-facebook
-</a> //
-<a class=icon-linkedin href="https://www.linkedin.com/shareArticle?mini=true&url=https://adamdrake.com&title=UDID%20is%20Gone.%20%20So%20What%3f&source=Adam%20Drake" onclick="return window.open(this.href,'linkedin-share','width=980,height=980'),!1">
-linkedin
-</a>
-</div>
-<div class=content>
-<p>The last week has seen quite a bit of commotion in the mobile world as
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=mobile-web-app-capable content="yes"><meta name=viewport content="width=device-width,initial-scale=1"><title>UDID is Gone. So What? - Adam Drake</title><meta name=description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams."><link rel="shortcut icon" href=https://adamdrake.com/static/favicon.ico><link rel=authorization_endpoint href=https://indieauth.com/auth><link rel=token_endpoint href=https://tokens.indieauth.com/token><link rel=me href=https://github.com/adamdrake><link rel=me href=https://twitter.com/aadrake><link rel=stylesheet href=https://adamdrake.com/css/style.min.css crossorigin=anonymous media=screen><meta property="og:url" content="https://adamdrake.com"><meta property="og:title" content="Adam Drake"><meta property="og:site_name" content="Adam Drake"><meta property="og:type" content="website"><meta property="og:description" content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams."><meta property="og:image" content="/static/images/twitter-card.jpg"><meta name=twitter:title content="Adam Drake"><meta name=twitter:description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams."><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/static/images/twitter-card.jpg"></head><body><header><section><div class="header flex row"><div class="header__item flex row"><a id=site__name href=https://adamdrake.com>Adam Drake</a></div><div class="flex row"><nav aria-label="page menu" class="flex row"><ul role=menubar class="flex row"><li role=none><a class=sidebar-nav-itemmenu__item href=/ title>Latest</a></li><li role=none><a class=sidebar-nav-itemmenu__item href=/about.html title>About</a></li><li role=none><a class=sidebar-nav-itemmenu__item href=/cases.html title>Case Studies</a></li><li role=none><a class=sidebar-nav-itemmenu__item href=/contact.html title>Contact</a></li><li role=none><a class="sidebar-nav-item activemenu__item" href=/posts.html title=Posts>Posts</a></li><li role=none><a class=sidebar-nav-itemmenu__item href=/press.html title>Press</a></li><li><button class="subscribe subscribe-btn">
+<a href=https://www.digitalmaneuver.com/#/portal>Subscribe to newsletter</a></button></li></ul></nav></div></div></section></header><main aria-role=main><section><ul id=feed__ul><li class="feed__li h-entry"><div class=feed__content><time class="hidden dt-published">2012-03-31 00:00:00 +0000 UTC</time><div class="flex properties__row"><div rel=author class="flex left p-author h-card hidden"><img class=u-photo src=https://adamdrake.com/static/images/adam_drake_240.jpg alt="Adam Drake" id=author-img><div><p rel=me class=p-name id=author-name>Adam Drake</p><p class=properties>Mar 31, 2012</p></div></div><div class="flex right properties"></div></div><article class="md p-summary e-content"><h1 class=p-name>UDID is Gone. So What?</h1><p>The last week has seen quite a bit of commotion in the mobile world as
 Apple has started enforcing their long-awaited deprecation of the use of
 the UDID. Honestly, I&rsquo;m not sure what all the fuss is about. This change
 was announced by Apple last summer, so everyone has had nearly a year to
 prepare for it. The general set of questions I&rsquo;ve seen on the topic can
-be reduced to the following.</p>
-<h3 id=why-did-apple-do-this class=anchor-link><a href=#why-did-apple-do-this>Why did Apple do this?</a></h3>
-<p>Most people would simply state the the reason is related to privacy
+be reduced to the following.</p><h3 id=why-did-apple-do-this class=anchor-link><a href=#why-did-apple-do-this>Why did Apple do this?</a></h3><p>Most people would simply state the the reason is related to privacy
 concerns, but I think that&rsquo;s the short and easy answer. Before we can go
 deeper into this question we need to consider how the UDID is typically
-used by app developers and mobile advertising firms.</p>
-<p>The problem with using the UDID is that, as the name implies, it is an
+used by app developers and mobile advertising firms.</p><p>The problem with using the UDID is that, as the name implies, it is an
 identifier that is unique to the device. In that sense you can think
 about it like a license plate number on a car. The industry
 best-practice for dealing with the UDID is to anonymize it before it
@@ -96,16 +18,14 @@ version of a license plate number from a car. This encoding is one-way
 so even if you have the encoded version of the UDID, that doesn&rsquo;t mean
 that you can just reverse the process to obtain the UDID itself. This
 process is called hashing and the <a href=https://en.wikipedia.org/wiki/MD5>MD5</a> and <a href=https://en.wikipedia.org/wiki/SHA-1>SHA-1</a> algorithms are the
-ones most commonly used for this.</p>
-<p>So what does having this anonymized identifier get you as an app
+ones most commonly used for this.</p><p>So what does having this anonymized identifier get you as an app
 developer? Namely it allows you to see how many people have downloaded
 you app, how it is being used, and various other kinds of analytics that
 you may be interested in. For example, perhaps you would like to know
 how often people have deleted and then re-installed your app. You can
 find this out by sending the anonymized UDID every time your application
 is launched. There are plenty of useful things you can measure using
-this identifier from an app developer&rsquo;s perspective.</p>
-<p>The other large group that makes use of the UDID is mobile advertising
+this identifier from an app developer&rsquo;s perspective.</p><p>The other large group that makes use of the UDID is mobile advertising
 firms. One obvious use for the identifier is something like frequency
 capping, which is just an industry term for making sure you don&rsquo;t see
 the same ad over and over again. I think everyone is happy not to be
@@ -121,11 +41,9 @@ at the devices who fit into some group and makes some guesses about
 other devices. In other words, users who have app A and app B installed
 tend to be more likely to click on advertisements for app C. This allows
 for better targeting of ads and provides more efficient allocation of
-resources for advertisers and more relevant advertising for users.</p>
-<p>Now that the groundwork has been laid on UDIDs, how they&rsquo;re used, and
+resources for advertisers and more relevant advertising for users.</p><p>Now that the groundwork has been laid on UDIDs, how they&rsquo;re used, and
 why they&rsquo;re used, we can begin to have a discussion about privacy
-issues.</p>
-<p>I cannot pretend to know what went on in the debates leading up to the
+issues.</p><p>I cannot pretend to know what went on in the debates leading up to the
 decision to deprecate the UDID, but here is the basic idea as I see it.
 Many developers were not anonymizing the UDID before making use of it,
 and this is bad no matter how you slice it. Secondly, people tend to be
@@ -140,30 +58,19 @@ UDID is something that is hardware based and therefore can&rsquo;t really be
 changed or deleted from the device. In other words, it&rsquo;s too permanent.
 All that being said, Apple didn&rsquo;t want to be seen as making it easy for
 people to &ldquo;be tracked.&rdquo; I don&rsquo;t blame them for that, but deprecating the
-UDID doesn&rsquo;t change anything, as we&rsquo;ll see.</p>
-<h3 id=potential-replacements class=anchor-link><a href=#potential-replacements>Potential Replacements</a></h3>
-<p>Okay, so apparently the gospel says that using the UDID is bad. What
+UDID doesn&rsquo;t change anything, as we&rsquo;ll see.</p><h3 id=potential-replacements class=anchor-link><a href=#potential-replacements>Potential Replacements</a></h3><p>Okay, so apparently the gospel says that using the UDID is bad. What
 happens next then? Well there are quite a few proposed solutions, some
-of which are below in no particular order.</p>
-<ul>
-<li>
-<p><a href=https://github.com/ylechelle/OpenUDID>OpenUDID</a> is a solution that came out last year and generates a
+of which are below in no particular order.</p><ul><li><p><a href=https://github.com/ylechelle/OpenUDID>OpenUDID</a> is a solution that came out last year and generates a
 unique token for the device that is stored in the UIPasteboard and
 consequently is available to all apps. In this way it still becomes a
 unique identifier for the device, which doesn&rsquo;t solve any of the
 privacy problems mentioned earlier. There is some opt-out
 functionality present, but the fact remains that it&rsquo;s still one
-identifier that goes back to one device.</p>
-</li>
-<li>
-<p><a href=https://code.google.com/archive/p/odinmobile/wikis/ODIN1.wiki>ODIN-1</a> uses the <a href=https://en.wikipedia.org/wiki/MAC_address>Media Access Control</a> (MAC) address from the
+identifier that goes back to one device.</p></li><li><p><a href=https://code.google.com/archive/p/odinmobile/wikis/ODIN1.wiki>ODIN-1</a> uses the <a href=https://en.wikipedia.org/wiki/MAC_address>Media Access Control</a> (MAC) address from the
 wireless network chip inside the device in order to generate a unique
 token for the device. In this way it is really no different than
 using the UDID as it is still a hardware-based identification system
-and therefore is difficult to change.</p>
-</li>
-<li>
-<p>SecureUDID is an effort by Crashlytics to produce their own
+and therefore is difficult to change.</p></li><li><p>SecureUDID is an effort by Crashlytics to produce their own
 UDID replacement. Apparently there is a <a href=https://techcrunch.com/2012/03/27/secureudid-is-an-open-source-solution-to-the-apple-udid-problem/>bit of a scuffle</a> between
 the SecureUDID people and the OpenUDID people over who contributed to
 which technology and when. In the end, the result is that you still
@@ -176,10 +83,7 @@ requests from multiple apps, then you will not be able to tell that
 two requests from different apps actually came from the same device
 except under very specific circumstances. In the end, this solution
 is a non-starter in cases where you need to be able to identify the
-same device across apps from different publishers.</p>
-</li>
-</ul>
-<p>There are other solutions out there, but the last one brings us to the
+same device across apps from different publishers.</p></li></ul><p>There are other solutions out there, but the last one brings us to the
 key issue in the matter. The only way for the ecosystem to perpetuate is
 with one unique identifier per device, and that&rsquo;s the point that is at
 odds with the privacy argument. The reason that there are so many apps
@@ -192,9 +96,7 @@ develop for other platforms, and that would be horrible for Apple.
 Imagine having an iPhone or an iPad without any apps. So Apple has to
 walk a fine line now by addressing concerns of privacy advocates and
 also addressing concerns of those who make a living by developing apps
-on their platform.</p>
-<h3 id=what-next class=anchor-link><a href=#what-next>What next?</a></h3>
-<p>I think most people in the industry will move towards using the
+on their platform.</p><h3 id=what-next class=anchor-link><a href=#what-next>What next?</a></h3><p>I think most people in the industry will move towards using the
 anonymized MAC address. This is the easiest change to make and the one
 that is most likely to be done by most industry players. This also
 allows for a device-specific identifier and therefore all of the
@@ -205,8 +107,7 @@ likely to receive push-back from Apple at some point. In the end there
 will (hopefully) be an industry-wide solution that provides the required
 level of identification on a per-device basis, but is also something
 that can be cleared by the user. I think that will be the best solution
-for everyone involved.</p>
-<p>Additionally, mobile websites and app developers should take additional
+for everyone involved.</p><p>Additionally, mobile websites and app developers should take additional
 steps to clearly communicate to their users what kind of information is
 being collected, why it being collected, how it will be handled, and so
 forth. Additionally, opt-out capability is something that will need to
@@ -218,9 +119,7 @@ collection, use, and storage, and allow the user to choose not to
 provide any data at all. At that point it will be up to the
 developer/publisher to decide if they want to allow the user to continue
 to use the app or if they want to make the use contingent on the ability
-to display ads. That&rsquo;s how they&rsquo;re making money from their trade.</p>
-<h3 id=conclusion class=anchor-link><a href=#conclusion>Conclusion</a></h3>
-<p>So the UDID is gone now. So what? This was announced months ago, and in
+to display ads. That&rsquo;s how they&rsquo;re making money from their trade.</p><h3 id=conclusion class=anchor-link><a href=#conclusion>Conclusion</a></h3><p>So the UDID is gone now. So what? This was announced months ago, and in
 the end it doesn&rsquo;t really change anything. The need to uniquely identify
 devices is greater than ever, and the number of apps in the iOS App
 Store is rapidly growing (<a href=https://www.apple.com/iphone/built-in-apps/app-store.html>over 500,000 at the moment</a>). Apple won&rsquo;t
@@ -234,44 +133,8 @@ balancing the need to uniquely identify a device and also respect the
 privacy and desires of users. The downside may be that app developers
 will only allow their apps to be used by those that opt in since they
 need to put food on the table. Just like there is no free lunch, there
-are no free apps.</p>
-</div>
-</div>
-</section>
-<div class="nav-box row">
-<div class=nav-left-menu>
-<ul>
-<li><a href=/>Latest</a> | </li>
-<li><a href=/about.html>About</a> | </li>
-<li><a href=/cases.html>Case Studies</a> | </li>
-<li><a href=/contact.html>Contact</a> | </li>
-<li><a href=/press.html>Press</a></li>
-</ul>
-</div>
-</div>
-<div class="footer-box row">
-<div class="footer-left col-md-6 col-xs-12">
-<div class="footer-bio content">
-<p><strong>Adam Drake</strong> leads technical business transformations in global and multi-cultural environments. He has a passion for helping companies become more productive by improving internal leadership capabilities, and accelerating product development through technology and data architecture guidance. Adam has served as a White House Presidential Innovation Fellow and is an IEEE Senior Member.</p>
-</div>
-</div>
-<div class=footer-right>
-<div class=social-icons>
-<a href=https://github.com/adamdrake>
-<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64>
-</a>
-<a href=https://twitter.com/aadrake>
-<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64>
-</a>
-<a href=https://linkedin.com/in/aadrake>
-<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64>
-</a>
-</div>
-<button class="subscribe subscribe-btn">
-<a href=https://www.digitalmaneuver.com/#/portal>Subscribe to newsletter</a>
-</button>
-</div>
-</div>
-<div class="container has-text-centered footer-copyright">
-</div>
-</body>
+are no free apps.</p><a class=hidden href=https://brid.gy/publish/mastodon></a>
+<a class=hidden href=https://brid.gy/publish/twitter></a>
+<a class=hidden href=https://fed.brid.gy/></a>
+<data class=p-bridgy-omit-link value=false></data></article></div><div id=webmentions></div></li></ul></section></main><hr><footer class="flex col"><section class="footer-bio content"><p><strong>Adam Drake</strong> leads technical business transformations in global and multi-cultural environments. He has a passion for helping companies become more productive by improving internal leadership capabilities, and accelerating product development through technology and data architecture guidance. Adam has served as a White House Presidential Innovation Fellow and is an IEEE Senior Member.</p></section><button class="subscribe subscribe-btn">
+<a href=https://www.digitalmaneuver.com/#/portal>Subscribe to newsletter</a></button><div class=social-icons><a rel=me href=https://github.com/adamdrake title=GitHub><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg></a><a rel=me href=https://linkedin.com/in/aadrake title=LinkedIn><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-linkedin"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a><a rel=me href=https://twitter.com/aadrake title=Twitter><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter"><path d="M23 3a10.9 10.9.0 01-3.14 1.53 4.48 4.48.0 00-7.86 3v1A10.66 10.66.0 013 4s-4 9 5 13a11.64 11.64.0 01-7 2c9 5 20 0 20-11.5a4.5 4.5.0 00-.08-.83A7.72 7.72.0 0023 3z"/></svg></a></div></footer></body></html>

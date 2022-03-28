@@ -1,624 +1,454 @@
-<!doctype html><html lang=en>
-<head>
-<meta charset=utf-8>
-<meta http-equiv=x-ua-compatible content="chrome=1">
-<meta name=HandheldFriendly content="True">
-<meta name=MobileOptimized content="320">
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=referrer content="no-referrer">
-<meta name=description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams.">
-<title>
-An Unreasonably Deep Dive into Project Euler Problem 3 - Adam Drake
-</title>
-<link rel="shortcut icon" href=/static/favicon.ico>
-<link rel=stylesheet href=https://adamdrake.com/sass/style.min.a413c0798309dd1ab28bd9f9ff8e6472c76e69f14068707081b5a01351efe34e.css integrity="sha256-pBPAeYMJ3Rqyi9n5/45kcsduafFAaHBwgbWgE1Hv404=" crossorigin=anonymous media=screen>
-<meta name=twitter:card content="summary_large_image">
-<meta name=twitter:image content="https://adamdrake.com/static/images/twitter-card.jpg">
-<meta name=twitter:title content="An Unreasonably Deep Dive into Project Euler Problem 3">
-<meta name=twitter:description content="Intro I&rsquo;ve been busy as usual for the last couple of months, and haven&rsquo;t really had time to extend the Project Euler series after Problem 1 and Problem 2 articles.
-However, I finally did set aside some time to play around with Problem 3: finding the largest prime factor of a number.
-Problem Statement  The prime factors of 13195 are 5, 7, 13 and 29.
-What is the largest prime factor of the number 600851475143?">
-<meta property="og:title" content="An Unreasonably Deep Dive into Project Euler Problem 3">
-<meta property="og:description" content="Intro I&rsquo;ve been busy as usual for the last couple of months, and haven&rsquo;t really had time to extend the Project Euler series after Problem 1 and Problem 2 articles.
-However, I finally did set aside some time to play around with Problem 3: finding the largest prime factor of a number.
-Problem Statement  The prime factors of 13195 are 5, 7, 13 and 29.
-What is the largest prime factor of the number 600851475143?">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://adamdrake.com/an-unreasonably-deep-dive-into-project-euler-problem-3.html"><meta property="og:image" content="https://adamdrake.com/static/images/twitter-card.jpg"><meta property="article:section" content="posts">
-<meta property="article:published_time" content="2017-05-14T00:00:00+00:00">
-<meta property="article:modified_time" content="2017-05-14T00:00:00+00:00">
-</head>
-<body>
-<div class=title-box>
-<div class=title-left>
-<h1 class=name><a href=/>Adam Drake</a></h1>
-</div>
-<div class=title-right>
-<div class=social-icons>
-<a href=https://github.com/adamdrake>
-<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64>
-</a>
-<a href=https://twitter.com/aadrake>
-<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64>
-</a>
-<a href=https://linkedin.com/in/aadrake>
-<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64>
-</a>
-</div>
-<button class="subscribe subscribe-btn">
-<a href=https://www.digitalmaneuver.com/#/portal>Subscribe to newsletter</a>
-</button>
-</div>
-</div>
-<div class="nav-box row">
-<div class=nav-left-menu>
-<ul>
-<li><a href=/>Latest</a> | </li>
-<li><a href=/about.html>About</a> | </li>
-<li><a href=/cases.html>Case Studies</a> | </li>
-<li><a href=/contact.html>Contact</a> | </li>
-<li><a href=/press.html>Press</a></li>
-</ul>
-</div>
-</div>
-<section class=section>
-<div class=container>
-<a href=https://applybyapi.com><button class="cta btn">Struggling to hire developers? Check out ApplyByAPI!</button></a>
-<h1 class=page-title>An Unreasonably Deep Dive into Project Euler Problem 3</h1>
-<h2 class=content-date>May 14, 2017</h2>
-<div class=share-links>
-Share this:
-<a class=twitter-share-button href="https://twitter.com/intent/tweet?text=Read%20An%20Unreasonably%20Deep%20Dive%20into%20Project%20Euler%20Problem%203%20https%3a%2f%2fadamdrake.com%2fan-unreasonably-deep-dive-into-project-euler-problem-3.html" onclick="return window.open(this.href,'twitter-share','width=550,height=235'),!1">
-twitter
-</a> //
-<a class=icon-facebook href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fadamdrake.com%2fan-unreasonably-deep-dive-into-project-euler-problem-3.html" onclick="return window.open(this.href,'facebook-share','width=580,height=296'),!1">
-facebook
-</a> //
-<a class=icon-linkedin href="https://www.linkedin.com/shareArticle?mini=true&url=https://adamdrake.com&title=An%20Unreasonably%20Deep%20Dive%20into%20Project%20Euler%20Problem%203&source=Adam%20Drake" onclick="return window.open(this.href,'linkedin-share','width=980,height=980'),!1">
-linkedin
-</a>
-</div>
-<div class=content>
-<h1 id=intro class=anchor-link><a href=#intro>Intro</a></h1>
-<p>I&rsquo;ve been busy as usual for the last couple of months, and haven&rsquo;t really had time to extend the Project Euler series after <a href=/an-unreasonably-deep-dive-into-project-euler-problem-1.html>Problem 1</a> and <a href=/an-unreasonably-deep-dive-into-project-euler-problem-2.html>Problem 2</a> articles.</p>
-<p>However, I finally did set aside some time to play around with Problem 3: finding the largest <a href=https://en.wikipedia.org/wiki/Prime_factor>prime factor</a> of a number.</p>
-<h1 id=problem-statement class=anchor-link><a href=#problem-statement>Problem Statement</a></h1>
-<blockquote>
-<p>The prime factors of 13195 are 5, 7, 13 and 29.</p>
-<p>What is the largest prime factor of the number 600851475143?</p>
-</blockquote>
-<h1 id=definitions-and-theorems class=anchor-link><a href=#definitions-and-theorems>Definitions and Theorems</a></h1>
-<p><strong>Definition</strong>: For two integers a and b, we can say that a <em>divides</em> b, a is a <em>divisor</em> of b, b is a <em>multiple</em> of a, or a is a <em>factor</em> of b if, for some integer y, y*a=b.</p>
-<p><strong>Definition</strong>: an integer n is <em>prime</em> if the only divisors of n are itself and 1. Note that 1 and -1 are divisors of every integer.</p>
-<p><strong>Definition</strong>: a whole number n is <em>composite</em> if it is not prime. That is, it has some integer divisors beyond itself and 1.</p>
-<p><strong>Theorem</strong> (Fundamental Theorem of Arithmetic): Every integer greater than 1 is either <strong>prime</strong>, or the <strong>product of primes</strong> (i.e., composite). Also, for composite number, the prime factorization is unique up to the order of the factors. There is 1, and only 1, prime factorization for a composite number.</p>
-<p><strong>Proof</strong>: see <a href=https://en.wikipedia.org/wiki/Fundamental_theorem_of_arithmetic#Proof>Wikipedia</a></p>
-<p>To start considering the problem, we know that the given number is either prime or composite (product of unique set of primes). We can assume the number is composite, otherwise the problem statement doesn&rsquo;t make much sense and/or is trivial.</p>
-<p>We must therefore find the unique prime factors of the number, and then find which of those primes is largest.</p>
-<h1 id=v1-brute-force class=anchor-link><a href=#v1-brute-force>V1: Brute force</a></h1>
-<p>These sorts of approaches are often underestimated and can be very effective in practical applications. They&rsquo;re a good place to start.</p>
-<p>A naive algorithm could be to loop through all the numbers from 2 to n-1, and check if each one divides n. If some number d does divide n, then put it in the list of divisors. After finding all the divisors, check each one to determine if it is prime. To check primality, loop through all the numbers between 3 and d-1 to check if one of the numbers is a divisor of d. If you find any such numbers, d is not prime and therefore not a prime factor of n. If you find no such number, then d divides n but d does not have any other divisors. Thus, d is prime. Thus, d is a prime factor of n.</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>package</span> v1
-
-<span style=color:#09f;font-style:italic>// V1:
-</span><span style=color:#09f;font-style:italic>// Take a number n, calculate all its factors,
-</span><span style=color:#09f;font-style:italic>// for each factor f, test if f is itself
-</span><span style=color:#09f;font-style:italic>// prime by getting all its factors.  If only 1 and f
-</span><span style=color:#09f;font-style:italic>// are divisors of f, then f is prime, and a factor
-</span><span style=color:#09f;font-style:italic>// of n, and therefore a prime factor.
-</span><span style=color:#09f;font-style:italic></span>
-<span style=color:#069;font-weight:700>import</span> (
-	<span style=color:#c30>&#34;math&#34;</span>
-)
-
-<span style=color:#09f;font-style:italic>// If the only divisors of n are 1 and n, then n is prime
-</span><span style=color:#09f;font-style:italic></span><span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>isPrime</span>(n <span style=color:#078;font-weight:700>int</span>) <span style=color:#078;font-weight:700>bool</span> {
-	<span style=color:#069;font-weight:700>if</span> n <span style=color:#555>==</span> <span style=color:#f60>0</span> <span style=color:#555>||</span> n <span style=color:#555>==</span> <span style=color:#f60>1</span> {
-		<span style=color:#069;font-weight:700>return</span> <span style=color:#069;font-weight:700>false</span>
-	}
-	facs <span style=color:#555>:=</span> <span style=color:#c0f>factors</span>(n)
-	<span style=color:#069;font-weight:700>if</span> <span style=color:#366>len</span>(facs) <span style=color:#555>!=</span> <span style=color:#f60>0</span> {
-		<span style=color:#069;font-weight:700>return</span> <span style=color:#069;font-weight:700>false</span>
-	}
-	<span style=color:#069;font-weight:700>return</span> <span style=color:#069;font-weight:700>true</span>
-}
-
-<span style=color:#09f;font-style:italic>// Generate all factors
-</span><span style=color:#09f;font-style:italic></span><span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>factors</span>(n <span style=color:#078;font-weight:700>int</span>) []<span style=color:#078;font-weight:700>int</span> {
-	facs <span style=color:#555>:=</span> <span style=color:#366>make</span>([]<span style=color:#078;font-weight:700>int</span>, <span style=color:#f60>0</span>)
-	<span style=color:#069;font-weight:700>for</span> i <span style=color:#555>:=</span> <span style=color:#f60>2</span>; i &lt; n; i<span style=color:#555>++</span> {
-		<span style=color:#069;font-weight:700>if</span> math.<span style=color:#c0f>Mod</span>(<span style=color:#366>float64</span>(n), <span style=color:#366>float64</span>(i)) <span style=color:#555>==</span> <span style=color:#f60>0.0</span> {
-			facs = <span style=color:#366>append</span>(facs, i)
-		}
-	}
-	<span style=color:#069;font-weight:700>return</span> facs
-}
-
-<span style=color:#09f;font-style:italic>// Given some n, return the largest prime factor of n
-</span><span style=color:#09f;font-style:italic></span><span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>LargestPrimeFactor</span>(n <span style=color:#078;font-weight:700>int</span>) <span style=color:#078;font-weight:700>int</span> {
-	biggest <span style=color:#555>:=</span> <span style=color:#f60>0</span>
-	<span style=color:#069;font-weight:700>for</span> i <span style=color:#555>:=</span> <span style=color:#f60>2</span>; i &lt; n; i<span style=color:#555>++</span> {
-		<span style=color:#069;font-weight:700>if</span> math.<span style=color:#c0f>Mod</span>(<span style=color:#366>float64</span>(n), <span style=color:#366>float64</span>(i)) <span style=color:#555>==</span> <span style=color:#f60>0.0</span> { <span style=color:#09f;font-style:italic>// i divides n evenly
-</span><span style=color:#09f;font-style:italic></span>			<span style=color:#069;font-weight:700>if</span> <span style=color:#c0f>isPrime</span>(i) { <span style=color:#09f;font-style:italic>// i is prime
-</span><span style=color:#09f;font-style:italic></span>				<span style=color:#069;font-weight:700>if</span> i &gt; biggest { <span style=color:#09f;font-style:italic>// i is new biggest prime
-</span><span style=color:#09f;font-style:italic></span>					biggest = i
-				}
-			}
-		}
-	}
-	<span style=color:#069;font-weight:700>return</span> biggest
-}
-</code></pre></div><p>We have three functions: one which calculates all the factors of a given number, one which tests if a number is prime, and one which ties it all together (<code>LargestPrimeFactor</code>). While this solution is very inefficient, it does work for small numbers, so the logic is correct. We can see this by writing the necessary tests, using benchmark functions to look at performance of the functions and system.</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>package</span> v1
-
-<span style=color:#069;font-weight:700>import</span> (
-	<span style=color:#c30>&#34;testing&#34;</span>
-	<span style=color:#c30>&#34;reflect&#34;</span>
-)
-
-<span style=color:#069;font-weight:700>const</span> NUMBER <span style=color:#078;font-weight:700>int</span> = <span style=color:#f60>600851475143</span>
-<span style=color:#069;font-weight:700>const</span> benchmarkNumber <span style=color:#078;font-weight:700>int</span> = <span style=color:#f60>13195</span>
-<span style=color:#069;font-weight:700>const</span> benchmarkPrime <span style=color:#078;font-weight:700>int</span> = <span style=color:#f60>29</span>
-
-<span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>Test_factors</span>(t <span style=color:#555>*</span>testing.T) {
-	<span style=color:#069;font-weight:700>type</span> args <span style=color:#069;font-weight:700>struct</span> {
-		n <span style=color:#078;font-weight:700>int</span>
-	}
-	tests <span style=color:#555>:=</span> []<span style=color:#069;font-weight:700>struct</span> {
-		name <span style=color:#078;font-weight:700>string</span>
-		args args
-		want []<span style=color:#078;font-weight:700>int</span>
-	}{
-		{name: <span style=color:#c30>&#34;factors of zero&#34;</span>, args: args{n: <span style=color:#f60>0</span>}, want: []<span style=color:#078;font-weight:700>int</span>{}},
-		{name: <span style=color:#c30>&#34;factors of 6&#34;</span>, args: args{n: <span style=color:#f60>6</span>}, want: []<span style=color:#078;font-weight:700>int</span>{<span style=color:#f60>2</span>, <span style=color:#f60>3</span>}},
-		{name: <span style=color:#c30>&#34;factors of a prime, 7&#34;</span>, args: args{n: <span style=color:#f60>7</span>}, want: []<span style=color:#078;font-weight:700>int</span>{}},
-	}
-	<span style=color:#069;font-weight:700>for</span> _, tt <span style=color:#555>:=</span> <span style=color:#069;font-weight:700>range</span> tests {
-		t.<span style=color:#c0f>Run</span>(tt.name, <span style=color:#069;font-weight:700>func</span>(t <span style=color:#555>*</span>testing.T) {
-			<span style=color:#069;font-weight:700>if</span> got <span style=color:#555>:=</span> <span style=color:#c0f>factors</span>(tt.args.n); !reflect.<span style=color:#c0f>DeepEqual</span>(got, tt.want) {
-				t.<span style=color:#c0f>Errorf</span>(<span style=color:#c30>&#34;factors() = %v, want %v&#34;</span>, got, tt.want)
-			}
-		})
-	}
-}
-
-<span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>Test_isPrime</span>(t <span style=color:#555>*</span>testing.T) {
-	<span style=color:#069;font-weight:700>type</span> args <span style=color:#069;font-weight:700>struct</span> {
-		n <span style=color:#078;font-weight:700>int</span>
-	}
-	tests <span style=color:#555>:=</span> []<span style=color:#069;font-weight:700>struct</span> {
-		name <span style=color:#078;font-weight:700>string</span>
-		args args
-		want <span style=color:#078;font-weight:700>bool</span>
-	}{
-		{name: <span style=color:#c30>&#34;even, not prime&#34;</span>, args: args{n: <span style=color:#f60>8</span>}, want: <span style=color:#069;font-weight:700>false</span>},
-		{name: <span style=color:#c30>&#34;odd, not prime&#34;</span>, args: args{n: <span style=color:#f60>15</span>}, want: <span style=color:#069;font-weight:700>false</span>},
-		{name: <span style=color:#c30>&#34;zero, not prime&#34;</span>, args: args{n: <span style=color:#f60>0</span>}, want: <span style=color:#069;font-weight:700>false</span>},
-		{name: <span style=color:#c30>&#34;one, not prime&#34;</span>, args: args{n: <span style=color:#f60>1</span>}, want: <span style=color:#069;font-weight:700>false</span>},
-		{name: <span style=color:#c30>&#34;a prime number, 7&#34;</span>, args: args{n: <span style=color:#f60>7</span>}, want: <span style=color:#069;font-weight:700>true</span>},
-	}
-	<span style=color:#069;font-weight:700>for</span> _, tt <span style=color:#555>:=</span> <span style=color:#069;font-weight:700>range</span> tests {
-		t.<span style=color:#c0f>Run</span>(tt.name, <span style=color:#069;font-weight:700>func</span>(t <span style=color:#555>*</span>testing.T) {
-			<span style=color:#069;font-weight:700>if</span> got <span style=color:#555>:=</span> <span style=color:#c0f>isPrime</span>(tt.args.n); got <span style=color:#555>!=</span> tt.want {
-				t.<span style=color:#c0f>Errorf</span>(<span style=color:#c30>&#34;isPrime() = %v, want %v&#34;</span>, got, tt.want)
-			}
-		})
-	}
-}
-
-<span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>Test_LargestPrimeFactor</span>(t <span style=color:#555>*</span>testing.T) {
-	<span style=color:#069;font-weight:700>type</span> args <span style=color:#069;font-weight:700>struct</span> {
-		n <span style=color:#078;font-weight:700>int</span>
-	}
-	tests <span style=color:#555>:=</span> []<span style=color:#069;font-weight:700>struct</span> {
-		name <span style=color:#078;font-weight:700>string</span>
-		args args
-		want <span style=color:#078;font-weight:700>int</span>
-	}{
-		{name: <span style=color:#c30>&#34;benchmarkNumber&#34;</span>, args: args{n: benchmarkNumber}, want: benchmarkPrime},
-	}
-	<span style=color:#069;font-weight:700>for</span> _, tt <span style=color:#555>:=</span> <span style=color:#069;font-weight:700>range</span> tests {
-		t.<span style=color:#c0f>Run</span>(tt.name, <span style=color:#069;font-weight:700>func</span>(t <span style=color:#555>*</span>testing.T) {
-			<span style=color:#069;font-weight:700>if</span> got <span style=color:#555>:=</span> <span style=color:#c0f>LargestPrimeFactor</span>(tt.args.n); !reflect.<span style=color:#c0f>DeepEqual</span>(got, tt.want) {
-				t.<span style=color:#c0f>Errorf</span>(<span style=color:#c30>&#34;LargestPrimeFactor() = %v, want %v&#34;</span>, got, tt.want)
-			}
-		})
-	}
-}
-
-<span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>Benchmark_factors</span>(b <span style=color:#555>*</span>testing.B) {
-	benchmarks <span style=color:#555>:=</span> []<span style=color:#069;font-weight:700>struct</span> {
-		name  <span style=color:#078;font-weight:700>string</span>
-		input <span style=color:#078;font-weight:700>int</span>
-	}{
-		{name: <span style=color:#c30>&#34;benchmarkNumber&#34;</span>, input: benchmarkNumber},
-	}
-	<span style=color:#069;font-weight:700>for</span> _, bm <span style=color:#555>:=</span> <span style=color:#069;font-weight:700>range</span> benchmarks {
-		b.<span style=color:#c0f>Run</span>(bm.name, <span style=color:#069;font-weight:700>func</span>(b <span style=color:#555>*</span>testing.B) {
-			<span style=color:#069;font-weight:700>for</span> i <span style=color:#555>:=</span> <span style=color:#f60>0</span>; i &lt; b.N; i<span style=color:#555>++</span> {
-				<span style=color:#c0f>factors</span>(bm.input)
-			}
-		})
-	}
-
-}
-
-<span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>Benchmark_LargestPrimeFactor</span>(b <span style=color:#555>*</span>testing.B) {
-	benchmarks <span style=color:#555>:=</span> []<span style=color:#069;font-weight:700>struct</span> {
-		name  <span style=color:#078;font-weight:700>string</span>
-		input <span style=color:#078;font-weight:700>int</span>
-	}{
-		{name: <span style=color:#c30>&#34;benchmarkNumber&#34;</span>, input: benchmarkNumber},
-	}
-	<span style=color:#069;font-weight:700>for</span> _, bm <span style=color:#555>:=</span> <span style=color:#069;font-weight:700>range</span> benchmarks {
-		b.<span style=color:#c0f>Run</span>(bm.name, <span style=color:#069;font-weight:700>func</span>(b <span style=color:#555>*</span>testing.B) {
-			<span style=color:#069;font-weight:700>for</span> i <span style=color:#555>:=</span> <span style=color:#f60>0</span>; i &lt; b.N; i<span style=color:#555>++</span> {
-				<span style=color:#c0f>LargestPrimeFactor</span>(bm.input)
-			}
-		})
-	}
-}
-
-<span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>Benchmark_isPrime</span>(b <span style=color:#555>*</span>testing.B) {
-	benchmarks <span style=color:#555>:=</span> []<span style=color:#069;font-weight:700>struct</span> {
-		name  <span style=color:#078;font-weight:700>string</span>
-		input <span style=color:#078;font-weight:700>int</span>
-	}{
-		{name: <span style=color:#c30>&#34;benchmarkNumber&#34;</span>, input: benchmarkNumber},
-	}
-	<span style=color:#069;font-weight:700>for</span> _, bm <span style=color:#555>:=</span> <span style=color:#069;font-weight:700>range</span> benchmarks {
-		b.<span style=color:#c0f>Run</span>(bm.name, <span style=color:#069;font-weight:700>func</span>(b <span style=color:#555>*</span>testing.B) {
-			<span style=color:#069;font-weight:700>for</span> i <span style=color:#555>:=</span> <span style=color:#f60>0</span>; i &lt; b.N; i<span style=color:#555>++</span> {
-				<span style=color:#c0f>isPrime</span>(bm.input)
-			}
-		})
-	}
-}
-</code></pre></div><p>Note that in the <code>Benchmark_</code> functions, we are using the sub-test/sub-benchmark format, where we define multiple pieces of test data/test cases which can be run. In the benchmark case we are only using one, but we could easily increase that later if desired, so the flexibility is nice.</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ go <span style=color:#366>test</span> -bench<span style=color:#555>=</span>. -benchmem
-Benchmark_factors/benchmarkNumber-4         	            3000	    <span style=color:#f60>416669</span> ns/op	     <span style=color:#f60>248</span> B/op	       <span style=color:#f60>5</span> allocs/op
-Benchmark_LargestPrimeFactor/benchmarkNumber-4         	    2000	    <span style=color:#f60>625321</span> ns/op	     <span style=color:#f60>624</span> B/op	      <span style=color:#f60>28</span> allocs/op
-Benchmark_isPrime/benchmarkNumber-4                    	    3000	    <span style=color:#f60>414224</span> ns/op	     <span style=color:#f60>248</span> B/op	       <span style=color:#f60>5</span> allocs/op
-</code></pre></div><p>So far, not great for performance nor for memory allocations. Let&rsquo;s improve.</p>
-<h1 id=v2-skip-the-even-numbers class=anchor-link><a href=#v2-skip-the-even-numbers>V2: Skip the even numbers</a></h1>
-<p>By definition of <strong>prime</strong>, we know that 2 is the only even prime number. Since all other even numbers are divisible by 2, they have a divisor other than themselves and 1 - thus, they are not prime. Therefore, we can modify our solution to exclude checking whether or not these numbers are prime, and see if that speeds up the system. The code is almost the same as the previous version, with the difference being the addition of an <code>isEven()</code> function to check the parity of the number.</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>package</span> v2
-
-<span style=color:#069;font-weight:700>import</span> (
-	<span style=color:#c30>&#34;math&#34;</span>
-)
-
-<span style=color:#09f;font-style:italic>// V2:
-</span><span style=color:#09f;font-style:italic>// We know that 2 is the only even prime, so we can
-</span><span style=color:#09f;font-style:italic>// exclude that from being checked.
-</span><span style=color:#09f;font-style:italic></span>
-
-<span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>isEven</span>(n <span style=color:#078;font-weight:700>int</span>) <span style=color:#078;font-weight:700>bool</span> {
-	<span style=color:#069;font-weight:700>if</span> math.<span style=color:#c0f>Mod</span>(<span style=color:#366>float64</span>(n), <span style=color:#f60>2.0</span>) <span style=color:#555>==</span> <span style=color:#f60>0.0</span> {
-		<span style=color:#069;font-weight:700>return</span> <span style=color:#069;font-weight:700>true</span>
-	}
-	<span style=color:#069;font-weight:700>return</span> <span style=color:#069;font-weight:700>false</span>
-}
-
-<span style=color:#09f;font-style:italic>// Ignore even factors since they can never be prime
-</span><span style=color:#09f;font-style:italic></span><span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>factors</span>(n <span style=color:#078;font-weight:700>int</span>) []<span style=color:#078;font-weight:700>int</span> {
-	facs <span style=color:#555>:=</span> <span style=color:#366>make</span>([]<span style=color:#078;font-weight:700>int</span>, <span style=color:#f60>0</span>)
-	<span style=color:#069;font-weight:700>for</span> i <span style=color:#555>:=</span> <span style=color:#f60>2</span>; i &lt; n; i<span style=color:#555>++</span> {
-		<span style=color:#069;font-weight:700>if</span> <span style=color:#c0f>isEven</span>(i) {
-			<span style=color:#069;font-weight:700>continue</span>
-		}
-		<span style=color:#069;font-weight:700>if</span> math.<span style=color:#c0f>Mod</span>(<span style=color:#366>float64</span>(n), <span style=color:#366>float64</span>(i)) <span style=color:#555>==</span> <span style=color:#f60>0.0</span> {
-			facs = <span style=color:#366>append</span>(facs, i)
-		}
-	}
-	<span style=color:#069;font-weight:700>return</span> facs
-}
-
-<span style=color:#09f;font-style:italic>// Even numbers can&#39;t be prime, so we don&#39;t need to check them
-</span><span style=color:#09f;font-style:italic></span><span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>isPrime</span>(n <span style=color:#078;font-weight:700>int</span>) <span style=color:#078;font-weight:700>bool</span> {
-	<span style=color:#069;font-weight:700>if</span> n <span style=color:#555>==</span> <span style=color:#f60>0</span> <span style=color:#555>||</span> n <span style=color:#555>==</span> <span style=color:#f60>1</span> <span style=color:#555>||</span> <span style=color:#c0f>isEven</span>(n) {
-		<span style=color:#069;font-weight:700>return</span> <span style=color:#069;font-weight:700>false</span>
-	}
-	facs <span style=color:#555>:=</span> <span style=color:#c0f>factors</span>(n)
-	<span style=color:#069;font-weight:700>if</span> <span style=color:#366>len</span>(facs) <span style=color:#555>!=</span> <span style=color:#f60>0</span> {
-		<span style=color:#069;font-weight:700>return</span> <span style=color:#069;font-weight:700>false</span>
-	}
-	<span style=color:#069;font-weight:700>return</span> <span style=color:#069;font-weight:700>true</span>
-}
-
-<span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>LargestPrimeFactor</span>(n <span style=color:#078;font-weight:700>int</span>) <span style=color:#078;font-weight:700>int</span> {
-	biggest <span style=color:#555>:=</span> <span style=color:#f60>0</span>
-	<span style=color:#069;font-weight:700>for</span> i <span style=color:#555>:=</span> <span style=color:#f60>2</span>; i &lt; n; i<span style=color:#555>++</span> {
-		<span style=color:#069;font-weight:700>if</span> <span style=color:#c0f>isEven</span>(i) { <span style=color:#09f;font-style:italic>// skip even numbers
-</span><span style=color:#09f;font-style:italic></span>			<span style=color:#069;font-weight:700>continue</span>
-		}
-		<span style=color:#069;font-weight:700>if</span> math.<span style=color:#c0f>Mod</span>(<span style=color:#366>float64</span>(n), <span style=color:#366>float64</span>(i)) <span style=color:#555>==</span> <span style=color:#f60>0.0</span> {
-			<span style=color:#069;font-weight:700>if</span> <span style=color:#c0f>isPrime</span>(i) {
-				<span style=color:#069;font-weight:700>if</span> i &gt; biggest {
-					biggest = i
-				}
-			}
-		}
-	}
-	<span style=color:#069;font-weight:700>return</span> biggest
-}
-</code></pre></div><p>We use the same testing and benchmarking code as in V1, but with the addition of a test and benchmark for <code>isEven()</code>.</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>Test_isEven</span>(t <span style=color:#555>*</span>testing.T) {
-	<span style=color:#069;font-weight:700>type</span> args <span style=color:#069;font-weight:700>struct</span> {
-		n <span style=color:#078;font-weight:700>int</span>
-	}
-	tests <span style=color:#555>:=</span> []<span style=color:#069;font-weight:700>struct</span> {
-		name <span style=color:#078;font-weight:700>string</span>
-		args args
-		want <span style=color:#078;font-weight:700>bool</span>
-	}{
-		{name: <span style=color:#c30>&#34;Even number, 4&#34;</span>, args: args{n: <span style=color:#f60>4</span>}, want: <span style=color:#069;font-weight:700>true</span>},
-		{name: <span style=color:#c30>&#34;Even number, 0&#34;</span>, args: args{n: <span style=color:#f60>0</span>}, want: <span style=color:#069;font-weight:700>true</span>},
-		{name: <span style=color:#c30>&#34;Even number, -2&#34;</span>, args: args{n: <span style=color:#555>-</span><span style=color:#f60>2</span>}, want: <span style=color:#069;font-weight:700>true</span>},
-		{name: <span style=color:#c30>&#34;Odd number, 3&#34;</span>, args: args{n: <span style=color:#f60>3</span>}, want: <span style=color:#069;font-weight:700>false</span>},
-		{name: <span style=color:#c30>&#34;Odd number, 1&#34;</span>, args: args{n: <span style=color:#f60>1</span>}, want: <span style=color:#069;font-weight:700>false</span>},
-		{name: <span style=color:#c30>&#34;Odd number, -5&#34;</span>, args: args{n: <span style=color:#555>-</span><span style=color:#f60>5</span>}, want: <span style=color:#069;font-weight:700>false</span>},
-	}
-	<span style=color:#069;font-weight:700>for</span> _, tt <span style=color:#555>:=</span> <span style=color:#069;font-weight:700>range</span> tests {
-		t.<span style=color:#c0f>Run</span>(tt.name, <span style=color:#069;font-weight:700>func</span>(t <span style=color:#555>*</span>testing.T) {
-			<span style=color:#069;font-weight:700>if</span> got <span style=color:#555>:=</span> <span style=color:#c0f>isEven</span>(tt.args.n); !reflect.<span style=color:#c0f>DeepEqual</span>(got, tt.want) {
-				t.<span style=color:#c0f>Errorf</span>(<span style=color:#c30>&#34;isEven() = %v, want %v&#34;</span>, got, tt.want)
-			}
-		})
-	}
-}
-
-<span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>Benchmark_isEven</span>(b <span style=color:#555>*</span>testing.B) {
-	benchmarks <span style=color:#555>:=</span> []<span style=color:#069;font-weight:700>struct</span> {
-		name  <span style=color:#078;font-weight:700>string</span>
-		input <span style=color:#078;font-weight:700>int</span>
-	}{
-		{name: <span style=color:#c30>&#34;Odd number, 3&#34;</span>, input: <span style=color:#f60>3</span>},
-	}
-	<span style=color:#069;font-weight:700>for</span> _, bm <span style=color:#555>:=</span> <span style=color:#069;font-weight:700>range</span> benchmarks {
-		b.<span style=color:#c0f>Run</span>(bm.name, <span style=color:#069;font-weight:700>func</span>(b <span style=color:#555>*</span>testing.B) {
-			<span style=color:#069;font-weight:700>for</span> i <span style=color:#555>:=</span> <span style=color:#f60>0</span>; i &lt; b.N; i<span style=color:#555>++</span> {
-				<span style=color:#c0f>isEven</span>(bm.input)
-			}
-		})
-	}
-}
-</code></pre></div><p>Since we are expecting fewer numbers to be checked, we would expect better performance, right?</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ go <span style=color:#366>test</span> -bench<span style=color:#555>=</span>. -benchmem
-Benchmark_factors/benchmarkNumber-4         	            1000	   <span style=color:#f60>1903807</span> ns/op	     <span style=color:#f60>248</span> B/op	       <span style=color:#f60>5</span> allocs/op
-Benchmark_LargestPrimeFactor/benchmarkNumber-4         	     500	   <span style=color:#f60>2716207</span> ns/op	     <span style=color:#f60>624</span> B/op	      <span style=color:#f60>28</span> allocs/op
-Benchmark_isPrime/benchmarkNumber-4                    	    1000	   <span style=color:#f60>1905843</span> ns/op	     <span style=color:#f60>248</span> B/op	       <span style=color:#f60>5</span> allocs/op
-Benchmark_isEven/Odd_number,_3-4                       	50000000	      24.7 ns/op	       <span style=color:#f60>0</span> B/op	       <span style=color:#f60>0</span> allocs/op
-</code></pre></div><p><strong>WRONG!</strong> Though it doesn&rsquo;t look like our memory allocations have changed, performance is definitely worse than before - but by how much exactly? For this, we can use the helpful <a href=https://godoc.org/golang.org/x/tools/cmd/benchcmp><code>benchcmp</code></a> command. It&rsquo;s easy to install with just a <code>go get golang.org/x/tools/cmd/benchcmp</code>. The we can redirect the output of the V1 benchmark and the V2 benchmark to a file, and use benchcmp to compare the files.</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ go <span style=color:#366>test</span> -bench<span style=color:#555>=</span>. -benchmem &gt; v1.bm
-</code></pre></div><p>And in the V2 package directory</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ go <span style=color:#366>test</span> -bench<span style=color:#555>=</span>. -benchmem &gt; v2.bm
-</code></pre></div><p>Then, with both files in the same directory, we can easily see what&rsquo;s going on.</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ benchcmp v1.bm v2.bm
-benchmark                                          old ns/op     new ns/op     delta
-Benchmark_factors/benchmarkNumber-4                <span style=color:#f60>414686</span>        <span style=color:#f60>1901842</span>       +358.62%
-Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>623854</span>        <span style=color:#f60>2723608</span>       +336.58%
-Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>414616</span>        <span style=color:#f60>1907886</span>       +360.16%
-
-benchmark                                          old allocs     new allocs     delta
-Benchmark_factors/benchmarkNumber-4                <span style=color:#f60>5</span>              <span style=color:#f60>5</span>              +0.00%
-Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>28</span>             <span style=color:#f60>28</span>             +0.00%
-Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>5</span>              <span style=color:#f60>5</span>              +0.00%
-
-benchmark                                          old bytes     new bytes     delta
-Benchmark_factors/benchmarkNumber-4                <span style=color:#f60>248</span>           <span style=color:#f60>248</span>           +0.00%
-Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>624</span>           <span style=color:#f60>624</span>           +0.00%
-Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>248</span>           <span style=color:#f60>248</span>           +0.00%
-</code></pre></div>
-<h1 id=v3 class=anchor-link><a href=#v3>V3</a></h1>
-<p>It seems that in the new version, checking the parity of the numbers in order to avoid testing even numbers for primality is actually slower. We know from the <a href=/an-unreasonably-deep-dive-into-project-euler-problem-2.html>deep-dive into Project Euler Problem 2</a> that testing parity of numbers with a bitwise AND is <strong>much</strong> faster, so let&rsquo;s replace our naive implementation with that one and call it V3. There will be no other changes, so we will just swap out the implementation of <code>isEven()</code>.</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>isEven</span>(x <span style=color:#078;font-weight:700>int</span>) <span style=color:#078;font-weight:700>bool</span> {
-	<span style=color:#069;font-weight:700>if</span> x<span style=color:#555>&amp;</span><span style=color:#f60>1</span> <span style=color:#555>==</span> <span style=color:#f60>0</span> {
-		<span style=color:#069;font-weight:700>return</span> <span style=color:#069;font-weight:700>true</span>
-	}
-	<span style=color:#069;font-weight:700>return</span> <span style=color:#069;font-weight:700>false</span>
-}
-</code></pre></div><p>Now we can use the same tests and benchmarks, and see if we obtained better performance over V2, and therefore hopefully over V1.</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ go <span style=color:#366>test</span> -bench<span style=color:#555>=</span>. -benchmem
-Benchmark_factors/benchmarkNumber-4         	           10000	    <span style=color:#f60>222491</span> ns/op	     <span style=color:#f60>248</span> B/op	       <span style=color:#f60>5</span> allocs/op
-Benchmark_LargestPrimeFactor/benchmarkNumber-4         	    5000	    <span style=color:#f60>345445</span> ns/op	     <span style=color:#f60>624</span> B/op	      <span style=color:#f60>28</span> allocs/op
-Benchmark_isPrime/benchmarkNumber-4                    	   10000	    <span style=color:#f60>223073</span> ns/op	     <span style=color:#f60>248</span> B/op	       <span style=color:#f60>5</span> allocs/op
-Benchmark_isEven/Odd_number,_3-4                      2000000000	      0.29 ns/op	       <span style=color:#f60>0</span> B/op	       <span style=color:#f60>0</span> allocs/op
-</code></pre></div><p>As before, the bitwise version is much faster for testing parity. Was there any performance improvement over V2, and hopefully over V1?</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ benchcmp v2.bm v3.bm
-benchmark                                          old ns/op     new ns/op     delta
-Benchmark_factors/benchmarkNumber-4                <span style=color:#f60>2016066</span>       <span style=color:#f60>222356</span>        -88.97%
-Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>2915830</span>       <span style=color:#f60>358904</span>        -87.69%
-Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>2013975</span>       <span style=color:#f60>222206</span>        -88.97%
-Benchmark_isEven/Odd_number,_3-4                   26.9          0.29          -98.92%
-
-benchmark                                          old allocs     new allocs     delta
-Benchmark_factors/benchmarkNumber-4                <span style=color:#f60>5</span>              <span style=color:#f60>5</span>              +0.00%
-Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>28</span>             <span style=color:#f60>28</span>             +0.00%
-Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>5</span>              <span style=color:#f60>5</span>              +0.00%
-Benchmark_isEven/Odd_number,_3-4                   <span style=color:#f60>0</span>              <span style=color:#f60>0</span>              +0.00%
-
-benchmark                                          old bytes     new bytes     delta
-Benchmark_factors/benchmarkNumber-4                <span style=color:#f60>248</span>           <span style=color:#f60>248</span>           +0.00%
-Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>624</span>           <span style=color:#f60>624</span>           +0.00%
-Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>248</span>           <span style=color:#f60>248</span>           +0.00%
-Benchmark_isEven/Odd_number,_3-4                   <span style=color:#f60>0</span>             <span style=color:#f60>0</span>             +0.00%
-</code></pre></div><p>Memory usage is the same, but the parity checking time was reduced by about 99%, so it&rsquo;s almost free now. Let&rsquo;s see if that bought us some significant improvement over the first version. Intuitively, we are skipping primality checks on half the numbers (the even ones greater than 2) so that should reduce the runtime by about half.</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ benchcmp v1.bm v3.bm
-benchmark                                          old ns/op     new ns/op     delta
-Benchmark_factors/benchmarkNumber-4                <span style=color:#f60>414686</span>        <span style=color:#f60>222356</span>        -46.38%
-Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>623854</span>        <span style=color:#f60>358904</span>        -42.47%
-Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>414616</span>        <span style=color:#f60>222206</span>        -46.41%
-
-benchmark                                          old allocs     new allocs     delta
-Benchmark_factors/benchmarkNumber-4                <span style=color:#f60>5</span>              <span style=color:#f60>5</span>              +0.00%
-Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>28</span>             <span style=color:#f60>28</span>             +0.00%
-Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>5</span>              <span style=color:#f60>5</span>              +0.00%
-
-benchmark                                          old bytes     new bytes     delta
-Benchmark_factors/benchmarkNumber-4                <span style=color:#f60>248</span>           <span style=color:#f60>248</span>           +0.00%
-Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>624</span>           <span style=color:#f60>624</span>           +0.00%
-Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>248</span>           <span style=color:#f60>248</span>           +0.00%
-</code></pre></div><p>That intuition seems to be correct. We reduced the runtime by about 50%. However, if we think about the properties of prime factors, we can take a different and <strong>MUCH</strong> faster approach to solving the problem.</p>
-<h1 id=v4 class=anchor-link><a href=#v4>V4</a></h1>
-<p>When we started out, we were given some number n and our naive solution was to check all the numbers from 3 to n-1 to see if they are divisors of n. If so, we then went on to check if the number is prime, and therefore a prime divisor. To check if a number is prime, we generated all its factors, and if there were no factors between 3 and n-1, inclusive, then the number is prime.</p>
-<p>The problem is that we did a lot of extra work to check if a number is prime. The reasoning is this: if a number <strong>IS NOT</strong> prime, then it will have at least one divisor which is less than or equal to its square root. If a number has some divisors between 3 and the number, call them a and b, then the largest they can both be is a = b = sqrt(n) since a * b = n. Therefore, if one of the numbers is larger, then the other must be smaller. The two numbers pivot around the square root of n, and can be at most sqrt(n).</p>
-<p>To see why this is true, consider the number 100, which has square root 10. In this case, a = b = 10. If a goes up to 20, b goes down to 5. If we want to know if a number is prime, we can simply check to see if it has any divisors less than its square root.</p>
-<p>Additionally, instead of generating all factors and then checking if each is prime, we can simply start at 3 - the smallest possible factor - and work our way up to sqrt(n).</p>
-<p>With that in mind, we can change our <code>isPrime()</code> function and check a much smaller set of numbers.</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>isPrime</span>(n <span style=color:#078;font-weight:700>int</span>) <span style=color:#078;font-weight:700>bool</span> {
-	<span style=color:#069;font-weight:700>if</span> n <span style=color:#555>==</span> <span style=color:#f60>0</span> <span style=color:#555>||</span> n <span style=color:#555>==</span> <span style=color:#f60>1</span> <span style=color:#555>||</span> <span style=color:#c0f>isEven</span>(n) {
-		<span style=color:#069;font-weight:700>return</span> <span style=color:#069;font-weight:700>false</span>
-	}
-	<span style=color:#069;font-weight:700>for</span> i <span style=color:#555>:=</span> <span style=color:#f60>3</span>; i <span style=color:#555>&lt;=</span> <span style=color:#366>int</span>(math.<span style=color:#c0f>Sqrt</span>(<span style=color:#366>float64</span>(n))); i<span style=color:#555>++</span> {
-		<span style=color:#069;font-weight:700>if</span> <span style=color:#c0f>isEven</span>(i) {
-			<span style=color:#069;font-weight:700>continue</span>
-		}
-		<span style=color:#069;font-weight:700>if</span> math.<span style=color:#c0f>Mod</span>(<span style=color:#366>float64</span>(n), <span style=color:#366>float64</span>(i)) <span style=color:#555>==</span> <span style=color:#f60>0.0</span> {
-			<span style=color:#069;font-weight:700>return</span> <span style=color:#069;font-weight:700>false</span>
-		}
-	}
-	<span style=color:#069;font-weight:700>return</span> <span style=color:#069;font-weight:700>true</span>
-}
-</code></pre></div><p>Now we can run the same set of tests (which pass) and benchmarks again to see how much performance we gained (if any).</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ benchcmp v3.bm v4.bm
-ignoring Benchmark_factors/benchmarkNumber-4: before has <span style=color:#f60>1</span> instances, after has <span style=color:#f60>0</span>
-benchmark                                          old ns/op     new ns/op     delta
-Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>358904</span>        <span style=color:#f60>223015</span>        -37.86%
-Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>222206</span>        <span style=color:#f60>239</span>           -99.89%
-Benchmark_isEven/Odd_number,_3-4                   0.29          0.29          +0.00%
-
-benchmark                                          old allocs     new allocs     delta
-Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>28</span>             <span style=color:#f60>0</span>              -100.00%
-Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>5</span>              <span style=color:#f60>0</span>              -100.00%
-Benchmark_isEven/Odd_number,_3-4                   <span style=color:#f60>0</span>              <span style=color:#f60>0</span>              +0.00%
-
-benchmark                                          old bytes     new bytes     delta
-Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>624</span>           <span style=color:#f60>0</span>             -100.00%
-Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>248</span>           <span style=color:#f60>0</span>             -100.00%
-Benchmark_isEven/Odd_number,_3-4                   <span style=color:#f60>0</span>             <span style=color:#f60>0</span>             +0.00%
-</code></pre></div><p>Great! We now have 0 memory allocations, which will make things faster, and we check fewer numbers, which will also make things faster. This is demonstrated by the 99% reduction in runtime for <code>isPrime()</code> and a 38% reduction for finding the largest prime factor compared to V3.</p>
-<p>If we compare to V1, we see that we are down about 64%.</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ benchcmp v1.bm v4.bm
-ignoring Benchmark_factors/benchmarkNumber-4: before has <span style=color:#f60>1</span> instances, after has <span style=color:#f60>0</span>
-benchmark                                          old ns/op     new ns/op     delta
-Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>623854</span>        <span style=color:#f60>223015</span>        -64.25%
-Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>414616</span>        <span style=color:#f60>239</span>           -99.94%
-
-benchmark                                          old allocs     new allocs     delta
-Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>28</span>             <span style=color:#f60>0</span>              -100.00%
-Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>5</span>              <span style=color:#f60>0</span>              -100.00%
-
-benchmark                                          old bytes     new bytes     delta
-Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>624</span>           <span style=color:#f60>0</span>             -100.00%
-Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>248</span>           <span style=color:#f60>0</span>             -100.00%
-</code></pre></div>
-<h1 id=bonus-round-v5 class=anchor-link><a href=#bonus-round-v5>Bonus round: V5</a></h1>
-<p>If we wanted to squeeze out a bit more performance (without going on to more advanced methods like the <a href=https://en.wikipedia.org/wiki/General_number_field_sieve>General Number Field Sieve</a>, the current top performer for prime factorization) we can take advantage again of the fact that all primes larger than 2 are odd. With this fact in mind, we only need to check odd divisors, and when checking for primality, we need only check odd numbers. This removes the call to <code>isEven()</code> entirely, since we don&rsquo;t need to check for that now, but it does make our <code>isPrime()</code> implementation more brittle since we are assuming the caller is always providing odd numbers.</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#069;font-weight:700>package</span> v5
-
-<span style=color:#069;font-weight:700>import</span> (
-	<span style=color:#c30>&#34;math&#34;</span>
-)
-
-
-<span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>isPrime</span>(n <span style=color:#078;font-weight:700>int</span>) <span style=color:#078;font-weight:700>bool</span> {
-	<span style=color:#069;font-weight:700>for</span> i <span style=color:#555>:=</span> <span style=color:#f60>3</span>; i <span style=color:#555>&lt;=</span> <span style=color:#366>int</span>(math.<span style=color:#c0f>Sqrt</span>(<span style=color:#366>float64</span>(n))); i = i <span style=color:#555>+</span> <span style=color:#f60>2</span> {
-		<span style=color:#069;font-weight:700>if</span> math.<span style=color:#c0f>Mod</span>(<span style=color:#366>float64</span>(n), <span style=color:#366>float64</span>(i)) <span style=color:#555>==</span> <span style=color:#f60>0.0</span> {
-			<span style=color:#069;font-weight:700>return</span> <span style=color:#069;font-weight:700>false</span>
-		}
-	}
-	<span style=color:#069;font-weight:700>return</span> <span style=color:#069;font-weight:700>true</span>
-}
-
-<span style=color:#069;font-weight:700>func</span> <span style=color:#c0f>LargestPrimeFactor</span>(n <span style=color:#078;font-weight:700>int</span>) <span style=color:#078;font-weight:700>int</span> {
-	biggest <span style=color:#555>:=</span> <span style=color:#f60>0</span>
-	<span style=color:#09f;font-style:italic>// First, find factors
-</span><span style=color:#09f;font-style:italic></span>	<span style=color:#069;font-weight:700>for</span> i <span style=color:#555>:=</span> <span style=color:#f60>3</span>; i &lt; n; i = i <span style=color:#555>+</span> <span style=color:#f60>2</span> {
-		<span style=color:#069;font-weight:700>if</span> math.<span style=color:#c0f>Mod</span>(<span style=color:#366>float64</span>(n), <span style=color:#366>float64</span>(i)) <span style=color:#555>==</span> <span style=color:#f60>0.0</span> {
-			<span style=color:#09f;font-style:italic>// i is a factor, so check if it&#39;s prime
-</span><span style=color:#09f;font-style:italic></span>			<span style=color:#069;font-weight:700>if</span> <span style=color:#c0f>isPrime</span>(i) {
-				<span style=color:#069;font-weight:700>if</span> i &gt; biggest {
-					biggest = i
-				}
-			}
-		}
-	}
-	<span style=color:#069;font-weight:700>return</span> biggest
-}
-</code></pre></div><p>Now we start at 3 and increment by 2 in each loop, which will only test odd numbers. The performance is a bit better, but we&rsquo;re starting to get only marginal benefits at this point.</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>
-$ benchcmp v4.bm v5.bm
-ignoring Benchmark_isEven/Odd_number,_3-4: before has <span style=color:#f60>1</span> instances, after has <span style=color:#f60>0</span>
-benchmark                                          old ns/op     new ns/op     delta
-Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>223015</span>        <span style=color:#f60>201270</span>        -9.75%
-Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>239</span>           <span style=color:#f60>231</span>           -3.35%
-
-benchmark                                          old allocs     new allocs     delta
-Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>0</span>              <span style=color:#f60>0</span>              +0.00%
-Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>0</span>              <span style=color:#f60>0</span>              +0.00%
-
-benchmark                                          old bytes     new bytes     delta
-Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>0</span>             <span style=color:#f60>0</span>             +0.00%
-Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>0</span>             <span style=color:#f60>0</span>             +0.00%
-</code></pre></div><p>We get another 10% or so increase overall compared to V4. What about compared to our original implementation?</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ benchcmp v1.bm v5.bm
-ignoring Benchmark_factors/benchmarkNumber-4: before has <span style=color:#f60>1</span> instances, after has <span style=color:#f60>0</span>
-benchmark                                          old ns/op     new ns/op     delta
-Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>623854</span>        <span style=color:#f60>201270</span>        -67.74%
-Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>414616</span>        <span style=color:#f60>231</span>           -99.94%
-
-benchmark                                          old allocs     new allocs     delta
-Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>28</span>             <span style=color:#f60>0</span>              -100.00%
-Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>5</span>              <span style=color:#f60>0</span>              -100.00%
-
-benchmark                                          old bytes     new bytes     delta
-Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#f60>624</span>           <span style=color:#f60>0</span>             -100.00%
-Benchmark_isPrime/benchmarkNumber-4                <span style=color:#f60>248</span>           <span style=color:#f60>0</span>             -100.00%
-</code></pre></div><p>Overall, we are down about 68% for the small benchmark number provided in the challenge. Let&rsquo;s try a bigger number and see if the percentages change as the numbers increase (they should). The random number I first typed originally was so slow to compute with V1 that I cancelled the benchmark. I&rsquo;ve replaced it with a random 10 digit number <code>8275832758</code>. Here are the results (I removed all the benchmark data that was the same as before).</p>
-<div class=highlight><pre tabindex=0 style=background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ benchcmp v1.1.bm v5.1.bm
-Benchmark_isPrime/8275832758-4                     <span style=color:#f60>275850428911</span>     <span style=color:#f60>9771163</span>       -100.00%
-</code></pre></div><p>I tried to also do the benchmark for <code>LargestPrimeFactor()</code> as well, but <code>go test</code> died mysteriously due to a SIGQUIT somewhere. Perhaps a bug report is in order.</p>
-<h1 id=outro class=anchor-link><a href=#outro>Outro</a></h1>
-<p>At this point, we aren&rsquo;t getting much more in the way of performance improvements, so there&rsquo;s no need to carry out more changes to this algorithm. If we want to have better performance, especially for numbers with a greater number of digits, we will have to change the algorithm and use something more intelligent and parallelizable (there are other sieves for which this is possible).</p>
-</div>
-</div>
-</section>
-<div class="nav-box row">
-<div class=nav-left-menu>
-<ul>
-<li><a href=/>Latest</a> | </li>
-<li><a href=/about.html>About</a> | </li>
-<li><a href=/cases.html>Case Studies</a> | </li>
-<li><a href=/contact.html>Contact</a> | </li>
-<li><a href=/press.html>Press</a></li>
-</ul>
-</div>
-</div>
-<div class="footer-box row">
-<div class="footer-left col-md-6 col-xs-12">
-<div class="footer-bio content">
-<p><strong>Adam Drake</strong> leads technical business transformations in global and multi-cultural environments. He has a passion for helping companies become more productive by improving internal leadership capabilities, and accelerating product development through technology and data architecture guidance. Adam has served as a White House Presidential Innovation Fellow and is an IEEE Senior Member.</p>
-</div>
-</div>
-<div class=footer-right>
-<div class=social-icons>
-<a href=https://github.com/adamdrake>
-<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64>
-</a>
-<a href=https://twitter.com/aadrake>
-<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64>
-</a>
-<a href=https://linkedin.com/in/aadrake>
-<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64>
-</a>
-</div>
-<button class="subscribe subscribe-btn">
-<a href=https://www.digitalmaneuver.com/#/portal>Subscribe to newsletter</a>
-</button>
-</div>
-</div>
-<div class="container has-text-centered footer-copyright">
-</div>
-</body>
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=mobile-web-app-capable content="yes"><meta name=viewport content="width=device-width,initial-scale=1"><title>An Unreasonably Deep Dive into Project Euler Problem 3 - Adam Drake</title><meta name=description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams."><link rel="shortcut icon" href=https://adamdrake.com/static/favicon.ico><link rel=authorization_endpoint href=https://indieauth.com/auth><link rel=token_endpoint href=https://tokens.indieauth.com/token><link rel=me href=https://github.com/adamdrake><link rel=me href=https://twitter.com/aadrake><link rel=stylesheet href=https://adamdrake.com/css/style.min.css crossorigin=anonymous media=screen><meta property="og:url" content="https://adamdrake.com"><meta property="og:title" content="Adam Drake"><meta property="og:site_name" content="Adam Drake"><meta property="og:type" content="website"><meta property="og:description" content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams."><meta property="og:image" content="/static/images/twitter-card.jpg"><meta name=twitter:title content="Adam Drake"><meta name=twitter:description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams."><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/static/images/twitter-card.jpg"></head><body><header><section><div class="header flex row"><div class="header__item flex row"><a id=site__name href=https://adamdrake.com>Adam Drake</a></div><div class="flex row"><nav aria-label="page menu" class="flex row"><ul role=menubar class="flex row"><li role=none><a class=sidebar-nav-itemmenu__item href=/ title>Latest</a></li><li role=none><a class=sidebar-nav-itemmenu__item href=/about.html title>About</a></li><li role=none><a class=sidebar-nav-itemmenu__item href=/cases.html title>Case Studies</a></li><li role=none><a class=sidebar-nav-itemmenu__item href=/contact.html title>Contact</a></li><li role=none><a class="sidebar-nav-item activemenu__item" href=/posts.html title=Posts>Posts</a></li><li role=none><a class=sidebar-nav-itemmenu__item href=/press.html title>Press</a></li><li><button class="subscribe subscribe-btn">
+<a href=https://www.digitalmaneuver.com/#/portal>Subscribe to newsletter</a></button></li></ul></nav></div></div></section></header><main aria-role=main><section><ul id=feed__ul><li class="feed__li h-entry"><div class=feed__content><time class="hidden dt-published">2017-05-14 00:00:00 +0000 UTC</time><div class="flex properties__row"><div rel=author class="flex left p-author h-card hidden"><img class=u-photo src=https://adamdrake.com/static/images/adam_drake_240.jpg alt="Adam Drake" id=author-img><div><p rel=me class=p-name id=author-name>Adam Drake</p><p class=properties>May 14, 2017</p></div></div><div class="flex right properties"></div></div><article class="md p-summary e-content"><h1 class=p-name>An Unreasonably Deep Dive into Project Euler Problem 3</h1><h1 id=intro class=anchor-link><a href=#intro>Intro</a></h1><p>I&rsquo;ve been busy as usual for the last couple of months, and haven&rsquo;t really had time to extend the Project Euler series after <a href=/an-unreasonably-deep-dive-into-project-euler-problem-1.html>Problem 1</a> and <a href=/an-unreasonably-deep-dive-into-project-euler-problem-2.html>Problem 2</a> articles.</p><p>However, I finally did set aside some time to play around with Problem 3: finding the largest <a href=https://en.wikipedia.org/wiki/Prime_factor>prime factor</a> of a number.</p><h1 id=problem-statement class=anchor-link><a href=#problem-statement>Problem Statement</a></h1><blockquote><p>The prime factors of 13195 are 5, 7, 13 and 29.</p><p>What is the largest prime factor of the number 600851475143?</p></blockquote><h1 id=definitions-and-theorems class=anchor-link><a href=#definitions-and-theorems>Definitions and Theorems</a></h1><p><strong>Definition</strong>: For two integers a and b, we can say that a <em>divides</em> b, a is a <em>divisor</em> of b, b is a <em>multiple</em> of a, or a is a <em>factor</em> of b if, for some integer y, y*a=b.</p><p><strong>Definition</strong>: an integer n is <em>prime</em> if the only divisors of n are itself and 1. Note that 1 and -1 are divisors of every integer.</p><p><strong>Definition</strong>: a whole number n is <em>composite</em> if it is not prime. That is, it has some integer divisors beyond itself and 1.</p><p><strong>Theorem</strong> (Fundamental Theorem of Arithmetic): Every integer greater than 1 is either <strong>prime</strong>, or the <strong>product of primes</strong> (i.e., composite). Also, for composite number, the prime factorization is unique up to the order of the factors. There is 1, and only 1, prime factorization for a composite number.</p><p><strong>Proof</strong>: see <a href=https://en.wikipedia.org/wiki/Fundamental_theorem_of_arithmetic#Proof>Wikipedia</a></p><p>To start considering the problem, we know that the given number is either prime or composite (product of unique set of primes). We can assume the number is composite, otherwise the problem statement doesn&rsquo;t make much sense and/or is trivial.</p><p>We must therefore find the unique prime factors of the number, and then find which of those primes is largest.</p><h1 id=v1-brute-force class=anchor-link><a href=#v1-brute-force>V1: Brute force</a></h1><p>These sorts of approaches are often underestimated and can be very effective in practical applications. They&rsquo;re a good place to start.</p><p>A naive algorithm could be to loop through all the numbers from 2 to n-1, and check if each one divides n. If some number d does divide n, then put it in the list of divisors. After finding all the divisors, check each one to determine if it is prime. To check primality, loop through all the numbers between 3 and d-1 to check if one of the numbers is a divisor of d. If you find any such numbers, d is not prime and therefore not a prime factor of n. If you find no such number, then d divides n but d does not have any other divisors. Thus, d is prime. Thus, d is a prime factor of n.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>v1</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// V1:
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// Take a number n, calculate all its factors,
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// for each factor f, test if f is itself
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// prime by getting all its factors.  If only 1 and f
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// are divisors of f, then f is prime, and a factor
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// of n, and therefore a prime factor.
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;math&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// If the only divisors of n are 1 and n, then n is prime
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>isPrime</span>(<span style=color:#a6e22e>n</span> <span style=color:#66d9ef>int</span>) <span style=color:#66d9ef>bool</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span> <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span> <span style=color:#f92672>||</span> <span style=color:#a6e22e>n</span> <span style=color:#f92672>==</span> <span style=color:#ae81ff>1</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>facs</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>factors</span>(<span style=color:#a6e22e>n</span>)
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> len(<span style=color:#a6e22e>facs</span>) <span style=color:#f92672>!=</span> <span style=color:#ae81ff>0</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Generate all factors
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>factors</span>(<span style=color:#a6e22e>n</span> <span style=color:#66d9ef>int</span>) []<span style=color:#66d9ef>int</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>facs</span> <span style=color:#f92672>:=</span> make([]<span style=color:#66d9ef>int</span>, <span style=color:#ae81ff>0</span>)
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>2</span>; <span style=color:#a6e22e>i</span> &lt; <span style=color:#a6e22e>n</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Mod</span>(float64(<span style=color:#a6e22e>n</span>), float64(<span style=color:#a6e22e>i</span>)) <span style=color:#f92672>==</span> <span style=color:#ae81ff>0.0</span> {
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>facs</span> = append(<span style=color:#a6e22e>facs</span>, <span style=color:#a6e22e>i</span>)
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>facs</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Given some n, return the largest prime factor of n
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>LargestPrimeFactor</span>(<span style=color:#a6e22e>n</span> <span style=color:#66d9ef>int</span>) <span style=color:#66d9ef>int</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>biggest</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>2</span>; <span style=color:#a6e22e>i</span> &lt; <span style=color:#a6e22e>n</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Mod</span>(float64(<span style=color:#a6e22e>n</span>), float64(<span style=color:#a6e22e>i</span>)) <span style=color:#f92672>==</span> <span style=color:#ae81ff>0.0</span> { <span style=color:#75715e>// i divides n evenly
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>			<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>isPrime</span>(<span style=color:#a6e22e>i</span>) { <span style=color:#75715e>// i is prime
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>				<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>i</span> &gt; <span style=color:#a6e22e>biggest</span> { <span style=color:#75715e>// i is new biggest prime
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>					<span style=color:#a6e22e>biggest</span> = <span style=color:#a6e22e>i</span>
+</span></span><span style=display:flex><span>				}
+</span></span><span style=display:flex><span>			}
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>biggest</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>We have three functions: one which calculates all the factors of a given number, one which tests if a number is prime, and one which ties it all together (<code>LargestPrimeFactor</code>). While this solution is very inefficient, it does work for small numbers, so the logic is correct. We can see this by writing the necessary tests, using benchmark functions to look at performance of the functions and system.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>v1</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;testing&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;reflect&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>NUMBER</span> <span style=color:#66d9ef>int</span> = <span style=color:#ae81ff>600851475143</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>benchmarkNumber</span> <span style=color:#66d9ef>int</span> = <span style=color:#ae81ff>13195</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>benchmarkPrime</span> <span style=color:#66d9ef>int</span> = <span style=color:#ae81ff>29</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>Test_factors</span>(<span style=color:#a6e22e>t</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>T</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>type</span> <span style=color:#a6e22e>args</span> <span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>n</span> <span style=color:#66d9ef>int</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>tests</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>name</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>args</span> <span style=color:#a6e22e>args</span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>want</span> []<span style=color:#66d9ef>int</span>
+</span></span><span style=display:flex><span>	}{
+</span></span><span style=display:flex><span>		{<span style=color:#a6e22e>name</span>: <span style=color:#e6db74>&#34;factors of zero&#34;</span>, <span style=color:#a6e22e>args</span>: <span style=color:#a6e22e>args</span>{<span style=color:#a6e22e>n</span>: <span style=color:#ae81ff>0</span>}, <span style=color:#a6e22e>want</span>: []<span style=color:#66d9ef>int</span>{}},
+</span></span><span style=display:flex><span>		{<span style=color:#a6e22e>name</span>: <span style=color:#e6db74>&#34;factors of 6&#34;</span>, <span style=color:#a6e22e>args</span>: <span style=color:#a6e22e>args</span>{<span style=color:#a6e22e>n</span>: <span style=color:#ae81ff>6</span>}, <span style=color:#a6e22e>want</span>: []<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>}},
+</span></span><span style=display:flex><span>		{<span style=color:#a6e22e>name</span>: <span style=color:#e6db74>&#34;factors of a prime, 7&#34;</span>, <span style=color:#a6e22e>args</span>: <span style=color:#a6e22e>args</span>{<span style=color:#a6e22e>n</span>: <span style=color:#ae81ff>7</span>}, <span style=color:#a6e22e>want</span>: []<span style=color:#66d9ef>int</span>{}},
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>tt</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>tests</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>t</span>.<span style=color:#a6e22e>Run</span>(<span style=color:#a6e22e>tt</span>.<span style=color:#a6e22e>name</span>, <span style=color:#66d9ef>func</span>(<span style=color:#a6e22e>t</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>T</span>) {
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>got</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>factors</span>(<span style=color:#a6e22e>tt</span>.<span style=color:#a6e22e>args</span>.<span style=color:#a6e22e>n</span>); !<span style=color:#a6e22e>reflect</span>.<span style=color:#a6e22e>DeepEqual</span>(<span style=color:#a6e22e>got</span>, <span style=color:#a6e22e>tt</span>.<span style=color:#a6e22e>want</span>) {
+</span></span><span style=display:flex><span>				<span style=color:#a6e22e>t</span>.<span style=color:#a6e22e>Errorf</span>(<span style=color:#e6db74>&#34;factors() = %v, want %v&#34;</span>, <span style=color:#a6e22e>got</span>, <span style=color:#a6e22e>tt</span>.<span style=color:#a6e22e>want</span>)
+</span></span><span style=display:flex><span>			}
+</span></span><span style=display:flex><span>		})
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>Test_isPrime</span>(<span style=color:#a6e22e>t</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>T</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>type</span> <span style=color:#a6e22e>args</span> <span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>n</span> <span style=color:#66d9ef>int</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>tests</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>name</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>args</span> <span style=color:#a6e22e>args</span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>want</span> <span style=color:#66d9ef>bool</span>
+</span></span><span style=display:flex><span>	}{
+</span></span><span style=display:flex><span>		{<span style=color:#a6e22e>name</span>: <span style=color:#e6db74>&#34;even, not prime&#34;</span>, <span style=color:#a6e22e>args</span>: <span style=color:#a6e22e>args</span>{<span style=color:#a6e22e>n</span>: <span style=color:#ae81ff>8</span>}, <span style=color:#a6e22e>want</span>: <span style=color:#66d9ef>false</span>},
+</span></span><span style=display:flex><span>		{<span style=color:#a6e22e>name</span>: <span style=color:#e6db74>&#34;odd, not prime&#34;</span>, <span style=color:#a6e22e>args</span>: <span style=color:#a6e22e>args</span>{<span style=color:#a6e22e>n</span>: <span style=color:#ae81ff>15</span>}, <span style=color:#a6e22e>want</span>: <span style=color:#66d9ef>false</span>},
+</span></span><span style=display:flex><span>		{<span style=color:#a6e22e>name</span>: <span style=color:#e6db74>&#34;zero, not prime&#34;</span>, <span style=color:#a6e22e>args</span>: <span style=color:#a6e22e>args</span>{<span style=color:#a6e22e>n</span>: <span style=color:#ae81ff>0</span>}, <span style=color:#a6e22e>want</span>: <span style=color:#66d9ef>false</span>},
+</span></span><span style=display:flex><span>		{<span style=color:#a6e22e>name</span>: <span style=color:#e6db74>&#34;one, not prime&#34;</span>, <span style=color:#a6e22e>args</span>: <span style=color:#a6e22e>args</span>{<span style=color:#a6e22e>n</span>: <span style=color:#ae81ff>1</span>}, <span style=color:#a6e22e>want</span>: <span style=color:#66d9ef>false</span>},
+</span></span><span style=display:flex><span>		{<span style=color:#a6e22e>name</span>: <span style=color:#e6db74>&#34;a prime number, 7&#34;</span>, <span style=color:#a6e22e>args</span>: <span style=color:#a6e22e>args</span>{<span style=color:#a6e22e>n</span>: <span style=color:#ae81ff>7</span>}, <span style=color:#a6e22e>want</span>: <span style=color:#66d9ef>true</span>},
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>tt</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>tests</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>t</span>.<span style=color:#a6e22e>Run</span>(<span style=color:#a6e22e>tt</span>.<span style=color:#a6e22e>name</span>, <span style=color:#66d9ef>func</span>(<span style=color:#a6e22e>t</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>T</span>) {
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>got</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>isPrime</span>(<span style=color:#a6e22e>tt</span>.<span style=color:#a6e22e>args</span>.<span style=color:#a6e22e>n</span>); <span style=color:#a6e22e>got</span> <span style=color:#f92672>!=</span> <span style=color:#a6e22e>tt</span>.<span style=color:#a6e22e>want</span> {
+</span></span><span style=display:flex><span>				<span style=color:#a6e22e>t</span>.<span style=color:#a6e22e>Errorf</span>(<span style=color:#e6db74>&#34;isPrime() = %v, want %v&#34;</span>, <span style=color:#a6e22e>got</span>, <span style=color:#a6e22e>tt</span>.<span style=color:#a6e22e>want</span>)
+</span></span><span style=display:flex><span>			}
+</span></span><span style=display:flex><span>		})
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>Test_LargestPrimeFactor</span>(<span style=color:#a6e22e>t</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>T</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>type</span> <span style=color:#a6e22e>args</span> <span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>n</span> <span style=color:#66d9ef>int</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>tests</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>name</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>args</span> <span style=color:#a6e22e>args</span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>want</span> <span style=color:#66d9ef>int</span>
+</span></span><span style=display:flex><span>	}{
+</span></span><span style=display:flex><span>		{<span style=color:#a6e22e>name</span>: <span style=color:#e6db74>&#34;benchmarkNumber&#34;</span>, <span style=color:#a6e22e>args</span>: <span style=color:#a6e22e>args</span>{<span style=color:#a6e22e>n</span>: <span style=color:#a6e22e>benchmarkNumber</span>}, <span style=color:#a6e22e>want</span>: <span style=color:#a6e22e>benchmarkPrime</span>},
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>tt</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>tests</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>t</span>.<span style=color:#a6e22e>Run</span>(<span style=color:#a6e22e>tt</span>.<span style=color:#a6e22e>name</span>, <span style=color:#66d9ef>func</span>(<span style=color:#a6e22e>t</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>T</span>) {
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>got</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>LargestPrimeFactor</span>(<span style=color:#a6e22e>tt</span>.<span style=color:#a6e22e>args</span>.<span style=color:#a6e22e>n</span>); !<span style=color:#a6e22e>reflect</span>.<span style=color:#a6e22e>DeepEqual</span>(<span style=color:#a6e22e>got</span>, <span style=color:#a6e22e>tt</span>.<span style=color:#a6e22e>want</span>) {
+</span></span><span style=display:flex><span>				<span style=color:#a6e22e>t</span>.<span style=color:#a6e22e>Errorf</span>(<span style=color:#e6db74>&#34;LargestPrimeFactor() = %v, want %v&#34;</span>, <span style=color:#a6e22e>got</span>, <span style=color:#a6e22e>tt</span>.<span style=color:#a6e22e>want</span>)
+</span></span><span style=display:flex><span>			}
+</span></span><span style=display:flex><span>		})
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>Benchmark_factors</span>(<span style=color:#a6e22e>b</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>B</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>benchmarks</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>name</span>  <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>input</span> <span style=color:#66d9ef>int</span>
+</span></span><span style=display:flex><span>	}{
+</span></span><span style=display:flex><span>		{<span style=color:#a6e22e>name</span>: <span style=color:#e6db74>&#34;benchmarkNumber&#34;</span>, <span style=color:#a6e22e>input</span>: <span style=color:#a6e22e>benchmarkNumber</span>},
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>bm</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>benchmarks</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>b</span>.<span style=color:#a6e22e>Run</span>(<span style=color:#a6e22e>bm</span>.<span style=color:#a6e22e>name</span>, <span style=color:#66d9ef>func</span>(<span style=color:#a6e22e>b</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>B</span>) {
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span> &lt; <span style=color:#a6e22e>b</span>.<span style=color:#a6e22e>N</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+</span></span><span style=display:flex><span>				<span style=color:#a6e22e>factors</span>(<span style=color:#a6e22e>bm</span>.<span style=color:#a6e22e>input</span>)
+</span></span><span style=display:flex><span>			}
+</span></span><span style=display:flex><span>		})
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>Benchmark_LargestPrimeFactor</span>(<span style=color:#a6e22e>b</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>B</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>benchmarks</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>name</span>  <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>input</span> <span style=color:#66d9ef>int</span>
+</span></span><span style=display:flex><span>	}{
+</span></span><span style=display:flex><span>		{<span style=color:#a6e22e>name</span>: <span style=color:#e6db74>&#34;benchmarkNumber&#34;</span>, <span style=color:#a6e22e>input</span>: <span style=color:#a6e22e>benchmarkNumber</span>},
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>bm</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>benchmarks</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>b</span>.<span style=color:#a6e22e>Run</span>(<span style=color:#a6e22e>bm</span>.<span style=color:#a6e22e>name</span>, <span style=color:#66d9ef>func</span>(<span style=color:#a6e22e>b</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>B</span>) {
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span> &lt; <span style=color:#a6e22e>b</span>.<span style=color:#a6e22e>N</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+</span></span><span style=display:flex><span>				<span style=color:#a6e22e>LargestPrimeFactor</span>(<span style=color:#a6e22e>bm</span>.<span style=color:#a6e22e>input</span>)
+</span></span><span style=display:flex><span>			}
+</span></span><span style=display:flex><span>		})
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>Benchmark_isPrime</span>(<span style=color:#a6e22e>b</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>B</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>benchmarks</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>name</span>  <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>input</span> <span style=color:#66d9ef>int</span>
+</span></span><span style=display:flex><span>	}{
+</span></span><span style=display:flex><span>		{<span style=color:#a6e22e>name</span>: <span style=color:#e6db74>&#34;benchmarkNumber&#34;</span>, <span style=color:#a6e22e>input</span>: <span style=color:#a6e22e>benchmarkNumber</span>},
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>bm</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>benchmarks</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>b</span>.<span style=color:#a6e22e>Run</span>(<span style=color:#a6e22e>bm</span>.<span style=color:#a6e22e>name</span>, <span style=color:#66d9ef>func</span>(<span style=color:#a6e22e>b</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>B</span>) {
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span> &lt; <span style=color:#a6e22e>b</span>.<span style=color:#a6e22e>N</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+</span></span><span style=display:flex><span>				<span style=color:#a6e22e>isPrime</span>(<span style=color:#a6e22e>bm</span>.<span style=color:#a6e22e>input</span>)
+</span></span><span style=display:flex><span>			}
+</span></span><span style=display:flex><span>		})
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Note that in the <code>Benchmark_</code> functions, we are using the sub-test/sub-benchmark format, where we define multiple pieces of test data/test cases which can be run. In the benchmark case we are only using one, but we could easily increase that later if desired, so the flexibility is nice.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ go test -bench<span style=color:#f92672>=</span>. -benchmem
+</span></span><span style=display:flex><span>Benchmark_factors/benchmarkNumber-4         	            3000	    <span style=color:#ae81ff>416669</span> ns/op	     <span style=color:#ae81ff>248</span> B/op	       <span style=color:#ae81ff>5</span> allocs/op
+</span></span><span style=display:flex><span>Benchmark_LargestPrimeFactor/benchmarkNumber-4         	    2000	    <span style=color:#ae81ff>625321</span> ns/op	     <span style=color:#ae81ff>624</span> B/op	      <span style=color:#ae81ff>28</span> allocs/op
+</span></span><span style=display:flex><span>Benchmark_isPrime/benchmarkNumber-4                    	    3000	    <span style=color:#ae81ff>414224</span> ns/op	     <span style=color:#ae81ff>248</span> B/op	       <span style=color:#ae81ff>5</span> allocs/op
+</span></span></code></pre></div><p>So far, not great for performance nor for memory allocations. Let&rsquo;s improve.</p><h1 id=v2-skip-the-even-numbers class=anchor-link><a href=#v2-skip-the-even-numbers>V2: Skip the even numbers</a></h1><p>By definition of <strong>prime</strong>, we know that 2 is the only even prime number. Since all other even numbers are divisible by 2, they have a divisor other than themselves and 1 - thus, they are not prime. Therefore, we can modify our solution to exclude checking whether or not these numbers are prime, and see if that speeds up the system. The code is almost the same as the previous version, with the difference being the addition of an <code>isEven()</code> function to check the parity of the number.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>v2</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;math&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// V2:
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// We know that 2 is the only even prime, so we can
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// exclude that from being checked.
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>isEven</span>(<span style=color:#a6e22e>n</span> <span style=color:#66d9ef>int</span>) <span style=color:#66d9ef>bool</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Mod</span>(float64(<span style=color:#a6e22e>n</span>), <span style=color:#ae81ff>2.0</span>) <span style=color:#f92672>==</span> <span style=color:#ae81ff>0.0</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Ignore even factors since they can never be prime
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>factors</span>(<span style=color:#a6e22e>n</span> <span style=color:#66d9ef>int</span>) []<span style=color:#66d9ef>int</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>facs</span> <span style=color:#f92672>:=</span> make([]<span style=color:#66d9ef>int</span>, <span style=color:#ae81ff>0</span>)
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>2</span>; <span style=color:#a6e22e>i</span> &lt; <span style=color:#a6e22e>n</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>isEven</span>(<span style=color:#a6e22e>i</span>) {
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>continue</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Mod</span>(float64(<span style=color:#a6e22e>n</span>), float64(<span style=color:#a6e22e>i</span>)) <span style=color:#f92672>==</span> <span style=color:#ae81ff>0.0</span> {
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>facs</span> = append(<span style=color:#a6e22e>facs</span>, <span style=color:#a6e22e>i</span>)
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>facs</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Even numbers can&#39;t be prime, so we don&#39;t need to check them
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>isPrime</span>(<span style=color:#a6e22e>n</span> <span style=color:#66d9ef>int</span>) <span style=color:#66d9ef>bool</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span> <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span> <span style=color:#f92672>||</span> <span style=color:#a6e22e>n</span> <span style=color:#f92672>==</span> <span style=color:#ae81ff>1</span> <span style=color:#f92672>||</span> <span style=color:#a6e22e>isEven</span>(<span style=color:#a6e22e>n</span>) {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>facs</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>factors</span>(<span style=color:#a6e22e>n</span>)
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> len(<span style=color:#a6e22e>facs</span>) <span style=color:#f92672>!=</span> <span style=color:#ae81ff>0</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>LargestPrimeFactor</span>(<span style=color:#a6e22e>n</span> <span style=color:#66d9ef>int</span>) <span style=color:#66d9ef>int</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>biggest</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>2</span>; <span style=color:#a6e22e>i</span> &lt; <span style=color:#a6e22e>n</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>isEven</span>(<span style=color:#a6e22e>i</span>) { <span style=color:#75715e>// skip even numbers
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>			<span style=color:#66d9ef>continue</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Mod</span>(float64(<span style=color:#a6e22e>n</span>), float64(<span style=color:#a6e22e>i</span>)) <span style=color:#f92672>==</span> <span style=color:#ae81ff>0.0</span> {
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>isPrime</span>(<span style=color:#a6e22e>i</span>) {
+</span></span><span style=display:flex><span>				<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>i</span> &gt; <span style=color:#a6e22e>biggest</span> {
+</span></span><span style=display:flex><span>					<span style=color:#a6e22e>biggest</span> = <span style=color:#a6e22e>i</span>
+</span></span><span style=display:flex><span>				}
+</span></span><span style=display:flex><span>			}
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>biggest</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>We use the same testing and benchmarking code as in V1, but with the addition of a test and benchmark for <code>isEven()</code>.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>Test_isEven</span>(<span style=color:#a6e22e>t</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>T</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>type</span> <span style=color:#a6e22e>args</span> <span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>n</span> <span style=color:#66d9ef>int</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>tests</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>name</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>args</span> <span style=color:#a6e22e>args</span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>want</span> <span style=color:#66d9ef>bool</span>
+</span></span><span style=display:flex><span>	}{
+</span></span><span style=display:flex><span>		{<span style=color:#a6e22e>name</span>: <span style=color:#e6db74>&#34;Even number, 4&#34;</span>, <span style=color:#a6e22e>args</span>: <span style=color:#a6e22e>args</span>{<span style=color:#a6e22e>n</span>: <span style=color:#ae81ff>4</span>}, <span style=color:#a6e22e>want</span>: <span style=color:#66d9ef>true</span>},
+</span></span><span style=display:flex><span>		{<span style=color:#a6e22e>name</span>: <span style=color:#e6db74>&#34;Even number, 0&#34;</span>, <span style=color:#a6e22e>args</span>: <span style=color:#a6e22e>args</span>{<span style=color:#a6e22e>n</span>: <span style=color:#ae81ff>0</span>}, <span style=color:#a6e22e>want</span>: <span style=color:#66d9ef>true</span>},
+</span></span><span style=display:flex><span>		{<span style=color:#a6e22e>name</span>: <span style=color:#e6db74>&#34;Even number, -2&#34;</span>, <span style=color:#a6e22e>args</span>: <span style=color:#a6e22e>args</span>{<span style=color:#a6e22e>n</span>: <span style=color:#f92672>-</span><span style=color:#ae81ff>2</span>}, <span style=color:#a6e22e>want</span>: <span style=color:#66d9ef>true</span>},
+</span></span><span style=display:flex><span>		{<span style=color:#a6e22e>name</span>: <span style=color:#e6db74>&#34;Odd number, 3&#34;</span>, <span style=color:#a6e22e>args</span>: <span style=color:#a6e22e>args</span>{<span style=color:#a6e22e>n</span>: <span style=color:#ae81ff>3</span>}, <span style=color:#a6e22e>want</span>: <span style=color:#66d9ef>false</span>},
+</span></span><span style=display:flex><span>		{<span style=color:#a6e22e>name</span>: <span style=color:#e6db74>&#34;Odd number, 1&#34;</span>, <span style=color:#a6e22e>args</span>: <span style=color:#a6e22e>args</span>{<span style=color:#a6e22e>n</span>: <span style=color:#ae81ff>1</span>}, <span style=color:#a6e22e>want</span>: <span style=color:#66d9ef>false</span>},
+</span></span><span style=display:flex><span>		{<span style=color:#a6e22e>name</span>: <span style=color:#e6db74>&#34;Odd number, -5&#34;</span>, <span style=color:#a6e22e>args</span>: <span style=color:#a6e22e>args</span>{<span style=color:#a6e22e>n</span>: <span style=color:#f92672>-</span><span style=color:#ae81ff>5</span>}, <span style=color:#a6e22e>want</span>: <span style=color:#66d9ef>false</span>},
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>tt</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>tests</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>t</span>.<span style=color:#a6e22e>Run</span>(<span style=color:#a6e22e>tt</span>.<span style=color:#a6e22e>name</span>, <span style=color:#66d9ef>func</span>(<span style=color:#a6e22e>t</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>T</span>) {
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>got</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>isEven</span>(<span style=color:#a6e22e>tt</span>.<span style=color:#a6e22e>args</span>.<span style=color:#a6e22e>n</span>); !<span style=color:#a6e22e>reflect</span>.<span style=color:#a6e22e>DeepEqual</span>(<span style=color:#a6e22e>got</span>, <span style=color:#a6e22e>tt</span>.<span style=color:#a6e22e>want</span>) {
+</span></span><span style=display:flex><span>				<span style=color:#a6e22e>t</span>.<span style=color:#a6e22e>Errorf</span>(<span style=color:#e6db74>&#34;isEven() = %v, want %v&#34;</span>, <span style=color:#a6e22e>got</span>, <span style=color:#a6e22e>tt</span>.<span style=color:#a6e22e>want</span>)
+</span></span><span style=display:flex><span>			}
+</span></span><span style=display:flex><span>		})
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>Benchmark_isEven</span>(<span style=color:#a6e22e>b</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>B</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>benchmarks</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>name</span>  <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>input</span> <span style=color:#66d9ef>int</span>
+</span></span><span style=display:flex><span>	}{
+</span></span><span style=display:flex><span>		{<span style=color:#a6e22e>name</span>: <span style=color:#e6db74>&#34;Odd number, 3&#34;</span>, <span style=color:#a6e22e>input</span>: <span style=color:#ae81ff>3</span>},
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>bm</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>benchmarks</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>b</span>.<span style=color:#a6e22e>Run</span>(<span style=color:#a6e22e>bm</span>.<span style=color:#a6e22e>name</span>, <span style=color:#66d9ef>func</span>(<span style=color:#a6e22e>b</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>testing</span>.<span style=color:#a6e22e>B</span>) {
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span> &lt; <span style=color:#a6e22e>b</span>.<span style=color:#a6e22e>N</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+</span></span><span style=display:flex><span>				<span style=color:#a6e22e>isEven</span>(<span style=color:#a6e22e>bm</span>.<span style=color:#a6e22e>input</span>)
+</span></span><span style=display:flex><span>			}
+</span></span><span style=display:flex><span>		})
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Since we are expecting fewer numbers to be checked, we would expect better performance, right?</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ go test -bench<span style=color:#f92672>=</span>. -benchmem
+</span></span><span style=display:flex><span>Benchmark_factors/benchmarkNumber-4         	            1000	   <span style=color:#ae81ff>1903807</span> ns/op	     <span style=color:#ae81ff>248</span> B/op	       <span style=color:#ae81ff>5</span> allocs/op
+</span></span><span style=display:flex><span>Benchmark_LargestPrimeFactor/benchmarkNumber-4         	     500	   <span style=color:#ae81ff>2716207</span> ns/op	     <span style=color:#ae81ff>624</span> B/op	      <span style=color:#ae81ff>28</span> allocs/op
+</span></span><span style=display:flex><span>Benchmark_isPrime/benchmarkNumber-4                    	    1000	   <span style=color:#ae81ff>1905843</span> ns/op	     <span style=color:#ae81ff>248</span> B/op	       <span style=color:#ae81ff>5</span> allocs/op
+</span></span><span style=display:flex><span>Benchmark_isEven/Odd_number,_3-4                       	50000000	      24.7 ns/op	       <span style=color:#ae81ff>0</span> B/op	       <span style=color:#ae81ff>0</span> allocs/op
+</span></span></code></pre></div><p><strong>WRONG!</strong> Though it doesn&rsquo;t look like our memory allocations have changed, performance is definitely worse than before - but by how much exactly? For this, we can use the helpful <a href=https://godoc.org/golang.org/x/tools/cmd/benchcmp><code>benchcmp</code></a> command. It&rsquo;s easy to install with just a <code>go get golang.org/x/tools/cmd/benchcmp</code>. The we can redirect the output of the V1 benchmark and the V2 benchmark to a file, and use benchcmp to compare the files.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ go test -bench<span style=color:#f92672>=</span>. -benchmem &gt; v1.bm
+</span></span></code></pre></div><p>And in the V2 package directory</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ go test -bench<span style=color:#f92672>=</span>. -benchmem &gt; v2.bm
+</span></span></code></pre></div><p>Then, with both files in the same directory, we can easily see what&rsquo;s going on.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ benchcmp v1.bm v2.bm
+</span></span><span style=display:flex><span>benchmark                                          old ns/op     new ns/op     delta
+</span></span><span style=display:flex><span>Benchmark_factors/benchmarkNumber-4                <span style=color:#ae81ff>414686</span>        <span style=color:#ae81ff>1901842</span>       +358.62%
+</span></span><span style=display:flex><span>Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#ae81ff>623854</span>        <span style=color:#ae81ff>2723608</span>       +336.58%
+</span></span><span style=display:flex><span>Benchmark_isPrime/benchmarkNumber-4                <span style=color:#ae81ff>414616</span>        <span style=color:#ae81ff>1907886</span>       +360.16%
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>benchmark                                          old allocs     new allocs     delta
+</span></span><span style=display:flex><span>Benchmark_factors/benchmarkNumber-4                <span style=color:#ae81ff>5</span>              <span style=color:#ae81ff>5</span>              +0.00%
+</span></span><span style=display:flex><span>Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#ae81ff>28</span>             <span style=color:#ae81ff>28</span>             +0.00%
+</span></span><span style=display:flex><span>Benchmark_isPrime/benchmarkNumber-4                <span style=color:#ae81ff>5</span>              <span style=color:#ae81ff>5</span>              +0.00%
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>benchmark                                          old bytes     new bytes     delta
+</span></span><span style=display:flex><span>Benchmark_factors/benchmarkNumber-4                <span style=color:#ae81ff>248</span>           <span style=color:#ae81ff>248</span>           +0.00%
+</span></span><span style=display:flex><span>Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#ae81ff>624</span>           <span style=color:#ae81ff>624</span>           +0.00%
+</span></span><span style=display:flex><span>Benchmark_isPrime/benchmarkNumber-4                <span style=color:#ae81ff>248</span>           <span style=color:#ae81ff>248</span>           +0.00%
+</span></span></code></pre></div><h1 id=v3 class=anchor-link><a href=#v3>V3</a></h1><p>It seems that in the new version, checking the parity of the numbers in order to avoid testing even numbers for primality is actually slower. We know from the <a href=/an-unreasonably-deep-dive-into-project-euler-problem-2.html>deep-dive into Project Euler Problem 2</a> that testing parity of numbers with a bitwise AND is <strong>much</strong> faster, so let&rsquo;s replace our naive implementation with that one and call it V3. There will be no other changes, so we will just swap out the implementation of <code>isEven()</code>.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>isEven</span>(<span style=color:#a6e22e>x</span> <span style=color:#66d9ef>int</span>) <span style=color:#66d9ef>bool</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>x</span><span style=color:#f92672>&amp;</span><span style=color:#ae81ff>1</span> <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Now we can use the same tests and benchmarks, and see if we obtained better performance over V2, and therefore hopefully over V1.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ go test -bench<span style=color:#f92672>=</span>. -benchmem
+</span></span><span style=display:flex><span>Benchmark_factors/benchmarkNumber-4         	           10000	    <span style=color:#ae81ff>222491</span> ns/op	     <span style=color:#ae81ff>248</span> B/op	       <span style=color:#ae81ff>5</span> allocs/op
+</span></span><span style=display:flex><span>Benchmark_LargestPrimeFactor/benchmarkNumber-4         	    5000	    <span style=color:#ae81ff>345445</span> ns/op	     <span style=color:#ae81ff>624</span> B/op	      <span style=color:#ae81ff>28</span> allocs/op
+</span></span><span style=display:flex><span>Benchmark_isPrime/benchmarkNumber-4                    	   10000	    <span style=color:#ae81ff>223073</span> ns/op	     <span style=color:#ae81ff>248</span> B/op	       <span style=color:#ae81ff>5</span> allocs/op
+</span></span><span style=display:flex><span>Benchmark_isEven/Odd_number,_3-4                      2000000000	      0.29 ns/op	       <span style=color:#ae81ff>0</span> B/op	       <span style=color:#ae81ff>0</span> allocs/op
+</span></span></code></pre></div><p>As before, the bitwise version is much faster for testing parity. Was there any performance improvement over V2, and hopefully over V1?</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ benchcmp v2.bm v3.bm
+</span></span><span style=display:flex><span>benchmark                                          old ns/op     new ns/op     delta
+</span></span><span style=display:flex><span>Benchmark_factors/benchmarkNumber-4                <span style=color:#ae81ff>2016066</span>       <span style=color:#ae81ff>222356</span>        -88.97%
+</span></span><span style=display:flex><span>Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#ae81ff>2915830</span>       <span style=color:#ae81ff>358904</span>        -87.69%
+</span></span><span style=display:flex><span>Benchmark_isPrime/benchmarkNumber-4                <span style=color:#ae81ff>2013975</span>       <span style=color:#ae81ff>222206</span>        -88.97%
+</span></span><span style=display:flex><span>Benchmark_isEven/Odd_number,_3-4                   26.9          0.29          -98.92%
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>benchmark                                          old allocs     new allocs     delta
+</span></span><span style=display:flex><span>Benchmark_factors/benchmarkNumber-4                <span style=color:#ae81ff>5</span>              <span style=color:#ae81ff>5</span>              +0.00%
+</span></span><span style=display:flex><span>Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#ae81ff>28</span>             <span style=color:#ae81ff>28</span>             +0.00%
+</span></span><span style=display:flex><span>Benchmark_isPrime/benchmarkNumber-4                <span style=color:#ae81ff>5</span>              <span style=color:#ae81ff>5</span>              +0.00%
+</span></span><span style=display:flex><span>Benchmark_isEven/Odd_number,_3-4                   <span style=color:#ae81ff>0</span>              <span style=color:#ae81ff>0</span>              +0.00%
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>benchmark                                          old bytes     new bytes     delta
+</span></span><span style=display:flex><span>Benchmark_factors/benchmarkNumber-4                <span style=color:#ae81ff>248</span>           <span style=color:#ae81ff>248</span>           +0.00%
+</span></span><span style=display:flex><span>Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#ae81ff>624</span>           <span style=color:#ae81ff>624</span>           +0.00%
+</span></span><span style=display:flex><span>Benchmark_isPrime/benchmarkNumber-4                <span style=color:#ae81ff>248</span>           <span style=color:#ae81ff>248</span>           +0.00%
+</span></span><span style=display:flex><span>Benchmark_isEven/Odd_number,_3-4                   <span style=color:#ae81ff>0</span>             <span style=color:#ae81ff>0</span>             +0.00%
+</span></span></code></pre></div><p>Memory usage is the same, but the parity checking time was reduced by about 99%, so it&rsquo;s almost free now. Let&rsquo;s see if that bought us some significant improvement over the first version. Intuitively, we are skipping primality checks on half the numbers (the even ones greater than 2) so that should reduce the runtime by about half.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ benchcmp v1.bm v3.bm
+</span></span><span style=display:flex><span>benchmark                                          old ns/op     new ns/op     delta
+</span></span><span style=display:flex><span>Benchmark_factors/benchmarkNumber-4                <span style=color:#ae81ff>414686</span>        <span style=color:#ae81ff>222356</span>        -46.38%
+</span></span><span style=display:flex><span>Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#ae81ff>623854</span>        <span style=color:#ae81ff>358904</span>        -42.47%
+</span></span><span style=display:flex><span>Benchmark_isPrime/benchmarkNumber-4                <span style=color:#ae81ff>414616</span>        <span style=color:#ae81ff>222206</span>        -46.41%
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>benchmark                                          old allocs     new allocs     delta
+</span></span><span style=display:flex><span>Benchmark_factors/benchmarkNumber-4                <span style=color:#ae81ff>5</span>              <span style=color:#ae81ff>5</span>              +0.00%
+</span></span><span style=display:flex><span>Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#ae81ff>28</span>             <span style=color:#ae81ff>28</span>             +0.00%
+</span></span><span style=display:flex><span>Benchmark_isPrime/benchmarkNumber-4                <span style=color:#ae81ff>5</span>              <span style=color:#ae81ff>5</span>              +0.00%
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>benchmark                                          old bytes     new bytes     delta
+</span></span><span style=display:flex><span>Benchmark_factors/benchmarkNumber-4                <span style=color:#ae81ff>248</span>           <span style=color:#ae81ff>248</span>           +0.00%
+</span></span><span style=display:flex><span>Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#ae81ff>624</span>           <span style=color:#ae81ff>624</span>           +0.00%
+</span></span><span style=display:flex><span>Benchmark_isPrime/benchmarkNumber-4                <span style=color:#ae81ff>248</span>           <span style=color:#ae81ff>248</span>           +0.00%
+</span></span></code></pre></div><p>That intuition seems to be correct. We reduced the runtime by about 50%. However, if we think about the properties of prime factors, we can take a different and <strong>MUCH</strong> faster approach to solving the problem.</p><h1 id=v4 class=anchor-link><a href=#v4>V4</a></h1><p>When we started out, we were given some number n and our naive solution was to check all the numbers from 3 to n-1 to see if they are divisors of n. If so, we then went on to check if the number is prime, and therefore a prime divisor. To check if a number is prime, we generated all its factors, and if there were no factors between 3 and n-1, inclusive, then the number is prime.</p><p>The problem is that we did a lot of extra work to check if a number is prime. The reasoning is this: if a number <strong>IS NOT</strong> prime, then it will have at least one divisor which is less than or equal to its square root. If a number has some divisors between 3 and the number, call them a and b, then the largest they can both be is a = b = sqrt(n) since a * b = n. Therefore, if one of the numbers is larger, then the other must be smaller. The two numbers pivot around the square root of n, and can be at most sqrt(n).</p><p>To see why this is true, consider the number 100, which has square root 10. In this case, a = b = 10. If a goes up to 20, b goes down to 5. If we want to know if a number is prime, we can simply check to see if it has any divisors less than its square root.</p><p>Additionally, instead of generating all factors and then checking if each is prime, we can simply start at 3 - the smallest possible factor - and work our way up to sqrt(n).</p><p>With that in mind, we can change our <code>isPrime()</code> function and check a much smaller set of numbers.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>isPrime</span>(<span style=color:#a6e22e>n</span> <span style=color:#66d9ef>int</span>) <span style=color:#66d9ef>bool</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>n</span> <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span> <span style=color:#f92672>||</span> <span style=color:#a6e22e>n</span> <span style=color:#f92672>==</span> <span style=color:#ae81ff>1</span> <span style=color:#f92672>||</span> <span style=color:#a6e22e>isEven</span>(<span style=color:#a6e22e>n</span>) {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>3</span>; <span style=color:#a6e22e>i</span> <span style=color:#f92672>&lt;=</span> int(<span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Sqrt</span>(float64(<span style=color:#a6e22e>n</span>))); <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>isEven</span>(<span style=color:#a6e22e>i</span>) {
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>continue</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Mod</span>(float64(<span style=color:#a6e22e>n</span>), float64(<span style=color:#a6e22e>i</span>)) <span style=color:#f92672>==</span> <span style=color:#ae81ff>0.0</span> {
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Now we can run the same set of tests (which pass) and benchmarks again to see how much performance we gained (if any).</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ benchcmp v3.bm v4.bm
+</span></span><span style=display:flex><span>ignoring Benchmark_factors/benchmarkNumber-4: before has <span style=color:#ae81ff>1</span> instances, after has <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>benchmark                                          old ns/op     new ns/op     delta
+</span></span><span style=display:flex><span>Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#ae81ff>358904</span>        <span style=color:#ae81ff>223015</span>        -37.86%
+</span></span><span style=display:flex><span>Benchmark_isPrime/benchmarkNumber-4                <span style=color:#ae81ff>222206</span>        <span style=color:#ae81ff>239</span>           -99.89%
+</span></span><span style=display:flex><span>Benchmark_isEven/Odd_number,_3-4                   0.29          0.29          +0.00%
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>benchmark                                          old allocs     new allocs     delta
+</span></span><span style=display:flex><span>Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#ae81ff>28</span>             <span style=color:#ae81ff>0</span>              -100.00%
+</span></span><span style=display:flex><span>Benchmark_isPrime/benchmarkNumber-4                <span style=color:#ae81ff>5</span>              <span style=color:#ae81ff>0</span>              -100.00%
+</span></span><span style=display:flex><span>Benchmark_isEven/Odd_number,_3-4                   <span style=color:#ae81ff>0</span>              <span style=color:#ae81ff>0</span>              +0.00%
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>benchmark                                          old bytes     new bytes     delta
+</span></span><span style=display:flex><span>Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#ae81ff>624</span>           <span style=color:#ae81ff>0</span>             -100.00%
+</span></span><span style=display:flex><span>Benchmark_isPrime/benchmarkNumber-4                <span style=color:#ae81ff>248</span>           <span style=color:#ae81ff>0</span>             -100.00%
+</span></span><span style=display:flex><span>Benchmark_isEven/Odd_number,_3-4                   <span style=color:#ae81ff>0</span>             <span style=color:#ae81ff>0</span>             +0.00%
+</span></span></code></pre></div><p>Great! We now have 0 memory allocations, which will make things faster, and we check fewer numbers, which will also make things faster. This is demonstrated by the 99% reduction in runtime for <code>isPrime()</code> and a 38% reduction for finding the largest prime factor compared to V3.</p><p>If we compare to V1, we see that we are down about 64%.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ benchcmp v1.bm v4.bm
+</span></span><span style=display:flex><span>ignoring Benchmark_factors/benchmarkNumber-4: before has <span style=color:#ae81ff>1</span> instances, after has <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>benchmark                                          old ns/op     new ns/op     delta
+</span></span><span style=display:flex><span>Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#ae81ff>623854</span>        <span style=color:#ae81ff>223015</span>        -64.25%
+</span></span><span style=display:flex><span>Benchmark_isPrime/benchmarkNumber-4                <span style=color:#ae81ff>414616</span>        <span style=color:#ae81ff>239</span>           -99.94%
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>benchmark                                          old allocs     new allocs     delta
+</span></span><span style=display:flex><span>Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#ae81ff>28</span>             <span style=color:#ae81ff>0</span>              -100.00%
+</span></span><span style=display:flex><span>Benchmark_isPrime/benchmarkNumber-4                <span style=color:#ae81ff>5</span>              <span style=color:#ae81ff>0</span>              -100.00%
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>benchmark                                          old bytes     new bytes     delta
+</span></span><span style=display:flex><span>Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#ae81ff>624</span>           <span style=color:#ae81ff>0</span>             -100.00%
+</span></span><span style=display:flex><span>Benchmark_isPrime/benchmarkNumber-4                <span style=color:#ae81ff>248</span>           <span style=color:#ae81ff>0</span>             -100.00%
+</span></span></code></pre></div><h1 id=bonus-round-v5 class=anchor-link><a href=#bonus-round-v5>Bonus round: V5</a></h1><p>If we wanted to squeeze out a bit more performance (without going on to more advanced methods like the <a href=https://en.wikipedia.org/wiki/General_number_field_sieve>General Number Field Sieve</a>, the current top performer for prime factorization) we can take advantage again of the fact that all primes larger than 2 are odd. With this fact in mind, we only need to check odd divisors, and when checking for primality, we need only check odd numbers. This removes the call to <code>isEven()</code> entirely, since we don&rsquo;t need to check for that now, but it does make our <code>isPrime()</code> implementation more brittle since we are assuming the caller is always providing odd numbers.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>v5</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;math&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>isPrime</span>(<span style=color:#a6e22e>n</span> <span style=color:#66d9ef>int</span>) <span style=color:#66d9ef>bool</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>3</span>; <span style=color:#a6e22e>i</span> <span style=color:#f92672>&lt;=</span> int(<span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Sqrt</span>(float64(<span style=color:#a6e22e>n</span>))); <span style=color:#a6e22e>i</span> = <span style=color:#a6e22e>i</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>2</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Mod</span>(float64(<span style=color:#a6e22e>n</span>), float64(<span style=color:#a6e22e>i</span>)) <span style=color:#f92672>==</span> <span style=color:#ae81ff>0.0</span> {
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>LargestPrimeFactor</span>(<span style=color:#a6e22e>n</span> <span style=color:#66d9ef>int</span>) <span style=color:#66d9ef>int</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>biggest</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// First, find factors
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>3</span>; <span style=color:#a6e22e>i</span> &lt; <span style=color:#a6e22e>n</span>; <span style=color:#a6e22e>i</span> = <span style=color:#a6e22e>i</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>2</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Mod</span>(float64(<span style=color:#a6e22e>n</span>), float64(<span style=color:#a6e22e>i</span>)) <span style=color:#f92672>==</span> <span style=color:#ae81ff>0.0</span> {
+</span></span><span style=display:flex><span>			<span style=color:#75715e>// i is a factor, so check if it&#39;s prime
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>			<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>isPrime</span>(<span style=color:#a6e22e>i</span>) {
+</span></span><span style=display:flex><span>				<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>i</span> &gt; <span style=color:#a6e22e>biggest</span> {
+</span></span><span style=display:flex><span>					<span style=color:#a6e22e>biggest</span> = <span style=color:#a6e22e>i</span>
+</span></span><span style=display:flex><span>				}
+</span></span><span style=display:flex><span>			}
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>biggest</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Now we start at 3 and increment by 2 in each loop, which will only test odd numbers. The performance is a bit better, but we&rsquo;re starting to get only marginal benefits at this point.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>
+</span></span><span style=display:flex><span>$ benchcmp v4.bm v5.bm
+</span></span><span style=display:flex><span>ignoring Benchmark_isEven/Odd_number,_3-4: before has <span style=color:#ae81ff>1</span> instances, after has <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>benchmark                                          old ns/op     new ns/op     delta
+</span></span><span style=display:flex><span>Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#ae81ff>223015</span>        <span style=color:#ae81ff>201270</span>        -9.75%
+</span></span><span style=display:flex><span>Benchmark_isPrime/benchmarkNumber-4                <span style=color:#ae81ff>239</span>           <span style=color:#ae81ff>231</span>           -3.35%
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>benchmark                                          old allocs     new allocs     delta
+</span></span><span style=display:flex><span>Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#ae81ff>0</span>              <span style=color:#ae81ff>0</span>              +0.00%
+</span></span><span style=display:flex><span>Benchmark_isPrime/benchmarkNumber-4                <span style=color:#ae81ff>0</span>              <span style=color:#ae81ff>0</span>              +0.00%
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>benchmark                                          old bytes     new bytes     delta
+</span></span><span style=display:flex><span>Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#ae81ff>0</span>             <span style=color:#ae81ff>0</span>             +0.00%
+</span></span><span style=display:flex><span>Benchmark_isPrime/benchmarkNumber-4                <span style=color:#ae81ff>0</span>             <span style=color:#ae81ff>0</span>             +0.00%
+</span></span></code></pre></div><p>We get another 10% or so increase overall compared to V4. What about compared to our original implementation?</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ benchcmp v1.bm v5.bm
+</span></span><span style=display:flex><span>ignoring Benchmark_factors/benchmarkNumber-4: before has <span style=color:#ae81ff>1</span> instances, after has <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>benchmark                                          old ns/op     new ns/op     delta
+</span></span><span style=display:flex><span>Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#ae81ff>623854</span>        <span style=color:#ae81ff>201270</span>        -67.74%
+</span></span><span style=display:flex><span>Benchmark_isPrime/benchmarkNumber-4                <span style=color:#ae81ff>414616</span>        <span style=color:#ae81ff>231</span>           -99.94%
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>benchmark                                          old allocs     new allocs     delta
+</span></span><span style=display:flex><span>Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#ae81ff>28</span>             <span style=color:#ae81ff>0</span>              -100.00%
+</span></span><span style=display:flex><span>Benchmark_isPrime/benchmarkNumber-4                <span style=color:#ae81ff>5</span>              <span style=color:#ae81ff>0</span>              -100.00%
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>benchmark                                          old bytes     new bytes     delta
+</span></span><span style=display:flex><span>Benchmark_LargestPrimeFactor/benchmarkNumber-4     <span style=color:#ae81ff>624</span>           <span style=color:#ae81ff>0</span>             -100.00%
+</span></span><span style=display:flex><span>Benchmark_isPrime/benchmarkNumber-4                <span style=color:#ae81ff>248</span>           <span style=color:#ae81ff>0</span>             -100.00%
+</span></span></code></pre></div><p>Overall, we are down about 68% for the small benchmark number provided in the challenge. Let&rsquo;s try a bigger number and see if the percentages change as the numbers increase (they should). The random number I first typed originally was so slow to compute with V1 that I cancelled the benchmark. I&rsquo;ve replaced it with a random 10 digit number <code>8275832758</code>. Here are the results (I removed all the benchmark data that was the same as before).</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ benchcmp v1.1.bm v5.1.bm
+</span></span><span style=display:flex><span>Benchmark_isPrime/8275832758-4                     <span style=color:#ae81ff>275850428911</span>     <span style=color:#ae81ff>9771163</span>       -100.00%
+</span></span></code></pre></div><p>I tried to also do the benchmark for <code>LargestPrimeFactor()</code> as well, but <code>go test</code> died mysteriously due to a SIGQUIT somewhere. Perhaps a bug report is in order.</p><h1 id=outro class=anchor-link><a href=#outro>Outro</a></h1><p>At this point, we aren&rsquo;t getting much more in the way of performance improvements, so there&rsquo;s no need to carry out more changes to this algorithm. If we want to have better performance, especially for numbers with a greater number of digits, we will have to change the algorithm and use something more intelligent and parallelizable (there are other sieves for which this is possible).</p><a class=hidden href=https://brid.gy/publish/mastodon></a>
+<a class=hidden href=https://brid.gy/publish/twitter></a>
+<a class=hidden href=https://fed.brid.gy/></a>
+<data class=p-bridgy-omit-link value=false></data></article></div><div id=webmentions></div></li></ul></section></main><hr><footer class="flex col"><section class="footer-bio content"><p><strong>Adam Drake</strong> leads technical business transformations in global and multi-cultural environments. He has a passion for helping companies become more productive by improving internal leadership capabilities, and accelerating product development through technology and data architecture guidance. Adam has served as a White House Presidential Innovation Fellow and is an IEEE Senior Member.</p></section><button class="subscribe subscribe-btn">
+<a href=https://www.digitalmaneuver.com/#/portal>Subscribe to newsletter</a></button><div class=social-icons><a rel=me href=https://github.com/adamdrake title=GitHub><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg></a><a rel=me href=https://linkedin.com/in/aadrake title=LinkedIn><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-linkedin"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a><a rel=me href=https://twitter.com/aadrake title=Twitter><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter"><path d="M23 3a10.9 10.9.0 01-3.14 1.53 4.48 4.48.0 00-7.86 3v1A10.66 10.66.0 013 4s-4 9 5 13a11.64 11.64.0 01-7 2c9 5 20 0 20-11.5a4.5 4.5.0 00-.08-.83A7.72 7.72.0 0023 3z"/></svg></a></div></footer></body></html>

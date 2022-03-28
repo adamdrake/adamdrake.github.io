@@ -1,205 +1,26 @@
-<!doctype html><html lang=en>
-<head>
-<meta charset=utf-8>
-<meta http-equiv=x-ua-compatible content="chrome=1">
-<meta name=HandheldFriendly content="True">
-<meta name=MobileOptimized content="320">
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=referrer content="no-referrer">
-<meta name=description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams.">
-<title>
-Posts - Adam Drake
-</title>
-<link href=/posts/index.xml rel=alternate type=application/rss+xml title="Adam Drake">
-<link rel="shortcut icon" href=/static/favicon.ico>
-<link rel=stylesheet href=https://adamdrake.com/sass/style.min.a413c0798309dd1ab28bd9f9ff8e6472c76e69f14068707081b5a01351efe34e.css integrity="sha256-pBPAeYMJ3Rqyi9n5/45kcsduafFAaHBwgbWgE1Hv404=" crossorigin=anonymous media=screen>
-<meta name=twitter:card content="summary_large_image">
-<meta name=twitter:image content="https://adamdrake.com/static/images/twitter-card.jpg">
-<meta name=twitter:title content="Posts">
-<meta name=twitter:description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams.">
-<meta property="og:title" content="Posts">
-<meta property="og:description" content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://adamdrake.com/posts.html"><meta property="og:image" content="https://adamdrake.com/static/images/twitter-card.jpg">
-</head>
-<body>
-<div class=title-box>
-<div class=title-left>
-<h1 class=name><a href=/>Adam Drake</a></h1>
-</div>
-<div class=title-right>
-<div class=social-icons>
-<a href=https://github.com/adamdrake>
-<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64>
-</a>
-<a href=https://twitter.com/aadrake>
-<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64>
-</a>
-<a href=https://linkedin.com/in/aadrake>
-<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64>
-</a>
-<a href=https://adamdrake.com/posts/index.xml>
-<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABOElEQVRIib2WXXWEMBBGIyESkICDroPWQSNhHRQnrANwsOsAHFAJdXD7ALSz0wmZLrTfObwwkDs/X3ISwiIgAQPHaQBegxRwORCg1cpK/lopAKN6eQEaoAduwPsBoCFoSDAEVMDZSMotF0hBT8yV7gIBtMAb8Aw8ATEDTMDHHpClDm3VGVbjbKcXtGrSQCB6YL8FreoQLfXALJC099bPg4LVbMys6DpmazdOWHbzu+29AK0KO/Wdaf2SvaNaJGKfi0ntMxfIApcGP6mEflTudd0E1KqNWrKq86OgFSYr0wbplQMfBoEwC3ZVMpG7U98C3ZZFKmwHZRcDTjn3WaCqkPWLiPfemAWKBVCzMadszAJd+W7d1YjLOek9lY2ZnneoXR5vbPy/y0mmBUfqq50rLLHj8mFoRJwWnzknvtUm1yWnAAAAAElFTkSuQmCC width=64 height=64>
-</a>
-</div>
-<button class="subscribe subscribe-btn">
-<a href=https://www.digitalmaneuver.com/#/portal>Subscribe to newsletter</a>
-</button>
-</div>
-</div>
-<div class="nav-box row">
-<div class=nav-left-menu>
-<ul>
-<li><a href=/>Latest</a> | </li>
-<li><a href=/about.html>About</a> | </li>
-<li><a href=/cases.html>Case Studies</a> | </li>
-<li><a href=/contact.html>Contact</a> | </li>
-<li><a href=/press.html>Press</a></li>
-</ul>
-</div>
-</div>
-<section class=section>
-<div class=container>
-<div class=content>
-<a href=https://applybyapi.com><button class="cta btn">Struggling to hire developers? Check out ApplyByAPI!</button></a>
-<div class=page-title>Right Now</div>
-</div>
-<hr>
-<div class=page-title>Recent Publications</div>
-<article>
-<h1 class=title><a href=https://adamdrake.com/data-science-and-organizational-structure.html>Data Science and Organizational Structure</a></h1>
-<h2 class=subtitle>January 25, 2014</h2>
-<div class=content>
-Introduction When a company wants to make data one of the prime focuses of the business, often the first problem that arises is how to fit a Data Science team into the current organizational structure. Similar problems have risen in the past with Business Intelligence/Business Analytics, and other disciplines, but the reason that Data Science presents a different problem is because it is a superset of previous areas in terms of technical and business scope.
-<a href=https://adamdrake.com/data-science-and-organizational-structure.html>[Read more]</a>
-</div>
-</article>
-<article>
-<h1 class=title><a href=https://adamdrake.com/command-line-tools-can-be-235x-faster-than-your-hadoop-cluster.html>Command-line Tools can be 235x Faster than your Hadoop Cluster</a></h1>
-<h2 class=subtitle>January 18, 2014</h2>
-<div class=content>
-Introduction As I was browsing the web and catching up on some sites I visit periodically, I found a cool article from Tom Hayden about using Amazon Elastic Map Reduce (EMR) and mrjob in order to compute some statistics on win/loss ratios for chess games he downloaded from the millionbase archive, and generally have fun with EMR. Since the data volume was only about 1.75GB containing around 2 million chess games, I was skeptical of using Hadoop for the task, but I can understand his goal of learning and having fun with mrjob and EMR.
-<a href=https://adamdrake.com/command-line-tools-can-be-235x-faster-than-your-hadoop-cluster.html>[Read more]</a>
-</div>
-</article>
-<article>
-<h1 class=title><a href=https://adamdrake.com/real-time-bidding-first-and-second-price-auctions-and-transparency.html>Real-Time Bidding, First and Second-Price Auctions, and Transparency</a></h1>
-<h2 class=subtitle>May 19, 2012</h2>
-<div class=content>
-There has been some debate recently on AdExchanger about the benefits of first price versus second price auctions. Esco Strong, the Director of Display Marketplace Strategy for Microsoft Advertising wrote an article that basically said second price auctions didn&rsquo;t work well for single unit RTB auctions and we should get rid of them:
-Comparatively, first-price auctions are competitions where there is no reduction in clearing price for the auction winner; instead, the winner simply acquires the good they have won by paying the price of their bid.
-<a href=https://adamdrake.com/real-time-bidding-first-and-second-price-auctions-and-transparency.html>[Read more]</a>
-</div>
-</article>
-<article>
-<h1 class=title><a href=https://adamdrake.com/mac-addresses-udids-and-privacy.html>MAC Addresses, UDIDs, and Privacy</a></h1>
-<h2 class=subtitle>April 6, 2012</h2>
-<div class=content>
-There has been quite a bit of fuss in the days since Apple started rejecting apps that make use of the UDID. The deprecation was announced months ago, but the rejection started without warning and was a surprise to some. Firms that had been planning for the change typically already had multiple secondary solutions in place, many of which rely on using the Media Access Control (MAC) address from the wireless network interface controller (wireless NIC) on the device.
-<a href=https://adamdrake.com/mac-addresses-udids-and-privacy.html>[Read more]</a>
-</div>
-</article>
-<article>
-<h1 class=title><a href=https://adamdrake.com/udid-is-gone.-so-what.html>UDID is Gone. So What?</a></h1>
-<h2 class=subtitle>March 31, 2012</h2>
-<div class=content>
-The last week has seen quite a bit of commotion in the mobile world as Apple has started enforcing their long-awaited deprecation of the use of the UDID. Honestly, I&rsquo;m not sure what all the fuss is about. This change was announced by Apple last summer, so everyone has had nearly a year to prepare for it. The general set of questions I&rsquo;ve seen on the topic can be reduced to the following.
-<a href=https://adamdrake.com/udid-is-gone.-so-what.html>[Read more]</a>
-</div>
-</article>
-<article>
-<h1 class=title><a href=https://adamdrake.com/on-big-data-and-spurious-correlations.html>On Big Data and Spurious Correlations</a></h1>
-<h2 class=subtitle>February 18, 2012</h2>
-<div class=content>
-I didn&rsquo;t have time to mention it last week, but even though I am happy that the New York Times wrote an article on big data, I think the most interesting part was at the end:
-Big Data has its perils, to be sure. With huge data sets and fine-grained measurement, statisticians and computer scientists note, there is increased risk of false discoveries. The trouble with seeking a meaningful needle in massive haystacks of data, says Trevor Hastie, a statistics professor at Stanford, is that many bits of straw look like needles.
-<a href=https://adamdrake.com/on-big-data-and-spurious-correlations.html>[Read more]</a>
-</div>
-</article>
-<article>
-<h1 class=title><a href=https://adamdrake.com/what-mobile-advertising-needs.html>What Mobile Advertising Needs</a></h1>
-<h2 class=subtitle>January 1, 2012</h2>
-<div class=content>
-The advertising world is both feeding, and being fed a lot of hype about the current state and potential of mobile advertising. It&rsquo;s no doubt that this form of marketing is unique in many ways, and offers opportunities not available via other forms of advertising. As an example, on mobile you can take advantage of information like a relatively precise knowledge of the location of the individual. Now, it is debatable whether such granular knowledge of a person&rsquo;s location is a good, bad, or neutral thing, but the fact remains that this piece of information is something that simply has not been available to advertisers until recently.
-<a href=https://adamdrake.com/what-mobile-advertising-needs.html>[Read more]</a>
-</div>
-</article>
-<article>
-<h1 class=title><a href=https://adamdrake.com/dont-ship-what-doesnt-work.html>Don't Ship What Doesn't Work</a></h1>
-<h2 class=subtitle>August 5, 2011</h2>
-<div class=content>
-If involved in workflow engineering, technology-related or otherwise, do everyone a favor and don&rsquo;t pass something to the next stage if the previous stage isn&rsquo;t done properly. Shigeru Miyamoto, the creator of Mario and the Legend of Zelda knows this. Take his words to heart:
-A late game is only late until it ships. A bad game is bad until the end of time. &ndash;Shigeru Miyamoto
-If you pass a project on to the next stage of the workflow when it isn&rsquo;t perfect, eventually it will have to regress back and be repaired.
-<a href=https://adamdrake.com/dont-ship-what-doesnt-work.html>[Read more]</a>
-</div>
-</article>
-<article>
-<h1 class=title><a href=https://adamdrake.com/the-dismal-jobs-report-economic-recovery-and-normalcy-bias.html>The Dismal Jobs Report, Economic Recovery, and Normalcy Bias</a></h1>
-<h2 class=subtitle>July 16, 2011</h2>
-<div class=content>
-Well everyone is reacting with shock and amazement at the negative June jobs report, which showed that contrary to the 125,000 jobs that even the most pessimistic economists expected to be added to the economy, the actual number was in fact about 18,000. This isn&rsquo;t surprising, as this recovery will take a long time. In fact, it will take longer than most people expect and that is due in part to something called Normalcy Bias.
-<a href=https://adamdrake.com/the-dismal-jobs-report-economic-recovery-and-normalcy-bias.html>[Read more]</a>
-</div>
-</article>
-<article>
-<h1 class=title><a href=https://adamdrake.com/uncorrelated-does-not-imply-independent.html>Uncorrelated Does NOT Imply Independent</a></h1>
-<h2 class=subtitle>June 21, 2011</h2>
-<div class=content>
-This is just an aside to describe a misconception that we have seen some money managers make when describing their strategies or portfolios. When you are discussing the correlation of your portfolio to another portfolio or the market in general, the fact that your portfolio may be fairly uncorrelated does not have anything to do with the independence of your portfolio from a reference portfolio or the market in general. In fact, even if the portfolio you have developed is completely uncorrelated, it still probably isn&rsquo;t independent.
-<a href=https://adamdrake.com/uncorrelated-does-not-imply-independent.html>[Read more]</a>
-</div>
-</article>
-</div>
-</section>
-<section class=section>
-<div class="container pager">
-<div class=pager-left>
-<a class=button href=/posts/page/6.html>
-&lt;&lt; Newer </a> </div> <div class=pager-right>
-<a class=button href=/posts/page/8.html>
-Older >>
-</a>
-</div>
-</div>
-</section>
-<div class="nav-box row">
-<div class=nav-left-menu>
-<ul>
-<li><a href=/>Latest</a> | </li>
-<li><a href=/about.html>About</a> | </li>
-<li><a href=/cases.html>Case Studies</a> | </li>
-<li><a href=/contact.html>Contact</a> | </li>
-<li><a href=/press.html>Press</a></li>
-</ul>
-</div>
-</div>
-<div class="footer-box row">
-<div class="footer-left col-md-6 col-xs-12">
-<div class="footer-bio content">
-<p><strong>Adam Drake</strong> leads technical business transformations in global and multi-cultural environments. He has a passion for helping companies become more productive by improving internal leadership capabilities, and accelerating product development through technology and data architecture guidance. Adam has served as a White House Presidential Innovation Fellow and is an IEEE Senior Member.</p>
-</div>
-</div>
-<div class=footer-right>
-<div class=social-icons>
-<a href=https://github.com/adamdrake>
-<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC5UlEQVR4nO2a0XXiMBBFKYESKIEOlg5CB3EHmw5wB9DBbgebDnAHTgemA9PB3Q8J1mtkaSSPjTnRPYePHIzem/FoJFtZrTKZTCaTyWQmBFgD78ABOAMNjzT2u4O9dv1s36OwQf8EakewUmo7xuskA9gAR6AdEXif1o65eXZ8XjDlqxm4KxGHZ8f5ALBlXKnHUrOUagAKpr3rQ7TAfgnBP5viOwd/Y94ksKzgb8wzHTAN7xlzPkTLHI0Rf7ffdZJUAleFwK52rK0de+e5tp46+NJn1HH92vGbK1DZz6f93P7uJ6zEsQsMJKycKvgN/tKvAr/dIyhRybU2WUNMMxWAUyDzlbrosBdfAvSrAFPKocZXqYr6/YQS0KL5AAV8BAQBWjXBsB/JKlRoCkr2+Q9NcCqQrS46KwKm/CXsVARlnnxLYZfx0wDZru9TIa5YX6E+ABq7Q8LdH2a8+x1fe4GvUkMolOnZ5r7DW6gXVBoizeQi6d5CN6fREAlRjQ8l2VuwD2iI5AR89wRcJhdJ9xbioiEiWW83o4XifW0EvioNIUkCitFC8b4kG7RKQ0iyETqPDyna11ng66QhJNlxwTKfBVS2wtKHoZoZDjGtH+kplI4f4GsJSYgM/ktTOOYcoMa+wdUEU/ZNhI9CU3zN44NHZRPze8DAH+BNQfvNjhWD/gMaj6vB/YQWcw7g2zCdMUfnwcrA3Okjsi4/xPju7zDmqoKWfwcWW8f3XS4I+oPVCe4+PVwlOqlJcL0cvb+Bxd8rPkbqSBHrJIF7Z1gKzIsbI/J1vk81Rcx9c65S/+89PKaM9zYZOxJKMiH4a0ySRzFwh34pa8QyT/Adg675flQcP4ZCSzfWpCsJDWbJ+9H5vCeMvezgO0Z3CE5qEsYNMd+cD4FpjN73Bglj+qgWE3wXTNd3VkPCWEN3fdp1fiyYJfDUT0TCOP3AT7zS/wyvVvcmWZGwN7cB3x64XivwTCaTyWQymVfgL42yxWFGEKJcAAAAAElFTkSuQmCC width=64 height=64>
-</a>
-<a href=https://twitter.com/aadrake>
-<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACQ0lEQVR4nO2a0XWjMBBFXQIluIR0EDpIOjAdLB1kO0g6sDvIdgAd2B3gDkwHNx8jEkIMNmTGkvfMPUc//hjmPTTSIHm1chzHcRzHcRzHSQggAx6BlzA2wEPsvMwBcqBinCYYkl2I8WyRXKEe9Ct2BmwnhJ8z4mEQ46ln3lo7wTwELlQDrz7F72eI7zgBr8D74Pc37RxXwK73gEI59naB+DEOTJTHb5IcvqFCKW7+U8PvxIex0cqxS/QcW4W4jZL4rhyqvhka2rtEx9izcHsC1krih7RLc5pK9jDxwBMXtqaRmKWB+KO6+JDsvyse3gCbGTH/Kou3WQBDssWMRBrgz6VkDAywER+SzZDamkuFmPFjWqJsgJn4XsIaNVsh+/4L0y3vbMwNCCZcsxZEwVr4K7JtZXzvClOhtTagY49M3VMcnaPU1gZM9QEpsLM24C22wgsU1gZYta1a2J8Wke4sOJqLDwZkpLkW6B+A3JkJtz0sRUxIpRwONxU/MGKNNEXHiAYUMYQ/I81QN2I1Rcebiw8GrFn2ZaiN/tn/DBO0v+XnUkcT3zOhjiS+RfviY6EBGXE+j4vY2r+BHJTcak3YxdZ7FmQ2lMiMsDIj3p4/B+S2p9EWj+WhpwbILBheVGpQJy0e6Qu2BsIh4Zp/RM4Jl1xrX0NLzEanJzRH+v0K/boeI70pj3R+1ltdDeSxtU6CXJFpdoAtMsPu6w9QyMJXsuxz+ICcJ8SvcS2QLTAPo0RKphtl+P2+3rLjOI7jOI7jOP8tH5ahgbeYuZE9AAAAAElFTkSuQmCC width=64 height=64>
-</a>
-<a href=https://linkedin.com/in/aadrake>
-<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAzElEQVRIie2WWxGDMBBFVwISkIAEnBQJOCoOKqE4AAeNg+Lg9AOY2VmSTls29If7eTPJmbubl8gioAEG/DQAF9ECOkeA1VUnya1GgPEA0CARs2dO2QLBi2RBAShU78pcoF6MgCkH6AlUClJ7QGKgFXYD7l6QFOhbBeYN9Hb3bkCRHqX8CaiNV6aAe0CV9Ra/IHIsfgapRYuIv7lt9iTSi7VmbHP+9oB0eR6peR6gj+adoBP0X9ART/l43OdkiZnzu9XZmjb4lnFkTSIiLyov4WUSpGLDAAAAAElFTkSuQmCC width=64 height=64>
-</a>
-<a href=https://adamdrake.com/posts/index.xml>
-<img class=icon src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABOElEQVRIib2WXXWEMBBGIyESkICDroPWQSNhHRQnrANwsOsAHFAJdXD7ALSz0wmZLrTfObwwkDs/X3ISwiIgAQPHaQBegxRwORCg1cpK/lopAKN6eQEaoAduwPsBoCFoSDAEVMDZSMotF0hBT8yV7gIBtMAb8Aw8ATEDTMDHHpClDm3VGVbjbKcXtGrSQCB6YL8FreoQLfXALJC099bPg4LVbMys6DpmazdOWHbzu+29AK0KO/Wdaf2SvaNaJGKfi0ntMxfIApcGP6mEflTudd0E1KqNWrKq86OgFSYr0wbplQMfBoEwC3ZVMpG7U98C3ZZFKmwHZRcDTjn3WaCqkPWLiPfemAWKBVCzMadszAJd+W7d1YjLOek9lY2ZnneoXR5vbPy/y0mmBUfqq50rLLHj8mFoRJwWnzknvtUm1yWnAAAAAElFTkSuQmCC width=64 height=64>
-</a>
-</div>
-<button class="subscribe subscribe-btn">
-<a href=https://www.digitalmaneuver.com/#/portal>Subscribe to newsletter</a>
-</button>
-</div>
-</div>
-<div class="container has-text-centered footer-copyright">
-</div>
-</body>
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=mobile-web-app-capable content="yes"><meta name=viewport content="width=device-width,initial-scale=1"><title>Posts - Adam Drake</title><meta name=description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams."><link rel="shortcut icon" href=https://adamdrake.com/static/favicon.ico><link rel=authorization_endpoint href=https://indieauth.com/auth><link rel=token_endpoint href=https://tokens.indieauth.com/token><link rel=me href=https://github.com/adamdrake><link rel=me href=https://twitter.com/aadrake><link rel=stylesheet href=https://adamdrake.com/css/style.min.css crossorigin=anonymous media=screen><meta property="og:url" content="https://adamdrake.com"><meta property="og:title" content="Adam Drake"><meta property="og:site_name" content="Adam Drake"><meta property="og:type" content="website"><meta property="og:description" content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams."><meta property="og:image" content="/static/images/twitter-card.jpg"><meta name=twitter:title content="Adam Drake"><meta name=twitter:description content="Adam Drake is an advisor to scale-up tech companies. He writes about ML/AI/crypto/data, leadership, and building tech teams."><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/static/images/twitter-card.jpg"></head><body><header><section><div class="header flex row"><div class="header__item flex row"><a id=site__name href=https://adamdrake.com>Adam Drake</a></div><div class="flex row"><nav aria-label="page menu" class="flex row"><ul role=menubar class="flex row"><li role=none><a class=sidebar-nav-itemmenu__item href=/ title>Latest</a></li><li role=none><a class=sidebar-nav-itemmenu__item href=/about.html title>About</a></li><li role=none><a class=sidebar-nav-itemmenu__item href=/cases.html title>Case Studies</a></li><li role=none><a class=sidebar-nav-itemmenu__item href=/contact.html title>Contact</a></li><li role=none><a class="sidebar-nav-item activemenu__item" href=/posts.html title=Posts>Posts</a></li><li role=none><a class=sidebar-nav-itemmenu__item href=/press.html title>Press</a></li><li role=none><a class=menu__item href=https://adamdrake.com/posts/index.xml>RSS</a></li><li><button class="subscribe subscribe-btn">
+<a href=https://www.digitalmaneuver.com/#/portal>Subscribe to newsletter</a></button></li></ul></nav></div></div></section></header><main aria-role=main><section><div class=h-card rel=author id=author><div class="flex row"><img class=u-photo id=author-img alt="author photo" src=https://adamdrake.com/static/images/adam_drake_240.jpg><div id=card class=md><h1 class=p-name>Adam Drake</h1><address class=properties><a class="u-url u-uid" href=adamdrake.com>adamdrake.com</a>
+∙
+<a rel=me href=https://github.com/adamdrake>github</a>
+∙
+<a rel=me href=https://linkedin.com/in/aadrake>linkedin</a>
+∙
+<a rel=me href=https://twitter.com/aadrake>twitter</a></address><p class=p-note></p></div></div></div><h1 style=margin:0>Posts</h1><ul id=feed__ul class=h-feed><li class="feed__li h-entry"><div class=feed__content><a rel=author class="p-author h-card hidden" href=https://adamdrake.com>Adam Drake</a><article class="md p-summary e-content"><h2 class=p-name><a href=https://adamdrake.com/on-confidence.html>On Confidence</a></h2>Bearing, presence, gravitas, and authority are all some words used to describe those who project confidence. When I am advising executives and leaders to help them with their teams, one of the topics of concern for them is confidence and how to gain it. Or at the very least, how to project confidence even when it’s not there. The latter seems to be especially concerning to those who are relatively new in their leadership positions.
+...
+<a href=https://adamdrake.com/on-confidence.html class=properties><strong>read more</strong></a></article><div class="flex properties__row properties"><div class="flex left properties"><span class=properties><a class="icon u-url dt-published" href=https://adamdrake.com/on-confidence.html>January 26, 2017</a></span></div><div class="flex right"></div></div></div></li><li class="feed__li h-entry"><div class=feed__content><a rel=author class="p-author h-card hidden" href=https://adamdrake.com>Adam Drake</a><article class="md p-summary e-content"><h2 class=p-name><a href=https://adamdrake.com/on-forecasts.html>On Forecasts</a></h2>Overview I was meeting with a client recently, and since it was the end of the year and they were in their budgeting process we were discussing forecasting methodologies. They were asking about their marketing function specifically, but the conversation applied more or less to all areas of the business which set targets and/or develop a budget. So basically, the whole business.
+It’s important to note that in many companies budgeting and forecasting are the same thing, so this is as much a budgeting topic as a forecasting one.
+...
+<a href=https://adamdrake.com/on-forecasts.html class=properties><strong>read more</strong></a></article><div class="flex properties__row properties"><div class="flex left properties"><span class=properties><a class="icon u-url dt-published" href=https://adamdrake.com/on-forecasts.html>January 26, 2017</a></span></div><div class="flex right"></div></div></div></li><li class="feed__li h-entry"><div class=feed__content><a rel=author class="p-author h-card hidden" href=https://adamdrake.com>Adam Drake</a><article class="md p-summary e-content"><h2 class=p-name><a href=https://adamdrake.com/leadership-and-communication.html>Leadership and Communication</a></h2>Good leadership is hard to quantify, especially when considering intrinsic qualities like humility (which I argue is the most important quality of all). However, there are external skills which can separate effective and ineffective leaders, and communication is arguably the most fundamental of those externally-visible skills.
+When a company is small, and everyone fits in a single room, then a shared vision can almost be maintained by osmosis. Additionally, at this stage a company is usually extremely focused on a narrow goal or set of goals, so there is clarity not only due to small company sizes having more efficient communication, but also because the set of objectives is small as well.
+...
+<a href=https://adamdrake.com/leadership-and-communication.html class=properties><strong>read more</strong></a></article><div class="flex properties__row properties"><div class="flex left properties"><span class=properties><a class="icon u-url dt-published" href=https://adamdrake.com/leadership-and-communication.html>January 19, 2017</a></span></div><div class="flex right"></div></div></div></li><li class="feed__li h-entry"><div class=feed__content><a rel=author class="p-author h-card hidden" href=https://adamdrake.com>Adam Drake</a><article class="md p-summary e-content"><h2 class=p-name><a href=https://adamdrake.com/an-unreasonably-deep-dive-into-project-euler-problem-2.html>An Unreasonably Deep Dive into Project Euler Problem 2</a></h2>First, the problem definition:
+Each new term in the Fibonacci sequence is generated by adding the previous two terms. By starting with 1 and 2, the first 10 terms will be:
+1, 2, 3, 5, 8, 13, 21, 34, 55, 89, …
+By considering the terms in the Fibonacci sequence whose values do not exceed four million, find the sum of the even-valued terms.
+Classic Fibonacci problem, with a slight twist due to the summation on top.
+...
+<a href=https://adamdrake.com/an-unreasonably-deep-dive-into-project-euler-problem-2.html class=properties><strong>read more</strong></a></article><div class="flex properties__row properties"><div class="flex left properties"><span class=properties><a class="icon u-url dt-published" href=https://adamdrake.com/an-unreasonably-deep-dive-into-project-euler-problem-2.html>January 17, 2017</a></span></div><div class="flex right"></div></div></div></li><li class="feed__li h-entry"><div class=feed__content><a rel=author class="p-author h-card hidden" href=https://adamdrake.com>Adam Drake</a><article class="md p-summary e-content"><h2 class=p-name><a href=https://adamdrake.com/an-unreasonably-deep-dive-into-project-euler-problem-1.html>An Unreasonably Deep Dive into Project Euler Problem 1</a></h2>Introduction As part of my work in keeping my technical skills sharp, I periodically go back to basics or solve old problems again in order to ensure my foundations are strong. So it was with great fun that I decided to start back at the beginning with Project Euler.
+One of the techniques I also use for this sort of thing is not just to solve the problem, but to really explore it.
+...
+<a href=https://adamdrake.com/an-unreasonably-deep-dive-into-project-euler-problem-1.html class=properties><strong>read more</strong></a></article><div class="flex properties__row properties"><div class="flex left properties"><span class=properties><a class="icon u-url dt-published" href=https://adamdrake.com/an-unreasonably-deep-dive-into-project-euler-problem-1.html>January 4, 2017</a></span></div><div class="flex right"></div></div></div></li></ul><footer><section><ul class="pagination flex row"><li class="pag__item flex left"><a href=/posts/page/6.html class=pag__link aria-label=Previous><span aria-hidden=true>&pr; newer</span></a></li><li class="pag__item flex right"><a href=/posts/page/8.html class=pag__link aria-label=Next><span aria-hidden=true>older &sc;</span></a></li></ul></section></footer></section></main><hr><footer class="flex col"><section class="footer-bio content"><p><strong>Adam Drake</strong> leads technical business transformations in global and multi-cultural environments. He has a passion for helping companies become more productive by improving internal leadership capabilities, and accelerating product development through technology and data architecture guidance. Adam has served as a White House Presidential Innovation Fellow and is an IEEE Senior Member.</p></section><button class="subscribe subscribe-btn">
+<a href=https://www.digitalmaneuver.com/#/portal>Subscribe to newsletter</a></button><div class=social-icons><a rel=me href=https://github.com/adamdrake title=GitHub><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg></a><a rel=me href=https://linkedin.com/in/aadrake title=LinkedIn><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-linkedin"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a><a rel=me href=https://twitter.com/aadrake title=Twitter><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter"><path d="M23 3a10.9 10.9.0 01-3.14 1.53 4.48 4.48.0 00-7.86 3v1A10.66 10.66.0 013 4s-4 9 5 13a11.64 11.64.0 01-7 2c9 5 20 0 20-11.5a4.5 4.5.0 00-.08-.83A7.72 7.72.0 0023 3z"/></svg></a><a href=https://adamdrake.com/posts/index.xml title=RSS><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 019 9"/><path d="M4 4a16 16 0 0116 16"/><circle cx="5" cy="19" r="1"/></svg></a></div></footer></body></html>
