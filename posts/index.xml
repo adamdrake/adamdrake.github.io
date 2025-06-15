@@ -4219,10 +4219,7 @@ them.  Don&rsquo;t forget that.</p>
 <p>A good example of this is <code>head</code>. You shouldn&rsquo;t use this function or write functions like it. The problem is in the type, it says <code>[a] -&gt; a</code> which is actually impossible as far as total functions are concerned. Why? Because you might have an empty list! Instead, a more honest type that lets you write a total function would be <code>[a] -&gt; Maybe a</code>. This makes the possibility of not getting a result more explicit and keeps your functions total.</p>
 <p>Another way, besides adding further definitions for elements in your domain for which your function is not defined, would be to exclude those elements from the domain of your functions altogether and to have this exclusion be enforced by the type system.  This is possible with <a href="https://en.wikipedia.org/wiki/Refinement_(computing)#Refinement_types">Refinement Types</a>, which are essentially just types paired with some type of predicate that causes a compile-time error when not satisfied.  Note, refinement types are related to <a href="https://en.wikipedia.org/wiki/Liskov_substitution_principle">Behavioral Subtyping</a> (Liskov Substitution Principle, the L in <a href="https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)">SOLID</a>).  For the example of the division operator, we could simply exclude 0 as a valid element from the domain of our function.  This is straightforward, as you can see in this example using Liquid Haskell:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#75715e">{-@ divide :: Int -&gt; {v: Int | v != 0 } -&gt; Int @-}</span>
-</span></span></code></pre></div><p>Simply by making all your functions total, you make huge amounts of progress along the path of more stable and correct programs.  So do it.</p>
-<p>
-<img class="enclosure" src="/static/images/benStiller_doit.jpg" alt="Starsky and Hutch meme &lsquo;Do it!&rsquo;"  />
-</p>
+</span></span></code></pre></div><p>Simply by making all your functions total, you make huge amounts of progress along the path of more stable and correct programs.</p>
 
 <h1 id="restricted-recursion" class="anchor-link"><a href="#restricted-recursion">Restricted recursion</a></h1>
 <p>This point is a bit more subtle, but necessary in order to achieve guaranteed termination of programs.  In order for this termination to occur, we must ensure that there is no infinite recursion.  There are a few ways to go about this, the simplest of which is probably <strong>substructural recursion</strong>, which is simply writing functions which only recurse on a subset of the data structure on which it operates (that is, only using <a href="https://en.wikipedia.org/wiki/Primitive_recursive_function">primitive recursive</a> functions).  So in the case of a list, the recursion will always occur on a subset of the original list.  As an example, if you were summing the even elements of a list then you could do it in the following way (in Haskell):</p>
@@ -4240,10 +4237,6 @@ them.  Don&rsquo;t forget that.</p>
 </span></span><span style="display:flex;"><span>		go <span style="color:#66d9ef">[]</span>     <span style="color:#f92672">=</span> z
 </span></span><span style="display:flex;"><span>		go (y<span style="color:#66d9ef">:</span>ys) <span style="color:#f92672">=</span> y `k` go ys
 </span></span></code></pre></div><p>Note also that the <code>foldr</code> implementation is tail recursive while our original <code>sumEven</code> implementation is not.</p>
-<p>
-<img class="enclosure" src="/static/images/xkcd_tailRecursion.png" alt="XKCD comic &lsquo;Functional&rsquo;"  />
-<br>
-<em>XKCD: <a href="https://www.xkcd.com/1270/">https://www.xkcd.com/1270/</a></em></p>
 
 <h1 id="conclusion" class="anchor-link"><a href="#conclusion">Conclusion</a></h1>
 <p>With only these two techniques, we can make use of the benefits of total functional programming.  Compile-time checking that functions will never encounter any arguments for which they aren&rsquo;t defined, and confirmation that all computations are terminating, can bring huge amounts of safety and reliability to software.  These tools and techniques exist widely and are easy to use in all languages, so there&rsquo;s really no reason not to make use of them wherever you can.  It will completely eliminate runtime errors of that sort.  Are your functions total?  If not, why not?</p>
