@@ -1,4 +1,4 @@
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Adam Drake</title><link href="https://adamdrake.com/feed.xml" rel="self"/><link href="https://adamdrake.com/"/><updated>2019-08-16T00:00:00+00:00</updated><id>https://adamdrake.com/</id><author><name>Adam Drake</name></author><generator>Hugo -- gohugo.io</generator><entry><title type="html">An Unreasonably Deep Dive Into Project Euler Problem 4</title><link href="https://adamdrake.com/an-unreasonably-deep-dive-into-project-euler-problem-4.html"/><id>https://adamdrake.com/an-unreasonably-deep-dive-into-project-euler-problem-4.html</id><author><name>Adam Drake</name></author><published>2019-08-16T00:00:00+00:00</published><updated>2019-08-16T00:00:00+00:00</updated><content type="html"><![CDATA[
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Adam Drake</title><link href="https://adamdrake.com/index.htmlfeed.xml" rel="self"/><link href="https://adamdrake.com/index.html"/><updated>2019-08-16T00:00:00+00:00</updated><id>https://adamdrake.com/index.html</id><author><name>Adam Drake</name></author><generator>Hugo -- gohugo.io</generator><entry><title type="html">An Unreasonably Deep Dive Into Project Euler Problem 4</title><link href="https://adamdrake.com/an-unreasonably-deep-dive-into-project-euler-problem-4.html"/><id>https://adamdrake.com/an-unreasonably-deep-dive-into-project-euler-problem-4.html</id><author><name>Adam Drake</name></author><published>2019-08-16T00:00:00+00:00</published><updated>2019-08-16T00:00:00+00:00</updated><content type="html"><![CDATA[
 <h1 id="or-how-to-make-your-solution-8000x-faster-with-math-and-short-circuit-evaluation" class="anchor-link"><a href="#or-how-to-make-your-solution-8000x-faster-with-math-and-short-circuit-evaluation">Or: How to make your solution 8000x faster with math and short-circuit evaluation.</a></h1>
 
 <h1 id="introduction" class="anchor-link"><a href="#introduction">Introduction</a></h1>
@@ -7,7 +7,8 @@
 <h1 id="problem-statement" class="anchor-link"><a href="#problem-statement">Problem Statement</a></h1>
 <blockquote>
 <p>A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.</p>
-<p>Find the largest palindrome made from the product of two 3-digit numbers.</p></blockquote>
+<p>Find the largest palindrome made from the product of two 3-digit numbers.</p>
+</blockquote>
 <p>The general approach to the solution will be to find a working version first (as always), then focus on making it faster by reducing the search space.  Along the way, there are a couple of programming techniques we can employ for great speedups as well.</p>
 <p>All of this results in the final version being about <em>8000x faster</em> than the naive version.</p>
 <p>For the full code, see <a href="https://github.com/adamdrake/projecteuler">the github repository</a>.</p>
@@ -18,7 +19,7 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">// is_palindromic_v1() will convert the number to a string, reverse the string, and compare that with the
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">// string representation of the number.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">is_palindromic_v1</span>(i: <span style="color:#66d9ef">i32</span>) -&gt; <span style="color:#66d9ef">bool</span> {
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">is_palindromic_v1</span>(i: <span style="color:#66d9ef">i32</span>) -&gt; <span style="color:#66d9ef">bool</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> i.to_string().chars().rev().collect::<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span>() <span style="color:#f92672">==</span> i.to_string();
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div>
@@ -27,7 +28,7 @@
 <p>This is slow but it works.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">// v0() is the naive attempt: multiply three-digit numbers.  When a palindromic number is found,
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">// if it&#39;s larger than the most recent palindromic number found then keep it.  Iterate until the end 999.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">v0</span>() -&gt; <span style="color:#66d9ef">i32</span> {
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">v0</span>() -&gt; <span style="color:#66d9ef">i32</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> res <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">100</span><span style="color:#f92672">..=</span><span style="color:#ae81ff">999</span> {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> j <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">100</span><span style="color:#f92672">..=</span><span style="color:#ae81ff">999</span> {
@@ -43,17 +44,17 @@
 <h1 id="v1---time-required-7300000ns-14x-speedup-from-v0" class="anchor-link"><a href="#v1---time-required-7300000ns-14x-speedup-from-v0">v1() - time required: 7,300,000ns (~14x speedup from v0())</a></h1>
 <p>This isn&rsquo;t really an algorithm change, but it is a slight change in the code that makes a massive performance difference.  We are taking advantage of the <a href="https://en.wikipedia.org/wiki/Short-circuit_evaluation">Short-circuit evaluation</a> present in Rust.  This means that for a given sequence of arguments chained together with certain operators, like <code>&amp;&amp;</code>, the evaluation will take place from left to right and will terminate as soon as possible.  This prevents the remaining elements in the sequence from being evaluated unnecessarily.  In our case, that makes a big difference since we are iterating through many numbers and therefore would be executing <code>is_palindromic_v1()</code> many times.  Since <code>prod &gt; res</code> has a much lower computational cost than <code>is_palindromic_v1(prod)</code> and since <code>prod &gt; res</code> happens sufficiently frequently, this cuts down runtime by a factor of 14.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">// v1(): FUN FACT - Rust has short-circuit evaluation.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">v1</span>() -&gt; <span style="color:#66d9ef">i32</span> {
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">v1</span>() -&gt; <span style="color:#66d9ef">i32</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> res <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">100</span><span style="color:#f92672">..=</span><span style="color:#ae81ff">999</span> {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> j <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">100</span><span style="color:#f92672">..=</span><span style="color:#ae81ff">999</span> {
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">let</span> prod <span style="color:#f92672">=</span> i <span style="color:#f92672">*</span> j;
 </span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Note that this order changed.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">// Consequently, the right-hand side of the &amp;&amp; is only evaluated if needed.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">// This is important since string casting and reversing is so slow and the search
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">// space is so large.  Many languages have short-circuit/lazy evaluation.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">// This matters less as we start restricting the search space.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span> prod <span style="color:#f92672">&gt;</span> res <span style="color:#f92672">&amp;&amp;</span> is_palindromic_v1(prod) {
+</span></span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Consequently, the right-hand side of the &amp;&amp; is only evaluated if needed.
+</span></span></span><span style="display:flex;"><span>            <span style="color:#75715e">// This is important since string casting and reversing is so slow and the search
+</span></span></span><span style="display:flex;"><span>            <span style="color:#75715e">// space is so large.  Many languages have short-circuit/lazy evaluation.
+</span></span></span><span style="display:flex;"><span>            <span style="color:#75715e">// This matters less as we start restricting the search space.
+</span></span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> prod <span style="color:#f92672">&gt;</span> res <span style="color:#f92672">&amp;&amp;</span> is_palindromic_v1(prod) {
 </span></span><span style="display:flex;"><span>                res <span style="color:#f92672">=</span> prod;
 </span></span><span style="display:flex;"><span>            }
 </span></span><span style="display:flex;"><span>        }
@@ -64,7 +65,7 @@
 <h1 id="v2---time-required-1800000ns-57x-speedup-from-v0" class="anchor-link"><a href="#v2---time-required-1800000ns-57x-speedup-from-v0">v2() - time required: ~1,800,000ns (~57x speedup from v0())</a></h1>
 <p>If you think about it, starting at the lower end of the range and iterating all the way to the higher end does not make very much sense when looking for the largest product.  The chances that the largest product will come from the lower end of the range are very small, so we should start the iteration from the large numbers and work our way down instead.  This results in a much smaller search space since we break out as soon as we find the large palindromic number.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">// v2(): Start from the biggest numbers, which makes a lot more sense.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">v2</span>() -&gt; <span style="color:#66d9ef">i32</span> {
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">v2</span>() -&gt; <span style="color:#66d9ef">i32</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> res <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> (<span style="color:#ae81ff">100</span><span style="color:#f92672">..=</span><span style="color:#ae81ff">999</span>).rev() {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> j <span style="color:#66d9ef">in</span> (<span style="color:#ae81ff">100</span><span style="color:#f92672">..=</span><span style="color:#ae81ff">999</span>).rev() {
@@ -84,7 +85,7 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">// v3(): Now stop if result is greater than current product.  If you
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">// are multiplying and the product is smaller than the current number, you won&#39;t be
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">// able to get around the fact that p * q = q * p, so you can stop.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">v3</span>() -&gt; <span style="color:#66d9ef">i32</span> {
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">v3</span>() -&gt; <span style="color:#66d9ef">i32</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> res <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> (<span style="color:#ae81ff">100</span><span style="color:#f92672">..=</span><span style="color:#ae81ff">999</span>).rev() {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> j <span style="color:#66d9ef">in</span> (<span style="color:#ae81ff">100</span><span style="color:#f92672">..=</span><span style="color:#ae81ff">999</span>).rev() {
@@ -113,7 +114,7 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Since p or q must be divisible by 11, just start the iteration at 990 because it is
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">// the largest possible number in the given range that is also divisible by 11 and
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">// work our way down in steps of 11.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">v4</span>() -&gt; <span style="color:#66d9ef">i32</span> {
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">v4</span>() -&gt; <span style="color:#66d9ef">i32</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> res <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> (<span style="color:#ae81ff">100</span><span style="color:#f92672">..=</span><span style="color:#ae81ff">990</span>).rev().step_by(<span style="color:#ae81ff">11</span>) {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> j <span style="color:#66d9ef">in</span> (<span style="color:#ae81ff">100</span><span style="color:#f92672">..=</span><span style="color:#ae81ff">999</span>).rev() {
@@ -138,7 +139,7 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">// and adding the 10s place of the candidate number until no places are left in the candidate
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">// number.  In this way, `reverse` is constructed as the sequence of successive tens place numbers
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">// from the original candidate number.  This version is ~16x faster than is_palindromic_v1().
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">is_palindromic_v2</span>(i: <span style="color:#66d9ef">i32</span>) -&gt; <span style="color:#66d9ef">bool</span> {
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">is_palindromic_v2</span>(i: <span style="color:#66d9ef">i32</span>) -&gt; <span style="color:#66d9ef">bool</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> reversed <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> number <span style="color:#f92672">=</span> i;
 </span></span><span style="display:flex;"><span>
@@ -152,7 +153,7 @@
 <h1 id="v5---time-required-13000ns-8000x-speedup-from-v0" class="anchor-link"><a href="#v5---time-required-13000ns-8000x-speedup-from-v0">v5() - time required: ~13,000ns (~8000x speedup from v0())</a></h1>
 <p>This version loops 1627 times, a ~500x reduction from <code>v0()</code> and <code>v1()</code>.  The ~500x overall reduction in search space, the short-circuit evaluation change, plus the ~16x reduction due to the improved method of palindromic number checking is what gets us to the ~8000x reduction relative to the initial version.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">// v5(): Get rid of the slow string reversing and use the numerical palindrome helper function.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">v5</span>() -&gt; <span style="color:#66d9ef">i32</span> {
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">v5</span>() -&gt; <span style="color:#66d9ef">i32</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> res <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> (<span style="color:#ae81ff">100</span><span style="color:#f92672">..=</span><span style="color:#ae81ff">990</span>).rev().step_by(<span style="color:#ae81ff">11</span>) {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> j <span style="color:#66d9ef">in</span> (<span style="color:#ae81ff">100</span><span style="color:#f92672">..=</span><span style="color:#ae81ff">999</span>).rev() {
@@ -241,7 +242,8 @@
 <li>
 <p>Anthropomorphizing</p>
 <blockquote>
-<p>The question of whether Machines Can Think is about as relevant as the questions of whether Submarines Can Swim.  &ndash; Dijkstra, EWD898, 1984</p></blockquote>
+<p>The question of whether Machines Can Think is about as relevant as the questions of whether Submarines Can Swim.  &ndash; Dijkstra, EWD898, 1984</p>
+</blockquote>
 <p>The quote above from Dijkstra perfectly illustrates the risk in humans anthropomorphizing technology.  By making it seem like the machine is doing something that a human does, we make the machine something to which you can relate, something more exciting, and those who play this horrible trick often use the resulting failures of intuition to swindle non-savvy consumers.</p>
 <p>It is much easier for a sales and marketing person for some AI vendor to sell magical technology if they can leave out any real explanation for how the technology works and instead focus on exploiting people&rsquo;s intuitive understanding of concepts like <em>thinking</em> machines and so on.  I once sat in on a pitch from a vendor who was trying to convince people that he had created machine learning systems that exhibited creativity due to him inducing stress and anxiety in the mind of the machine.  All he really did was introduce some random perturbations in the weight vector of his machine learning algorithm.  It was academically criminal, and thankfully I was able to ask probing questions in the sales pitch that revealed the vendor for the fraud that he was.</p>
 <p>If someone is anthropomorphizing the technology, run away.  They are probably lying to you.</p>
@@ -557,7 +559,8 @@ A: Because I stayed up playing video games and went to bed late at night.</p>
 <li>How much will it cost?</li>
 <li>How long will it take?</li>
 <li>What are the mid-term and final “exams” to check for success?</li>
-</ol></blockquote>
+</ol>
+</blockquote>
 <p>Taken together, this set of questions should be very effective in separating wheat from chaff in the calculus of allocating time, money, and people to a certain project or portfolio of projects.  I take some issue with questions 6 and 7 since, by definition, if you&rsquo;re building something new that has not been built before, it is impossible to know with precision how long it will take or how much it will cost.  However, research organizations (and any high-output organization for that matter) have employed Agile-like work practices since the beginning. I&rsquo;m confident, in the modern context, that points 6 and 7 can be evaluated on an ongoing basis.</p>
 <p>I think the first 4 questions are critical when evaluating a project that is pitched as having an AI focus.  The reason, as mentioned in my BS Detector article, is that the AI part is usually the <em>least important</em> part of the project.  It&rsquo;s often not even a critical component.  Usually, it&rsquo;s thrown on top purely as an attempt to differentiate from competitors in the funding or business development process.  This is harmful because the inflated expectations resulting from the differentiation must eventually be addressed.</p>
 <p>In fact, employing only the first question of the Heilmeier Catechism would likely suffice.  If you&rsquo;re using AI or other Machine Learning jargon to describe what you&rsquo;re doing, or if what you&rsquo;re doing doesn&rsquo;t sound interesting without it, then perhaps you should reconsider what you&rsquo;re doing in the first place.</p>
@@ -672,7 +675,8 @@ A: Because I stayed up playing video games and went to bed late at night.</p>
 <p>Before we talk about the three questions specifically, we have to talk about how to frame and communicate missions at various levels.  Thankfully, this work has already been done for us over hundreds of years, most recently and notably in the form of <em>auftragstaktik</em>.  From the <a href="https://adamdrake.com/command-and-control.html">Command and Control article</a>:</p>
 <blockquote>
 <p>Literally “mission tactics”, auftragstaktik is a system for providing direction and vision for achieving objectives. It was originally developed and applied with great success in the Prussian military, an organization renowned for its efficiency, innovativeness, and adaptability. It is such an effective approach that it is still in use today, although in the US and UK it’s now called mission command instead.</p>
-<p>Modern startups which reach a scale beyond which a couple of co-founders can manage are always striving for autonomy, innovation, and progress among their teams, and auftragstaktik is a great way to go about that.</p></blockquote>
+<p>Modern startups which reach a scale beyond which a couple of co-founders can manage are always striving for autonomy, innovation, and progress among their teams, and auftragstaktik is a great way to go about that.</p>
+</blockquote>
 <p>The general idea is that instead of telling people <strong>what</strong> to do, you communicate the <strong>goal</strong> you want to achieve and <strong>why</strong> you want to achieve it.  You also communicate the <strong>minimal set of constraints</strong> that their solution must follow.  Then you leave them, as a team, to tell you <strong>how</strong> they plan to achieve the objective.  That&rsquo;s mission command, in a nutshell.</p>
 <p>With this perspective on communication when it comes to planning objectives, let&rsquo;s consider the implications of the three questions and their importance to the broader company mission.</p>
 
@@ -1219,11 +1223,11 @@ A: Because I stayed up playing video games and went to bed late at night.</p>
 </span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Remainder of the handler below...</span>
 </span></span></code></pre></div><p>Another complication is that API Gateway likes to assume everything is JSON, and neither CompressTest nor TinySite deal strictly with JSON or even UTF-8 data.  CompressTest receives <code>multipart/form-data</code>, and TinySite responds with compressed data, which may contain arbitrary bytes.  AWS API Gateway can handle binary media types as long as you set the Content-Type values in the settings for the endpoint, but I found it to be difficult/unreliable.  The basic flow is that API Gateway receives the request and base64 encodes it.  It then passes the request on to the Lambda function, which decodes it back to bytes to perform the operations defined in the handler.  The resulting response is sent as-is if possible, or if it contains binary data it is base64 encoded before being sent to API Gateway.  If the Content-Type header supplied by the Lambda function matches that which was specified in the settings in API Gateway, then API Gateway will base64 decode the response body before forwarding it on to the client.  Additionally, I used the command line utility to set the <code>CONVERT_TO_BINARY</code> flag on egress as part of the process of trying to get it working.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>aws apigateway update-integration-response <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--rest-api-id XXXXXX <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--resource-id XXXXXX <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--http-method GET <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--status-code <span style="color:#ae81ff">200</span> <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--patch-operations <span style="color:#e6db74">&#39;[{&#34;op&#34; : &#34;replace&#34;, &#34;path&#34; : &#34;/contentHandling&#34;, &#34;value&#34; : &#34;CONVERT_TO_BINARY&#34;}]&#39;</span>
+</span></span></span><span style="display:flex;"><span>--rest-api-id XXXXXX <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>--resource-id XXXXXX <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>--http-method GET <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>--status-code <span style="color:#ae81ff">200</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>--patch-operations <span style="color:#e6db74">&#39;[{&#34;op&#34; : &#34;replace&#34;, &#34;path&#34; : &#34;/contentHandling&#34;, &#34;value&#34; : &#34;CONVERT_TO_BINARY&#34;}]&#39;</span>
 </span></span></code></pre></div><p>In the end, it all works, but it wasn&rsquo;t trivial to set up since there are so many knobs to turn.  I&rsquo;m not sure why API Gateway requires a string response instead of just bytes, but oh well.  Lastly, it does not seem to be totally clear which changes to API Gateway require the API to be redeployed, and which take effect without redeployment.  When in doubt, redeploy the API.</p>
 
 <h2 id="lambda" class="anchor-link"><a href="#lambda">Lambda</a></h2>
@@ -1397,7 +1401,8 @@ A: Because I stayed up playing video games and went to bed late at night.</p>
 <p>Our hiring process is very straightforward.  Once you apply to the job posting via API (we use <a href="https://applybyapi.com">ApplyByAPI</a>), we will contact you personally within 24 hours.  We&rsquo;ll schedule a short 20-minute phone call to chat and assess your verbal communication skills.  This is not a technical screening, fear not!</p>
 <p>If you successfully move to the next stage, you&rsquo;ll be given a small 2-4 hour project in which you can demonstrate your development skills.  You will be able to use the language and tooling of your choice.</p>
 <p>Lastly, we&rsquo;ll meet for one in-person interview (or video call) to discuss your project and answer any questions you have.</p>
-<p>We are a team of great people building a really cool product for great customers.  We&rsquo;d love to have you join us!</p></blockquote>
+<p>We are a team of great people building a really cool product for great customers.  We&rsquo;d love to have you join us!</p>
+</blockquote>
 
 <h1 id="serve-your-applicants" class="anchor-link"><a href="#serve-your-applicants">Serve your applicants</a></h1>
 <p>As you can see, a good job description can be a helpful and encouraging way to get interested and suitable candidates to apply for your position.  By being clear about required skills and helpful skills, accurately describing the work without overselling it, and being transparent about your company and hiring process, your job description will provide a great starting point for finding your next ideal technical hire.</p>
@@ -1410,7 +1415,8 @@ A: Because I stayed up playing video games and went to bed late at night.</p>
 <h1 id="tcp-and-ip-rfcs" class="anchor-link"><a href="#tcp-and-ip-rfcs">TCP and IP RFCs</a></h1>
 <p>One of the original TCP/IP specs, RFC 879, has been updated by <a href="https://tools.ietf.org/html/rfc6691">RFC 6691</a>.  In this RFC, we learn that:</p>
 <blockquote>
-<p>THE TCP MAXIMUM SEGMENT SIZE IS THE IP MAXIMUM DATAGRAM SIZE MINUS FORTY.</p></blockquote>
+<p>THE TCP MAXIMUM SEGMENT SIZE IS THE IP MAXIMUM DATAGRAM SIZE MINUS FORTY.</p>
+</blockquote>
 <p>Well, the maximum IP datagram size is 576 bytes, so we know that the maximum segment size (MSS) for TCP is 536 bytes.  This leaves 20 bytes for minimal TCP headers, and 20 bytes for minimal IP headers.  If we send an IP datagram of 536 bytes, we are guaranteed that the datagram (and the resulting TCP segment) will not be fragmented and will be delivered in a single unit.</p>
 <p>Okay.  Let&rsquo;s build a website that fits into 536 bytes!</p>
 
@@ -1428,10 +1434,12 @@ A: Because I stayed up playing video games and went to bed late at night.</p>
                   CRLF
 
                   [ message-body ]          ; Section 7.2
-</code></pre></blockquote>
+</code></pre>
+</blockquote>
 <p>That means that the only required element is the the <em>Status-Line</em>.</p>
 <blockquote>
-<p>Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase CRLF</p></blockquote>
+<p>Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase CRLF</p>
+</blockquote>
 <p>Easy enough.  The smallest thing we could send as a response from our TCP server is <code>HTTP/1.1 200 OK\r\n</code>.  That response string is 17 bytes, which cuts our available bytes for the message body down to 519 bytes.  As a reminder of the accounting: we can send 576 bytes total in a single TCP segment, and we must reserve 20 for TCP header, 20 for IP header.  This leaves us 536 bytes for everything else.  We need another 17 bytes for the HTTP response, giving us 536-17=519 bytes.</p>
 
 <h1 id="building-a-tcp-server" class="anchor-link"><a href="#building-a-tcp-server">Building a TCP server</a></h1>
@@ -1777,7 +1785,8 @@ A: Because I stayed up playing video games and went to bed late at night.</p>
 <p>It’s a common programming task: Take a data file with fields separated by a delimiter (comma, tab, etc), and run a mathematical calculation involving several of the fields. Often these programs are one-time use scripts, other times they have longer shelf life. Speed is of course appreciated when the program is used more than a few times on large files.</p>
 <p>The specific exercise we’ll explore starts with files having keys in one field, integer values in another.
 &hellip;
-Fields are delimited by a TAB, and there may be any number of fields on a line. The file name and field numbers of the key and value are passed as command line arguments.</p></blockquote>
+Fields are delimited by a TAB, and there may be any number of fields on a line. The file name and field numbers of the key and value are passed as command line arguments.</p>
+</blockquote>
 <p>Okay.  We&rsquo;ll have a delimited file (with tabs in this case), and we want to provide the filename, index for the key column, and index for the value column to our code.  With those, our code should compute the sum of all the values for each specific key, and then output the key having the largest value.  In SQL terms, this is a <code>GROUP BY</code> and a <code>MAX</code>.  (Note that I did not do a version of this problem in SQL, but from what I&rsquo;ve seen it is slower than the Go/Nim/D versions, though perhaps not the Python version.)</p>
 <p>The data we will use is a <a href="https://storage.googleapis.com/books/ngrams/books/googlebooks-eng-all-1gram-20120701-0.gz">file of n-grams</a> from the Google Books dataset.  The file is 184 Megabytes, uncompressed, and has a total of 10,512,769 lines.</p>
 
@@ -2259,13 +2268,17 @@ Fields are delimited by a TAB, and there may be any number of fields on a line. 
 </span></span></code></pre></div>]]></content></entry><entry><title type="html">Enough with the microservices</title><link href="https://adamdrake.com/enough-with-the-microservices.html"/><id>https://adamdrake.com/enough-with-the-microservices.html</id><author><name>Adam Drake</name></author><published>2017-05-20T00:00:00+00:00</published><updated>2017-05-20T00:00:00+00:00</updated><content type="html"><![CDATA[
 <h1 id="tldr" class="anchor-link"><a href="#tldr">Tl;dr:</a></h1>
 <blockquote>
-<p>Don’t even consider microservices unless you have a system that’s too complex to manage as a monolith. The majority of software systems should be built as a single monolithic application. Do pay attention to good modularity within that monolith, but don’t try to separate it into separate services.</p></blockquote>
+<p>Don’t even consider microservices unless you have a system that’s too complex to manage as a monolith. The majority of software systems should be built as a single monolithic application. Do pay attention to good modularity within that monolith, but don’t try to separate it into separate services.</p>
+</blockquote>
 <blockquote>
-<p>&ndash; Martin Fowler</p></blockquote>
+<p>&ndash; Martin Fowler</p>
+</blockquote>
 <blockquote>
-<p>If you can’t build a well-structured monolith, what makes you think microservices is the answer?</p></blockquote>
+<p>If you can’t build a well-structured monolith, what makes you think microservices is the answer?</p>
+</blockquote>
 <blockquote>
-<p>&ndash; <a href="https://twitter.com/simonbrown">Simon Brown</a></p></blockquote>
+<p>&ndash; <a href="https://twitter.com/simonbrown">Simon Brown</a></p>
+</blockquote>
 
 <h1 id="intro" class="anchor-link"><a href="#intro">Intro</a></h1>
 <p>Much has been written on the pros and cons of microservices, but unfortunately I&rsquo;m still seeing them as something being pursued in a <a href="https://en.wikipedia.org/wiki/Cargo_cult">cargo cult</a> fashion in the growth-stage startup world.  At the risk of rewriting Martin Fowler&rsquo;s <a href="https://martinfowler.com/bliki/MicroservicePremium.html">Microservice Premium</a> article, I thought it would be good to write up some thoughts so that I can send them to clients when the topic arises, and hopefully help people avoid some of the mistakes I&rsquo;ve seen.  The mistake of choosing a path towards a given architecture or technology on the basis of so-called <em>best practices</em> articles found online is a costly one, and if I can help a single company avoid it then writing this will have been worth it.</p>
@@ -2275,7 +2288,8 @@ Fields are delimited by a TAB, and there may be any number of fields on a line. 
 <p>This might seem strange, because most of the articles on microservices are extolling their countless virtues like decoupling tech systems, better horizontal scalability, removing dependencies between development teams, and so on.  If you&rsquo;re the size of Uber, Airbnb, Facebook, or Twitter, then that is all probably true.  I&rsquo;ve helped larger organizations with their microservices transitions, including helping them set up messaging systems and other technologies which allow for amazing scalability properties.  However, for growth-stage startups, all of that technology, and those microservices, are rarely needed.</p>
 <blockquote>
 <p>You are not Netflix, stop trying to be them!</p>
-<p>&ndash;Russ Miles</p></blockquote>
+<p>&ndash;Russ Miles</p>
+</blockquote>
 <p>Russ Miles makes this his first point in his post <em>8 ways to lose at microservices adoption</em>, and it&rsquo;s something I see all the time.  Growth-stage startups often want to emulate the <em>best practices</em> they see at those companies, often to their own detriment.  Best practices are context dependent.  What is a best practice for a company like Facebook, may or may not be a best practice for a startup with a total engineering team size of 100 or less.</p>
 <p>Even if you are smaller than the tech giants, you still might, on the balance, get some benefit from moving towards a microservices architecture.  However, a growth-stage startup doing a wholesale migration to microservices should be a firing-level offense for the tech people involved.</p>
 
@@ -2334,7 +2348,8 @@ Fields are delimited by a TAB, and there may be any number of fields on a line. 
 <p>If you&rsquo;re in a growth-stage startup with the need to make some changes to your architecture and microservices aren&rsquo;t the answer they seem to be, what is it that you <strong>should</strong> be doing?</p>
 <p>It&rsquo;s important to note that Fowler&rsquo;s prerequisites are something of a <a href="https://en.wikipedia.org/wiki/Capability_Maturity_Model">Capability Maturity Model</a> for tech, and of course Fowler does have his own article on the topic of a <a href="https://martinfowler.com/bliki/MaturityModel.html">Maturity Model</a>.  <strong>IF</strong> it makes sense for the company, we can use his prerequisites and take other intermediate steps to prepare for a move to microservices.  To quote Fowler:</p>
 <blockquote>
-<p>The vital point here is that the true outcome of a maturity model assessment isn&rsquo;t what level you are but the list of things you need to work on to improve. Your current level is merely a piece of intermediate work in order to determine that list of skills to acquire next.</p></blockquote>
+<p>The vital point here is that the true outcome of a maturity model assessment isn&rsquo;t what level you are but the list of things you need to work on to improve. Your current level is merely a piece of intermediate work in order to determine that list of skills to acquire next.</p>
+</blockquote>
 <p>So how do we look for things to improve, and what path should we take to get there?  There are a few simple, general steps. The first two <strong>alone</strong> will typically solve many of the problems that cause teams to move towards microservices, and without all the associated complexity.</p>
 <ol>
 <li>Clean up the application.  Make sure it has good automated tests and is using the current versions of all libraries, frameworks, and languages.</li>
@@ -2435,7 +2450,8 @@ Fields are delimited by a TAB, and there may be any number of fields on a line. 
 <h2 id="no-keys-command-ever" class="anchor-link"><a href="#no-keys-command-ever">No <code>KEYS</code> command. Ever.</a></h2>
 <p>Even the Redis site says this is for <a href="https://redis.io/topics/benchmarks">debugging only</a>.  This command stops the server while the keyspace is scanned for matches, which can take a really long time.</p>
 <blockquote>
-<p>Warning: consider <code>KEYS</code> as a command that should only be used in production environments with extreme care. It may ruin performance when it is executed against large databases. This command is intended for debugging and special operations, such as changing your keyspace layout. Don&rsquo;t use KEYS in your regular application code. If you&rsquo;re looking for a way to find keys in a subset of your keyspace, consider using <code>SCAN</code> or sets.</p></blockquote>
+<p>Warning: consider <code>KEYS</code> as a command that should only be used in production environments with extreme care. It may ruin performance when it is executed against large databases. This command is intended for debugging and special operations, such as changing your keyspace layout. Don&rsquo;t use KEYS in your regular application code. If you&rsquo;re looking for a way to find keys in a subset of your keyspace, consider using <code>SCAN</code> or sets.</p>
+</blockquote>
 <p>Instead of <code>KEYS</code>, use <code>SCAN</code>, which like all the Redis commands has <a href="https://redis.io/topics/benchmarks">good documentation</a>.</p>
 
 <h2 id="dont-open-a-new-connection-for-every-command" class="anchor-link"><a href="#dont-open-a-new-connection-for-every-command">Don&rsquo;t open a new connection for every command.</a></h2>
@@ -2485,7 +2501,8 @@ Fields are delimited by a TAB, and there may be any number of fields on a line. 
 <h2 id="if-memory-usage-is-getting-consistently-high-scan-your-keyspace" class="anchor-link"><a href="#if-memory-usage-is-getting-consistently-high-scan-your-keyspace">If memory usage is getting consistently high, <code>SCAN</code> your keyspace.</a></h2>
 <p>Redis generally handles key expiration very well, but sometimes it can be necessary to do a manual <code>SCAN</code> through the keyspace in order to expire keys.  I wouldn&rsquo;t do this as a matter of course since eviction seems to work well in current versions of Redis, but I do know of some customers using ElastiCache Redis instances on AWS that have to do this in order to keep their memory usage under control.  The expiration of keys in Redis is quite good in general.</p>
 <blockquote>
-<p><strong>How Redis expires keys:</strong></p></blockquote>
+<p><strong>How Redis expires keys:</strong></p>
+</blockquote>
 <blockquote>
 <p>Redis keys are expired in two ways: a passive way, and an active way.  A key is passively expired simply when some client tries to access it, and the key is found to be timed out.  Of course, this is not a complete solution as there are expired keys that will never be accessed again.  To address this, Redis periodically tests a few keys at random among keys with an expire set. All the keys that are expired are deleted from the keyspace.  Specifically, this is what Redis does 10 times per second:</p>
 <ol>
@@ -2493,7 +2510,8 @@ Fields are delimited by a TAB, and there may be any number of fields on a line. 
 <li>Delete all the keys found expired.</li>
 <li>If more than 25% of keys were expired, start again from step 1.</li>
 </ol>
-<p>This is a trivial probabilistic algorithm.  Basically, the assumption is that our sample is representative of the whole key space.  We continue to expire keys until the percentage of keys that are likely to be expired is under 25%.  This means that at any given moment the maximum amount of keys already expired that are using memory is at most equal to the maximum amount of write operations per second divided by 4.</p></blockquote>
+<p>This is a trivial probabilistic algorithm.  Basically, the assumption is that our sample is representative of the whole key space.  We continue to expire keys until the percentage of keys that are likely to be expired is under 25%.  This means that at any given moment the maximum amount of keys already expired that are using memory is at most equal to the maximum amount of write operations per second divided by 4.</p>
+</blockquote>
 
 <h1 id="fin" class="anchor-link"><a href="#fin">Fin</a></h1>
 <p>Above are some areas to examine if your Redis instance isn&rsquo;t performing well.  In general, you should be getting many thousands - if not millions - of commands from your Redis instance.  Chances are that your application/site isn&rsquo;t that busy, so you should be able to use Redis as your data structure server throughout your growth cycle.  If you do happen to need additional Redis instances with some kind of load balancing or sharding, consider setting up <a href="https://github.com/twitter/twemproxy">twemproxy</a>.</p>
@@ -2505,7 +2523,8 @@ Fields are delimited by a TAB, and there may be any number of fields on a line. 
 <h1 id="problem-statement" class="anchor-link"><a href="#problem-statement">Problem Statement</a></h1>
 <blockquote>
 <p>The prime factors of 13195 are 5, 7, 13 and 29.</p>
-<p>What is the largest prime factor of the number 600851475143?</p></blockquote>
+<p>What is the largest prime factor of the number 600851475143?</p>
+</blockquote>
 
 <h1 id="definitions-and-theorems" class="anchor-link"><a href="#definitions-and-theorems">Definitions and Theorems</a></h1>
 <p><strong>Definition</strong>: For two integers a and b, we can say that a <em>divides</em> b, a is a <em>divisor</em> of b, b is a <em>multiple</em> of a, or a is a <em>factor</em> of b if, for some integer y, y*a=b.</p>
@@ -3123,7 +3142,8 @@ Image address: <code>https://adamdrake.com/static/images/adam_drake.jpg</code></
 <p>Again, it&rsquo;s important to note that Mission Command is supposed to be the opposite of micromanagement.</p>
 <p>A fantastic perspective on this is contained in <a href="/static/MCDP-6-Command-and-Control.pdf">Marine Corps Doctrinal Publication 6 - Command and Control</a> (MCDP 6) on page 137:</p>
 <blockquote>
-<p>The reality of technological development is that equipment which improves the ability to monitor what is happening may also increase the temptation and the means to try to direct what is happening. Consequently, increased capability on the part of equipment brings with it the need for increased understanding and discipline on the part of users. Just because our technology allows us to micromanage does not mean that we should.</p></blockquote>
+<p>The reality of technological development is that equipment which improves the ability to monitor what is happening may also increase the temptation and the means to try to direct what is happening. Consequently, increased capability on the part of equipment brings with it the need for increased understanding and discipline on the part of users. Just because our technology allows us to micromanage does not mean that we should.</p>
+</blockquote>
 
 <h1 id="six-principles-of-mission-command" class="anchor-link"><a href="#six-principles-of-mission-command">Six principles of Mission Command</a></h1>
 <p>The US Army sets out six principles of Mission Command in their doctrine:</p>
@@ -3189,7 +3209,8 @@ Image address: <code>https://adamdrake.com/static/images/adam_drake.jpg</code></
 <p>Much of leadership is not about reaching an objective with the perfect path, but rather making continuous progress towards the objective.  This continuous progress, over long time horizons, is more effective than trying to do everything perfectly along the way.  In more technical terms, leadership is about <em>global</em> optimizations and not <em>local</em> optimizations.  As a leader, it&rsquo;s your duty to make sure you have enough strategic perspective, and enough control over your own ego, to determine when someone else&rsquo;s solution is a better move for <em>global</em> optimization.</p>
 <blockquote>
 <p>A good solution applied with vigor now is better than a perfect solution applied ten minutes later.
--General George S. Patton Junior</p></blockquote>
+-General George S. Patton Junior</p>
+</blockquote>
 <p>Live by this quote.  Just because your solution may seem like the 100% solution doesn&rsquo;t mean the 85% solution won&rsquo;t actually be better for the team and the business.  Consider how much more committed someone will be if they are actually working on, and responsible for, implementing their own solution.  It&rsquo;s a lot more likely someone will fight to get their solution implemented on time and on target since they have a sense of ownership.  If you tell them to implement your solution, then at best they&rsquo;re just doing what they&rsquo;re told, and that&rsquo;s not a way to consistently lead people.  You&rsquo;ll just end up being another founder/micro-manager who can&rsquo;t scale a growth-stage company and is eventually fired by the Board of Directors.</p>
 <p>If someone else&rsquo;s 85% solution will achieve progress now, if that solution will help you to win, then what&rsquo;s the point in arguing for the implementation of your solution over a colleague&rsquo;s?  At that point, you&rsquo;re only feeding your own ego and you should ask yourself the important question.</p>
 <p>Am I here to be right, or am I here to win?</p>
@@ -3288,7 +3309,8 @@ Image address: <code>https://adamdrake.com/static/images/adam_drake.jpg</code></
 <p>To the second point, some textbooks will mention that for ARIMA models you need <em>at least</em> 50 to 60 data points to start doing accurate forecasts.  In reality, any time series can be modeled, it&rsquo;s just a matter of signal to noise ratio and whether or not the forecast variance is acceptable.  If I tell you that your revenue for next year should be either down 80% or up 400%, that might not be useful, but it is still a valid model.</p>
 <blockquote>
 <p>All models are wrong but some are useful.</p>
-<p>&ndash; George Box</p></blockquote>
+<p>&ndash; George Box</p>
+</blockquote>
 <p>It&rsquo;s also important to note that a forecast is a guideline for the operation of the business.  Until our AI overlords take over, humans still have the most complete context and should serve as the sanity check for any forecasts.  Just because a computer says you might have a 200% revenue increase next year, doesn&rsquo;t mean it is correct.</p>
 
 <h1 id="top-down-versus-bottom-up" class="anchor-link"><a href="#top-down-versus-bottom-up">Top-down versus bottom-up</a></h1>
@@ -3309,7 +3331,8 @@ Image address: <code>https://adamdrake.com/static/images/adam_drake.jpg</code></
 <p>This is not to say that plans should not be made.  In fact, quite the opposite.  Plans should be drawn up and contingency plans made as well.  General Eisenhower said it best.</p>
 <blockquote>
 <p>Plans are nothing; planning is everything.</p>
-<p>&ndash; General Dwight D. Eisenhower</p></blockquote>
+<p>&ndash; General Dwight D. Eisenhower</p>
+</blockquote>
 <p>So yes, make plans, but <strong>do not expect everything to go as planned</strong>.  Additionally, if you require your people to make a forecast or budget, and they will be penalized for not meeting the forecast, then they will always try to play things safe and intentionally provide low numbers and behave conservatively.  They will focus on avoiding risks instead of pursuing rewards.  In some businesses conservative behavior might be desired, though hopefully not encouraged via arcane budgeting exercises, while in others there is an insatiable craving for innovation.  If you want innovation, you can&rsquo;t require someone to build a business case with 5 years of forecasts for something that doesn&rsquo;t even exist yet.  If those numbers are ever achieved then it will be purely by chance.</p>
 <p>The better strategy is to create an organization which can adapt to the changes it encounters and which is robust to changes in market conditions, revenue, and other factors.  There are simply some things which cannot be predicted to a satisfactory level of certainty.  If you are including the variance along with your forecasts, as you should be, then it may be the case that the variance is too high for the forecasts to be useful.  At that point you must either confront the truth that the future is less certain than you want it to be, and plan accordingly, or you can live in denial and instead treat forecasts like concrete predictions of the future.</p>
 ]]></content></entry><entry><title type="html">Leadership and Communication</title><link href="https://adamdrake.com/leadership-and-communication.html"/><id>https://adamdrake.com/leadership-and-communication.html</id><author><name>Adam Drake</name></author><published>2017-01-19T00:00:00+00:00</published><updated>2017-01-19T00:00:00+00:00</updated><content type="html"><![CDATA[<p>Good leadership is hard to quantify, especially when considering intrinsic qualities like humility (which I argue is the most important quality of all).  However, there are external skills which can separate effective and ineffective leaders, and communication is arguably the most fundamental of those externally-visible skills.</p>
@@ -3324,25 +3347,30 @@ Image address: <code>https://adamdrake.com/static/images/adam_drake.jpg</code></
 <p>General George S. Patton Jr. was one of the most well-known commanders of World War II, and as Commanding General of the Third Army, he was responsible for hundreds of thousands of people in his organization.  He was well-versed in the need for clear and easily understandable communication to his subordinate leadership.  Here are some examples from his <strong>Letter of Instruction 1</strong> dated 6 March 1944 and sent to what would in businesses terms be called his middle management.</p>
 <p>When discussing visits by officers to other levels of the organization:</p>
 <blockquote>
-<p>The function of these staff officers is to observe, not to meddle. In addition to their own specialty, they must observe and report anything of military importance. Remember, too, that your primary mission as a leader is to see with your own eyes and to be seen by the troops while engaged in personal reconnaissance.</p></blockquote>
+<p>The function of these staff officers is to observe, not to meddle. In addition to their own specialty, they must observe and report anything of military importance. Remember, too, that your primary mission as a leader is to see with your own eyes and to be seen by the troops while engaged in personal reconnaissance.</p>
+</blockquote>
 <p>When discussing rest and rotations:</p>
 <blockquote>
-<p>Staff personnel, commissioned and enlisted, who do not rest, do not last. All sections must run a duty roster and enforce compliance. The intensity of staff operations during battle is periodic. At the Army and Corps levels the busiest times are the periods from one to three hours after daylight, and from three to five hours after dark. In the lower echelons and in the administrative and supply staffs, the time of the periods is different but just as definite. When the need arises, everyone must work all the time, but these emergencies are not frequent; &ldquo;unfatigued men last longer and work better at high pressure.&rdquo;</p></blockquote>
+<p>Staff personnel, commissioned and enlisted, who do not rest, do not last. All sections must run a duty roster and enforce compliance. The intensity of staff operations during battle is periodic. At the Army and Corps levels the busiest times are the periods from one to three hours after daylight, and from three to five hours after dark. In the lower echelons and in the administrative and supply staffs, the time of the periods is different but just as definite. When the need arises, everyone must work all the time, but these emergencies are not frequent; &ldquo;unfatigued men last longer and work better at high pressure.&rdquo;</p>
+</blockquote>
 <p>That is a very clear communication of Patton&rsquo;s expectations for his subordinate leadership.  If you were part of his organization, there would be no question as to whether or not you should make sure your people have proper rest and to what extent they should be worked.</p>
 <p>You could do a bit of rewording and the same guidance would equally apply to many tech companies.  How many expect entire tech teams or engineering departments to be on-call at all times?  How many have no on-call rotation or roster to speak of?</p>
 <p>On planning:</p>
 <blockquote>
-<p>Plans must be simple and flexible. Actually they only form a datum plane from which you build as necessity directs or opportunity offers. They should be made by the people who are going to execute them.</p></blockquote>
+<p>Plans must be simple and flexible. Actually they only form a datum plane from which you build as necessity directs or opportunity offers. They should be made by the people who are going to execute them.</p>
+</blockquote>
 <p>This is clear and easy to understand.  Every subordinate leader who received the letter would know that they should not be making detailed plans.  The people who execute the plan should make the plan, and it is the job of the leader to provide the context and constraints for the plan.  Which leads to the topic of orders.</p>
 <blockquote>
-<p>Formal orders will be preceded by letters of instruction and by personal conferences. In this way the whole purpose of the operation will be made clear, together with the mission to be accomplished by each major unit. In this way, if communication breaks down during combat, each commander can and must so act as to attain the general objective. The order itself will be short, accompanied by a sketch &ndash; it tells WHAT to do, not HOW. It is really a memorandum and an assumption of responsibility by the issuing commander.</p></blockquote>
+<p>Formal orders will be preceded by letters of instruction and by personal conferences. In this way the whole purpose of the operation will be made clear, together with the mission to be accomplished by each major unit. In this way, if communication breaks down during combat, each commander can and must so act as to attain the general objective. The order itself will be short, accompanied by a sketch &ndash; it tells WHAT to do, not HOW. It is really a memorandum and an assumption of responsibility by the issuing commander.</p>
+</blockquote>
 <p>In other words, people should have a good understanding of the overall situation and context before any direction is given, and even then, the order should be short and should only describe <strong>WHAT</strong> needs to be done, but not <strong>HOW</strong> it should be done.  Leaders provide the what, and the team doing the work provides options for the how.</p>
 <p>Perhaps the most succinct guidance is contained in section 7, the final one of the letter.</p>
 <blockquote>
 <ol start="7">
 <li>COURAGE</li>
 </ol>
-<p>DO NOT TAKE COUNSEL OF YOUR FEARS.</p></blockquote>
+<p>DO NOT TAKE COUNSEL OF YOUR FEARS.</p>
+</blockquote>
 
 <h1 id="where-to-start" class="anchor-link"><a href="#where-to-start">Where to start</a></h1>
 <p>So we have some examples of a leader, who is responsible for a massive organization of around 250,000 people, and how they communicated their vision to their subordinate leadership.  How can you translate this into your organization and what are some ways you can determine whether or not the communication is clear enough?</p>
@@ -3359,7 +3387,8 @@ Image address: <code>https://adamdrake.com/static/images/adam_drake.jpg</code></
 <blockquote>
 <p>Each new term in the Fibonacci sequence is generated by adding the previous two terms. By starting with 1 and 2, the first 10 terms will be:</p>
 <p>1, 2, 3, 5, 8, 13, 21, 34, 55, 89, &hellip;</p>
-<p>By considering the terms in the Fibonacci sequence whose values do not exceed four million, find the sum of the even-valued terms.</p></blockquote>
+<p>By considering the terms in the Fibonacci sequence whose values do not exceed four million, find the sum of the even-valued terms.</p>
+</blockquote>
 <p>Classic Fibonacci problem, with a slight twist due to the summation on top.  Spoiler alert: a simple loop is fastest.  Keep reading to see why.</p>
 
 <h1 id="first-attempt-recursion" class="anchor-link"><a href="#first-attempt-recursion">First Attempt: Recursion</a></h1>
@@ -3631,7 +3660,8 @@ BenchmarkSumEvenFibsApprox-4             1000000              1766 ns/op
 <h1 id="overview" class="anchor-link"><a href="#overview">Overview</a></h1>
 <p>The problem is short and easy to understand:</p>
 <blockquote>
-<p>If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.  Find the sum of all the multiples of 3 or 5 below 1000.</p></blockquote>
+<p>If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.  Find the sum of all the multiples of 3 or 5 below 1000.</p>
+</blockquote>
 <p>A simple brute-force approach to this is simply to iterate through all of the numbers from 1 to 999 (since we are only to check numbers below 1000), check if the number is divisible by 3 or 5, and sum the ones which are.</p>
 <p>If you want the Python one-liner:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>sum([x <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1000</span>) <span style="color:#66d9ef">if</span> ((x <span style="color:#f92672">%</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) <span style="color:#f92672">or</span> (x <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>))])
@@ -3757,7 +3787,8 @@ BenchmarkSumEvenFibsApprox-4             1000000              1766 ns/op
 <p>The data is in <em>Defense Casualty Analysis System</em> (DCAS) format, and includes all the service members who have died from 1950 through 2005, with another file containing deaths for 2006.  The files are pipe-delimited and the fields are pretty well documented in the <a href="https://catalog.archives.gov/OpaAPI/media/4734832/content/arcmedia/electronic-records/rg-330/DCAS/DCAS_DOC_PDF.pdf">associated PDF</a>.</p>
 <p>They are also very clear on the contents of the file(s):</p>
 <blockquote>
-<p>This file contains the records of U.S. military personnel casualties for deaths between the years 1950 and 2005, and two records of deaths related to Vietnam that occurred in 2006. The casualties occurred worldwide and resulted from both hostile and non-hostile action. The war or conflict for each casualty is identified as occurring during the Korean War, Vietnam War, Gulf War, War on Terrorism, or Peacetime. Because of the broad nature of the category of Peacetime, several fields further describe those casualties in terms of location, circumstances, category, and reason. Each record includes such information as: the service member&rsquo;s name, service number, service branch, rank, pay grade, occupation, birth date, gender, home of record (city, county, state or province, country), marital status, religion, race, ethnicity, casualty circumstances, casualty location (city, state or province, country or over water), unit, duty, process date, death date, war or conflict, operation incident type, aircraft type, hostile or non-hostile death indicator, casualty type, and casualty category. Since this is the public use version of the file, the service number field is masked.</p></blockquote>
+<p>This file contains the records of U.S. military personnel casualties for deaths between the years 1950 and 2005, and two records of deaths related to Vietnam that occurred in 2006. The casualties occurred worldwide and resulted from both hostile and non-hostile action. The war or conflict for each casualty is identified as occurring during the Korean War, Vietnam War, Gulf War, War on Terrorism, or Peacetime. Because of the broad nature of the category of Peacetime, several fields further describe those casualties in terms of location, circumstances, category, and reason. Each record includes such information as: the service member&rsquo;s name, service number, service branch, rank, pay grade, occupation, birth date, gender, home of record (city, county, state or province, country), marital status, religion, race, ethnicity, casualty circumstances, casualty location (city, state or province, country or over water), unit, duty, process date, death date, war or conflict, operation incident type, aircraft type, hostile or non-hostile death indicator, casualty type, and casualty category. Since this is the public use version of the file, the service number field is masked.</p>
+</blockquote>
 
 <h1 id="clean-and-transform-data" class="anchor-link"><a href="#clean-and-transform-data">Clean and transform data</a></h1>
 <p>There were some records with errors in the file, as is nearly always the case, so after taking only the records listed as <code>KILLED IN ACTION</code> I further filtered out the ones where the date of death wasn&rsquo;t 8 characters long since the file represents death date as an 8 character string in <code>yyyymmdd</code> format.</p>
@@ -4243,7 +4274,8 @@ them.  Don&rsquo;t forget that.</p>
 <p>When building your product for triggers, the ultimate goal of the habit-forming product is to ease the user&rsquo;s pain by creating an association so the user identifies the product with removing the pain.</p>
 <blockquote>
 <p>&ldquo;We often think the internet enables you to do new things&hellip;But people just want to do the same things they&rsquo;ve always done.&rdquo;
-&ndash; Evan Williams</p></blockquote>
+&ndash; Evan Williams</p>
+</blockquote>
 <p>Declared preferences are what users say they want.</p>
 <p>Revealed preferences are what users actually want.</p>
 <p>Instagram photos you see in Facebook are a relationship external trigger.</p>
@@ -4317,7 +4349,8 @@ them.  Don&rsquo;t forget that.</p>
 </ul>
 <blockquote>
 <p>Take a human desire, preferably one that has been around for a really long time&hellip;Identify that desire and use modern technology to take out steps.
-&ndash; Evan Williams (co-founder of Twitter and Blogger)</p></blockquote>
+&ndash; Evan Williams (co-founder of Twitter and Blogger)</p>
+</blockquote>
 <p>Fogg Six Elements of Simplicity:</p>
 <ul>
 <li>
@@ -4475,12 +4508,14 @@ them.  Don&rsquo;t forget that.</p>
 <p>Adding to this model only one new feature <code>PositionFactor</code> from my teammate Alexander. It gave the incredible increments and the model scored ~ 0.0418 on Public LB.</p>
 <p><code>PositionFactor = hash( [Position 1_place:ObjectType 2_place:ObjectType 6_place:ObjectType 7_place:ObjectType 8_place:ObjectType])</code> , where <code>Position</code> is the position of the given context ad in search result page. <code>k_place:ObjectType</code> is the position and type others ads in search result page (if there are data about them).</p>
 <p>Alexander&rsquo;s models vw+xgb and vw+rf give him ~ 0.0424 on Public LB</p>
-<p>After tuning hyperparameters and finding the weights for linear combination of our solutions we achieved 0.04137 on Public LB.</p></blockquote>
+<p>After tuning hyperparameters and finding the weights for linear combination of our solutions we achieved 0.04137 on Public LB.</p>
+</blockquote>
 
 <h1 id="from-a-5th-place-finisher" class="anchor-link"><a href="#from-a-5th-place-finisher">From a 5th place finisher</a></h1>
 <p>Gilberto Titericz Junior was 5th place and used this method as described by Dmitry Efimov:</p>
 <blockquote>
-<p>I used something similar in the Avazu contest, if you are interested, you can check my presentation <em>(link no longer available)</em> about the solution (there are some slides about Batch FTRL). The principle is to sort combined dataset (train and test) by some fields and apply the FTRL algorithm. Then it will work in the following way: the algorithm is trained on the first batch from the train set and make prediction on the first batch from the test set. Then it starts training on the second batch from the train set starting from coefficients from the first batch and so on.</p></blockquote>
+<p>I used something similar in the Avazu contest, if you are interested, you can check my presentation <em>(link no longer available)</em> about the solution (there are some slides about Batch FTRL). The principle is to sort combined dataset (train and test) by some fields and apply the FTRL algorithm. Then it will work in the following way: the algorithm is trained on the first batch from the train set and make prediction on the first batch from the test set. Then it starts training on the second batch from the train set starting from coefficients from the first batch and so on.</p>
+</blockquote>
 
 <h1 id="conclusion" class="anchor-link"><a href="#conclusion">Conclusion</a></h1>
 <p>This was an interesting and fun competition, and a good proving ground for new ideas and approaches.  I wrote up an implementation in Go which I may package as a library and put on GitHub at some point.  Until then, here is a forked gist from <a href="https://github.com/ceshine">ceshine</a> of the implementation from another competition:</p>
@@ -4497,7 +4532,8 @@ them.  Don&rsquo;t forget that.</p>
 <h1 id="culture" class="anchor-link"><a href="#culture">Culture</a></h1>
 <p>The main point of the talk is that no matter the data maturity of the organization, and no matter what kind of data strategy you have developed, the culture surrounding data (and the company culture more broadly) will be the deciding factor in whether or not the organization continues to progress in the usage of data.  To use the phrase often attributed to Peter Drucker:</p>
 <blockquote>
-<p><strong>&hellip;culture eats strategy for breakfast</strong></p></blockquote>
+<p><strong>&hellip;culture eats strategy for breakfast</strong></p>
+</blockquote>
 <p>Consider what this means for your organization.  Does it have the right culture?  If not, your data strategy probably isn&rsquo;t worth much.</p>
 
 <h1 id="defend-forecasts-against-actuals" class="anchor-link"><a href="#defend-forecasts-against-actuals">Defend forecasts against actuals</a></h1>
@@ -4656,7 +4692,8 @@ them.  Don&rsquo;t forget that.</p>
 <p>When we talk about message schemas we are in a different context than a schema for a database table.  The reason being that for applications that want to communicate with the database, each one must implement the schema (this part is the same) but in the case of databases there is often no simple ways to extend or modify the schema without disruption for clients.  You could argue that views achieve this, but we are talking about the situation where the underlying table structure needs to change.</p>
 <p>The interruptions to clients can be significant, but are often things like downtime of the database, or slowness due to changing fields in a table with lots of data, or other things.  For example, consider the way that Percona, a high-performance and high-availability version of MySQL, addresses the problem of adding columns to tables (i.e., changing the schema) with the <a href="https://www.percona.com/doc/percona-toolkit/2.1/pt-online-schema-change.html">pt-online-schema-change</a> tool:</p>
 <blockquote>
-<p>pt-online-schema-change works by creating an empty copy of the table to alter, modifying it as desired, and then copying rows from the original table into the new table. When the copy is complete, it moves away the original table and replaces it with the new one. By default, it also drops the original table.</p></blockquote>
+<p>pt-online-schema-change works by creating an empty copy of the table to alter, modifying it as desired, and then copying rows from the original table into the new table. When the copy is complete, it moves away the original table and replaces it with the new one. By default, it also drops the original table.</p>
+</blockquote>
 <p>There are additional concerns when the table you want to change contains foreign keys, but that&rsquo;s even more operationally complex.  These difficulties with database schemas can be avoided in message schemas implemented with Protocol Buffers, Avro, and other message serialization formats.  The reason for this is that with Protocol Buffers for example, when best practices are followed a producer can extend the schema with additional optional fields at any time, with no impact on the downstream consumers whatsoever.  This is a huge difference, because adding a column to a database table can be a potentially dangerous process by comparison.</p>
 
 <h1 id="schemas-and-distributed-systems" class="anchor-link"><a href="#schemas-and-distributed-systems">Schemas and distributed systems</a></h1>
@@ -4675,7 +4712,8 @@ them.  Don&rsquo;t forget that.</p>
 <h1 id="introduction" class="anchor-link"><a href="#introduction">Introduction</a></h1>
 <p>For those who have read or seen much science fiction, you have probably encountered the <a href="https://en.wikipedia.org/wiki/Kardashev_scale">Kardashev Scale</a> at some point.  This is a general grouping of how advanced a civilization is based on the ways it utilizes energy.  At the risk of reiterating what&rsquo;s already on Wikipedia:</p>
 <blockquote>
-<p>The Kardashev scale is a method of measuring a civilization&rsquo;s level of technological advancement, based on the amount of energy a civilization is able to utilize. The scale has three designated categories called Type I, II, and III. A Type I civilization uses all available resources impinging on its home planet, Type II harnesses all the energy of its star, and Type III of its galaxy.</p></blockquote>
+<p>The Kardashev scale is a method of measuring a civilization&rsquo;s level of technological advancement, based on the amount of energy a civilization is able to utilize. The scale has three designated categories called Type I, II, and III. A Type I civilization uses all available resources impinging on its home planet, Type II harnesses all the energy of its star, and Type III of its galaxy.</p>
+</blockquote>
 <p>This classification may be interesting for civilizations, but it can also be applied to companies and how they use data.  Below I provide a general outline of what such a scale could look like, based on my experiences.</p>
 
 <h1 id="type-1" class="anchor-link"><a href="#type-1">Type 1</a></h1>
@@ -4736,10 +4774,12 @@ them.  Don&rsquo;t forget that.</p>
 <p>One thing that is noted repeatedly in <em>The Goal</em> but doesn&rsquo;t receive enough attention is the problem of what is being measured and why.  Specifically, the problem of performance being measured against metrics that are not relevant to the business.  In the book, this takes the shape of people being measured against efficiency metrics for particular components instead of overall revenue metrics for the business, and therefore possibly being penalized for what appears on paper to be a decrease in efficiency but regardless results in an increase in sales.  This kind of dissonance is something I have personally encountered many times in my career, usually in the context of a supervisory board or board of directors that enforces goals or metrics for executives which are totally detached from the success of the business.</p>
 <p>A recent article in <a href="https://hbr.org/2015/01/where-boards-fall-short">Harvard Business Review</a> entitled <em>Where Boards Fall Short</em> specifically addresses the topic of board members not understanding the business and therefore giving direction and applying pressure to executives to achieve short-term financial goals instead of long-term business success.</p>
 <blockquote>
-<p>A mere 34% of the 772 directors surveyed by McKinsey in 2013 agreed that the boards on which they served fully comprehended their companies’ strategies. Only 22% said their boards were completely aware of how their firms created value, and just 16% claimed that their boards had a strong understanding of the dynamics of their firms’ industries.</p></blockquote>
+<p>A mere 34% of the 772 directors surveyed by McKinsey in 2013 agreed that the boards on which they served fully comprehended their companies’ strategies. Only 22% said their boards were completely aware of how their firms created value, and just 16% claimed that their boards had a strong understanding of the dynamics of their firms’ industries.</p>
+</blockquote>
 <p>It&rsquo;s bad enough of course if your board doesn&rsquo;t understand how the company&rsquo;s industry works, but it&rsquo;s worse when that lack of understanding is translated into an emphasis on simple short-term financial metrics.</p>
 <blockquote>
-<p>More recently, in March 2014, McKinsey and the Canada Pension Plan Investment Board (CPPIB) asked 604 C-suite executives and directors around the world which source of pressure was most responsible for their organizations’ overemphasis on short-term financial results and underemphasis on long-term value creation. The most frequent response, cited by 47% of those surveyed, was the company’s board.</p></blockquote>
+<p>More recently, in March 2014, McKinsey and the Canada Pension Plan Investment Board (CPPIB) asked 604 C-suite executives and directors around the world which source of pressure was most responsible for their organizations’ overemphasis on short-term financial results and underemphasis on long-term value creation. The most frequent response, cited by 47% of those surveyed, was the company’s board.</p>
+</blockquote>
 <p>As a data professional, a big part of the job is helping companies and boards to understand business dynamics, how to collect data on those dynamics, and what kinds of incentives make sense in order to encourage the kind of growth the company needs.  If senior executives or boards are focused on irrelevant metrics, or do not have an understanding of the business and therefore focus on only financial metrics, then everything else is put to the side to the detriment of long-term business success.  Measurement and how people are incentivized is a topic for another post, and definitely could have received more emphasis in <em>The Goal</em>.  After all, it doesn&rsquo;t matter if you improve the right things only for management to fire you because they don&rsquo;t understand the business anyway.</p>
 
 <h3 id="summary" class="anchor-link"><a href="#summary">Summary</a></h3>
@@ -4875,7 +4915,8 @@ them.  Don&rsquo;t forget that.</p>
 <p>Be a tour guide, not a travel agent.</p>
 <p>Leaders here gain credibility from their teams by fleshing out and modeling for the people around them the things that they want to see and need to produce.  By these acts they start to attract people who want to produce like they do.</p>
 <blockquote>
-<p>We attract who we are, not what we want.</p></blockquote>
+<p>We attract who we are, not what we want.</p>
+</blockquote>
 <p>At this level, who you are as a leader is who you attract on your team.  Much problem solving is taken care of here.</p>
 <p>Managers try to solve problems, but leaders try to create momentum.  Leaders know you can solve 80% of problems with momentum.  A train traveling at 100kph will smash through a 2m thick concrete block with ease, but if you put a 2cm block in front of the wheels when it&rsquo;s stopped it won&rsquo;t even be able to get moving (or will have a hard time doing so).</p>
 
@@ -4947,10 +4988,12 @@ them.  Don&rsquo;t forget that.</p>
 <h3 id="chapter-2" class="anchor-link"><a href="#chapter-2">Chapter 2</a></h3>
 <blockquote>
 <p>Insurgents start with nothing but a cause and grow to strength, while counter-insurgents start with everything but a cause and gradually decline in strength and grow to weakness.
-&ndash; Frank Kitson, <strong>Low Intensity Operations: Subversion, Intensity, and Peacekeeping</strong>, pg. 29</p></blockquote>
+&ndash; Frank Kitson, <strong>Low Intensity Operations: Subversion, Intensity, and Peacekeeping</strong>, pg. 29</p>
+</blockquote>
 <blockquote>
 <p>The printing press is the greatest weapon in the armory of the modern commander.
-&ndash; T.E. Lawrence</p></blockquote>
+&ndash; T.E. Lawrence</p>
+</blockquote>
 
 <h3 id="chapter-5" class="anchor-link"><a href="#chapter-5">Chapter 5</a></h3>
 <p>(page 90)
@@ -4979,19 +5022,22 @@ The methodology of General Sir Gerald Templar as described by John Cloake:</p>
 <h3 id="chapter-6" class="anchor-link"><a href="#chapter-6">Chapter 6</a></h3>
 <p>The old guard in the Army didn&rsquo;t care at all about the successes of the CIA and the US Army Special Forces with arming and training villages (see example of Buon Enao).  Instead, they were very dismissive of the capabilities of these kinds of soldiers.  The quote from General Harold K. Johnson in his <em>Senior Officer Oral History Project</em> debriefing is particularly telling, and sounds like every successful Data Science or Engineering team I&rsquo;ve ever led (page 128).</p>
 <blockquote>
-<p>Well, the Special Forces that were available at the time President Kennedy latched on to them as a new gimmick, were what I would describe as consisting primarily of fugitives from responsibility.  These were people that somehow or other tended to be nonconformist, couldn&rsquo;t quite get along in a straight military system, and found a haven where their actions were not scrutinized too carefully, and where they came under only sporadic or intermittent observation from the regular chain of command. . . . Perhaps there is a desirability for this highly specialized effort, but I continue to really question it as such.</p></blockquote>
+<p>Well, the Special Forces that were available at the time President Kennedy latched on to them as a new gimmick, were what I would describe as consisting primarily of fugitives from responsibility.  These were people that somehow or other tended to be nonconformist, couldn&rsquo;t quite get along in a straight military system, and found a haven where their actions were not scrutinized too carefully, and where they came under only sporadic or intermittent observation from the regular chain of command. . . . Perhaps there is a desirability for this highly specialized effort, but I continue to really question it as such.</p>
+</blockquote>
 
 <h3 id="chapter-7" class="anchor-link"><a href="#chapter-7">Chapter 7</a></h3>
 <p>(page 158)
 Regarding the ability of the Regional Forces/Popular Forces to become capable and take over operations:</p>
 <blockquote>
 <p>The Vietnamese like being part of an organization which cares, and they respond well and bravely . . . There are sufficient men who will fight if they know the system is competent and cares
-&ndash; Lewy, <strong>American in Vietnam</strong>, 117</p></blockquote>
+&ndash; Lewy, <strong>American in Vietnam</strong>, 117</p>
+</blockquote>
 <p>In other words, local groups who may seem incapable will be motivated to do their best and work against all odds if they believe and trust that the organization of which they are a part knows what it&rsquo;s doing and cares about their well-being.  As soon as an organization loses this trust from its people, there is little hope.</p>
 <p>(page 162)
 From a memo from Robert McNamara to President Johnson on 14 October 1966, indicating his growing doubts about any military solution in Vietnam:</p>
 <blockquote>
-<p>The large-unit operations war, which we know best how to fight and where we have had our successes, is largely irrelevant to pacification as long as we do not lose it . . . Success in pacification depends on the interrelated functions of providing physical security, destroying the VC apparatus, motivating the people to cooperate, and establishing responsive local government.  An obviously necessary but not sufficient requirement for success of the RD (ed. <em>Rural Development</em>) cadre and police is vigorously conducted and adequately prolonged clearing operations by military troops who will <em>stay</em> in the area, who behave themselves decently, and who show respect for the people.</p></blockquote>
+<p>The large-unit operations war, which we know best how to fight and where we have had our successes, is largely irrelevant to pacification as long as we do not lose it . . . Success in pacification depends on the interrelated functions of providing physical security, destroying the VC apparatus, motivating the people to cooperate, and establishing responsive local government.  An obviously necessary but not sufficient requirement for success of the RD (ed. <em>Rural Development</em>) cadre and police is vigorously conducted and adequately prolonged clearing operations by military troops who will <em>stay</em> in the area, who behave themselves decently, and who show respect for the people.</p>
+</blockquote>
 <p>If you don&rsquo;t have a group of middle-management on the ground, willing to fight for the people on the ground, and willing to continue to do so, all hope is lost.  However, it is stated in the book that the Joint Chiefs of Staff profoundly disagreed and instead favored an increase in the bombing of North Vietnam and further commitment of US troops.  This again demonstrates the lack of capability and micro-management inherent in organizations where the high-level directors believe they have more or superior knowledge to those who are actually doing the work.</p>
 
 <h3 id="chapter-9" class="anchor-link"><a href="#chapter-9">Chapter 9</a></h3>
@@ -5037,10 +5083,12 @@ From a memo from Robert McNamara to President Johnson on 14 October 1966, indica
 <h3 id="part-4" class="anchor-link"><a href="#part-4">Part 4</a></h3>
 <p>It&rsquo;s not reality unless it&rsquo;s shared</p>
 <blockquote>
-<p>How would large organizations such as the military organize if they didn&rsquo;t know how they were supposed to be organized? (page 217)</p></blockquote>
+<p>How would large organizations such as the military organize if they didn&rsquo;t know how they were supposed to be organized? (page 217)</p>
+</blockquote>
 <p>In companies, why are salespeople not inside of the engineering teams that are building the products which they are selling?  Why is it necessary to rely on multiple levels of indirection (product owners, product marketing, etc.) which only make the salespeople less informed and likely diminish their chances of success in selling the product?  To properly sell a product you must believe in it and you must know it through and through.  Every level of abstraction between the engineering team and the sales person or account manager actually talking to the client means the salesperson understands the product less and has less of a say in what gets built.  Put sales and account managers into engineering teams, experiment with the idea of getting rid of product owners but keep a scrum master or other administrator in the team.  Since it is often senior engineers that do most of the requirements analysis and also participate in stakeholder management, this could be more efficient.</p>
 <blockquote>
-<p>The Chinese symbol for crisis is &lsquo;danger-opportunity&rsquo;, which roughly translates to &lsquo;without the danger the cannot arise the opportunity.&rsquo;&quot; (page 266)</p></blockquote>
+<p>The Chinese symbol for crisis is &lsquo;danger-opportunity&rsquo;, which roughly translates to &lsquo;without the danger the cannot arise the opportunity.&rsquo;&quot; (page 266)</p>
+</blockquote>
 <p>I was skeptical about this one, and a quick search shows that <a href="https://en.wikipedia.org/wiki/Chinese_word_for_%22crisis%22">Wikipedia</a> indicates that danger-opportunity is not necessarily correct.</p>
 ]]></content></entry><entry><title type="html">CSAP - Collect, Store, Analyze, Productize</title><link href="https://adamdrake.com/csap-collect-store-analyze-productize.html"/><id>https://adamdrake.com/csap-collect-store-analyze-productize.html</id><author><name>Adam Drake</name></author><published>2014-01-25T00:00:00+00:00</published><updated>2014-01-25T00:00:00+00:00</updated><content type="html"><![CDATA[
 <h3 id="introduction" class="anchor-link"><a href="#introduction">Introduction</a></h3>
@@ -5128,7 +5176,8 @@ Does the technology architecture support independent data products that can be w
 <p>As I was browsing the web and catching up on some sites I visit periodically, I found a cool article from <a href="https://tomhayden3.com/2013/12/27/chess-mr-job/">Tom Hayden</a> about using <a href="https://aws.amazon.com/elasticmapreduce/">Amazon Elastic Map Reduce</a> (EMR) and <a href="https://github.com/Yelp/mrjob">mrjob</a> in order to compute some statistics on win/loss ratios for chess games he downloaded from the <a href="https://www.top-5000.nl/pgn.htm">millionbase archive</a>, and generally have fun with EMR.  Since the data volume was only about 1.75GB containing around 2 million chess games, I was skeptical of using Hadoop for the task, but I can understand his goal of learning and having fun with mrjob and EMR.  Since the problem is basically just to look at the result lines of each file and aggregate the different results, it seems ideally suited to stream processing with shell commands.  I tried this out, and for the same amount of data I was able to use my laptop to get the results in about 12 seconds (processing speed of about 270MB/sec), while the Hadoop processing took about 26 minutes (processing speed of about 1.14MB/sec).</p>
 <p>After reporting that the time required to process the data with 7 c1.medium machine in the cluster took 26 minutes, Tom remarks</p>
 <blockquote>
-<p>This is probably better than it would take to run serially on my machine but probably not as good as if I did some kind of clever multi-threaded application locally.</p></blockquote>
+<p>This is probably better than it would take to run serially on my machine but probably not as good as if I did some kind of clever multi-threaded application locally.</p>
+</blockquote>
 <p>This is absolutely correct, although even serial processing may beat 26 minutes.  Although Tom was doing the project for fun, often people use Hadoop and other so-called <em>Big Data (tm)</em> tools for real-world processing and analysis jobs that can be done faster with simpler tools and different techniques.</p>
 <p>One especially under-used approach for data processing is using standard shell tools and commands.  The benefits of this approach can be massive, since creating a data pipeline out of shell commands means that all the processing steps can be done in parallel.  This is basically like having your own <a href="https://storm-project.net/">Storm</a> cluster on your local machine.  Even the concepts of Spouts, Bolts, and Sinks transfer to shell pipes and the commands between them.  You can pretty easily construct a stream processing pipeline with basic commands that will have extremely good performance compared to many modern <em>Big Data (tm)</em> tools.</p>
 <p>An additional point is the batch versus streaming analysis approach.  Tom mentions in the beginning of the piece that after loading 10000 games and doing the analysis locally, that he gets a bit short on memory.  This is because all game data is loaded into RAM for the analysis.  However, considering the problem for a bit, it can be easily solved with streaming analysis that requires basically no memory at all.  The resulting stream processing pipeline we will create will be over 235 times faster than the Hadoop implementation and use virtually no memory.</p>
@@ -5198,7 +5247,8 @@ their bid. The dynamics of this type of marketplace would become
 much more straightforward and predictable, enabling more parties to
 participate and experience stable results, as well as manage their
 businesses to a of set expectations that won&rsquo;t require constant
-revision.</p></blockquote>
+revision.</p>
+</blockquote>
 <p>Then Jonathan Wolf, Chief Buying Officer for <a href="https://criteo.com">Criteo</a>, <a href="https://www.adexchanger.com/the-sell-sider/incentivizing-low-bidding/">wrote a
 response</a> that disputed the claims made by Esco Strong:</p>
 <blockquote>
@@ -5206,7 +5256,8 @@ response</a> that disputed the claims made by Esco Strong:</p>
 argued, I strongly disagree with it. As I see it, there are two
 options in building a long-term business: by pricing transparently,
 or by taking unfair advantage of your customers. Only the first
-seems sustainable to me.</p></blockquote>
+seems sustainable to me.</p>
+</blockquote>
 <p>He then went on to touch on some topics relating to first and second
 price auction mechanisms with some input from the Business Intelligence
 group at Criteo. The problem with Esco Strong&rsquo;s original article is that
@@ -5367,7 +5418,8 @@ be rewarded with loyalty.</p>
 <p>From the event overview page:</p>
 <blockquote>
 <p>Join us as an experienced lineup of AI experts share their stories from the field, cut through the AI fog and help you build a strategy to optimize your investment in machine learning projects, companies and technologies.</p>
-<p>Whether you&rsquo;re looking to develop them as a startup or tech leader, deploy them as a business user, or fund them as an investor, you&rsquo;ll leave with key insights to help you prioritize resources towards your most valuable — and solvable — AI-powered applications.</p></blockquote>
+<p>Whether you&rsquo;re looking to develop them as a startup or tech leader, deploy them as a business user, or fund them as an investor, you&rsquo;ll leave with key insights to help you prioritize resources towards your most valuable — and solvable — AI-powered applications.</p>
+</blockquote>
 <p>This event was put on by Steve O&rsquo;Neil and his team, who all did an excellent job.  The venue was standing-room only with a fantastic audience of 300-400 people.</p>
 <p>The goal of the event was to have a discussion around &ldquo;Rational AI in the Enterprise&rdquo; and I think all of the speakers did a wonderful job of doing so.  We wanted to present the facts as they are, on the ground, in real-world projects and situations.</p>
 <p>My talk was aimed at a mixed audience of technologists, investors, and executives.  The goal was to instill a sense of skepticism when considering if and when a given business problem dictates an AI solution.  I also sought to increase people&rsquo;s ability to have a critical conversation with someone pitching an AI solution to a business problem.</p>
@@ -5388,7 +5440,8 @@ be rewarded with loyalty.</p>
 <p>A panel discussion arranged by <a href="https://twitter.com/GA_Singapore">General Assembly</a> Singapore.  For the full writeup, see this <a href="https://victoria.dev/verbose/to-be-a-data-scientist/">excellent article</a>.</p>
 <blockquote>
 <p>Considering a career as a data scientist or data analyst? Curious about what a day-to-day job in data looks like? Join General Assembly and NTUC to learn about what a day in the life entails for a data expert!</p>
-<p>Hear from a panel of data experts as they tell all about their professional experience and see what it&rsquo;s like to work as one. We will explore different options for branching into data and discuss how data experts are found and hired. We will also talk about the expectations you can have throughout your career and key areas of growth within the industry.</p></blockquote>
+<p>Hear from a panel of data experts as they tell all about their professional experience and see what it&rsquo;s like to work as one. We will explore different options for branching into data and discuss how data experts are found and hired. We will also talk about the expectations you can have throughout your career and key areas of growth within the industry.</p>
+</blockquote>
 <p>
 <img class="enclosure" src="/static/talks/DRAKE-adam-20170315-ga-datasci-offstage.jpg" alt="Adam speaking at General Assembly in Singapore"  />
 </p>
@@ -5396,7 +5449,8 @@ be rewarded with loyalty.</p>
 <h2 id="how-to-lead-and-win-in-a-data-life-singapore-6-october-2016" class="anchor-link"><a href="#how-to-lead-and-win-in-a-data-life-singapore-6-october-2016">How to Lead and Win in a Data Life, Singapore, 6 October 2016</a></h2>
 <p>From the Data Science Singapore&rsquo;s <a href="https://www.meetup.com/DataScience-SG-Singapore/events/234523325/">Meetup page</a>:</p>
 <blockquote>
-<p>Hi all! Adam (who spoke in June on Big Data, Small Machine) is back to share with us his thoughts on data leadership and building a successful career in the data science. We will follow his talk with a panel discussion between Adam and Koo (who is Co-founder/Practicum Director of Data Science Rex and Adjunct Lecturer at NUS-ISS, SMU &amp; UniSIM). Kai Xin (data scientist from Lazada) will be moderating the panel.</p></blockquote>
+<p>Hi all! Adam (who spoke in June on Big Data, Small Machine) is back to share with us his thoughts on data leadership and building a successful career in the data science. We will follow his talk with a panel discussion between Adam and Koo (who is Co-founder/Practicum Director of Data Science Rex and Adjunct Lecturer at NUS-ISS, SMU &amp; UniSIM). Kai Xin (data scientist from Lazada) will be moderating the panel.</p>
+</blockquote>
 <p><a href="https://www.youtube.com/embed/8_LisbDSoIc">YouTube video of talk</a></p>
 
 <h2 id="chief-data-officer-summit-singapore-30-june-2016" class="anchor-link"><a href="#chief-data-officer-summit-singapore-30-june-2016">Chief Data Officer Summit, Singapore, 30 June 2016</a></h2>
@@ -5548,5 +5602,5 @@ be rewarded with loyalty.</p>
 <p>By taking an individualized approach based the needs of a growing enterprise, Adam Drake helps create data-driven cultural and leadership transformations that prepare organizations for scalable long-term growth.</p>
 <p><a href="#top">Back to top</a></p>
 ]]></content></entry><entry><title type="html">Now</title><link href="https://adamdrake.com/now.html"/><id>https://adamdrake.com/now.html</id><author><name>Adam Drake</name></author><published>0001-01-01T00:00:00+00:00</published><updated>0001-01-01T00:00:00+00:00</updated><content type="html"><![CDATA[<p>I help boards and executives at technology companies continue (or resume) rapid acceleration by advising them on improving their leadership capabilities, operations, and technology. While I specialize in executive advising on leadership and process, I can also dive into deep technical problems with Data Science or Software Engineering departments.  Feel free to contact me directly to learn more.</p>
-<p>I have a few tech projects in progress that will undoubtedly become blog posts. I&rsquo;m working on an e-book about leadership in organizations, as well as a field manual for triaging performance and architecture in growth-stage startups.  I sometimes write code for <a href="https://github.com/adamdrake">open-source projects</a> like <a href="https://tinysite.adamdrake.com">TinySite</a> and <a href="https://compresstest.com">CompressTest</a>.  I also work on <a href="https://applybyapi.com">ApplyByAPI</a>, a tool that helps companies focus on quality over quantity in their tech hiring process.</p>
+<p>I have a few tech projects in progress that will undoubtedly become blog posts. I&rsquo;m working on an e-book about leadership in organizations, as well as a field manual for triaging performance and architecture in growth-stage startups.  I sometimes write code for <a href="https://github.com/adamdrake">open-source projects</a> like  <a href="https://compresstest.com">CompressTest</a>.  I also work on <a href="https://applybyapi.com">ApplyByAPI</a>, a tool that helps companies focus on quality over quantity in their tech hiring process.</p>
 ]]></content></entry></feed>
